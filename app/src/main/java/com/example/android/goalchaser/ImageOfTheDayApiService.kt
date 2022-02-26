@@ -39,7 +39,7 @@ interface TestApiService {
      */
 
 
- 
+   //TODO Insert key here -hidden for security purposes
     @GET("photos/random?collections=ssKIeMdFdRo")
     suspend fun getImageOfTheDay(): ImageOfTheDayData?
 }
