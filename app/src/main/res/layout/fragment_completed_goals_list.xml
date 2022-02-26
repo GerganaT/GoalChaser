@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/completed_tasks_list_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/completed_tasks_logo_header_image"
+        android:layout_width="0dp"
+        android:layout_height="306dp"
+        android:background="@color/semiTransparentColor"
+        android:paddingTop="@dimen/padding_very_large"
+        android:src="@drawable/logo_placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/completed_tasks_list_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/margin_small"
+        android:paddingBottom="@dimen/margin_small"
+        app:layout_constraintTop_toBottomOf="@+id/completed_tasks_logo_header_image"
+        tools:listitem="@layout/completed_goal_list_item" />
+</androidx.constraintlayout.widget.ConstraintLayout>
