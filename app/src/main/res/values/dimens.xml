@@ -2,7 +2,7 @@
 <resources>
     <dimen name="margin_middle">16dp</dimen>
     <dimen name="margin_small">8dp</dimen>
-    <dimen name="goal_title_text_size">20sp</dimen>
+    <dimen name="goal_title_text_size">18sp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -17,5 +17,6 @@
     <dimen name="margin_extra_large">64dp</dimen>
     <dimen name="statistics_text_size">20sp</dimen>
     <dimen name="margin_very_large">50dp</dimen>
-    <dimen name="edit_text_height">48dp</dimen>/>
+    <dimen name="edit_text_height">48dp</dimen>
+    <dimen name="switch_size">48dp</dimen>/>
 </resources>

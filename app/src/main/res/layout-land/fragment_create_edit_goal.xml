@@ -1,108 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/create_edit_goal_root"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/padding_mid"
-    tools:context=".CreateEditGoalFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <EditText
-        android:id="@+id/goal_title_edit_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_middle"
-        android:background="@drawable/border"
-        android:ems="10"
-        android:importantForAutofill="no"
-        android:inputType="textMultiLine"
-        android:maxLines="@integer/max_lines_edit_text"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/create_edit_goal_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:padding="@dimen/padding_mid"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goal_title_label_text"
-        tools:ignore="TextContrastCheck"
-        tools:text="Goal title" />
+        tools:context=".CreateEditGoalFragment">
 
-    <EditText
-        android:id="@+id/goal_description_edit_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_middle"
-        android:background="@drawable/border"
-        android:ems="10"
-        android:importantForAutofill="no"
-        android:inputType="textMultiLine"
-        android:maxLines="@integer/max_lines_edit_text"
-        android:padding="@dimen/padding_mid"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goal_description_label_text"
-        tools:ignore="TextContrastCheck"
-        tools:text="Goal description" />
+        <TextView
+            android:id="@+id/before_goal_due_date_tex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_middle"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/before_goal_due_date_label"
+            android:textSize="@dimen/goal_title_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/send_notification_text" />
 
-    <TextView
-        android:id="@+id/goal_description_label_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_middle"
-        android:text="@string/goal_description_label"
-        android:textAlignment="center"
-        android:textSize="@dimen/goal_title_text_size"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goal_title_edit_text" />
+        <TextView
+            android:id="@+id/send_notification_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_middle"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/send_notification_label"
+            android:textSize="@dimen/goal_title_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/goal_notifications_text" />
 
-    <TextView
-        android:id="@+id/goal_title_label_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_extra_large"
-        android:text="@string/title_label_save_edit_fragment"
-        android:textAlignment="center"
-        android:textSize="@dimen/goal_title_text_size"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <DatePicker
+            android:id="@+id/goal_date_picker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_middle"
+            android:background="@drawable/border"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/goal_due_date_label_text" />
 
-    <TextView
-        android:id="@+id/goal_due_date_label_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_middle"
-        android:text="@string/goal_due_date_label"
-        android:textAlignment="center"
-        android:textSize="@dimen/goal_title_text_size"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goal_description_edit_text" />
+        <EditText
+            android:id="@+id/goal_title_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_middle"
+            android:background="@drawable/border"
+            android:ems="10"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:maxLines="@integer/max_lines_edit_text"
+            android:padding="@dimen/padding_mid"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/goal_title_label_text"
+            tools:ignore="TextContrastCheck"
+            tools:text="Goal title" />
 
-    <DatePicker
-        android:id="@+id/goal_date_picker"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_middle"
-        android:background="@drawable/border"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goal_due_date_label_text" />
+        <TextView
+            android:id="@+id/goal_due_date_label_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_middle"
+            android:text="@string/goal_due_date_label"
+            android:textAlignment="center"
+            android:textSize="@dimen/goal_title_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/goal_title_edit_text" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/save_task_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:src="@drawable/ic_goal_checkmark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        <TextView
+            android:id="@+id/goal_title_label_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_extra_large"
+            android:text="@string/title_label_save_edit_fragment"
+            android:textAlignment="center"
+            android:textSize="@dimen/goal_title_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/goal_notifications_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_middle"
+            android:gravity="center"
+            android:paddingStart="@dimen/padding_very_large"
+            android:text="@string/goal_notifications_label"
+            android:textSize="@dimen/goal_title_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/enable_notifications_switch"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/goal_date_picker" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/save_task_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@drawable/ic_goal_checkmark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/enable_notifications_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:showText="false"
+            android:splitTrack="false"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="@dimen/goal_title_text_size"
+            app:layout_constraintBottom_toBottomOf="@+id/goal_notifications_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/goal_notifications_text"
+            app:thumbTint="@color/primaryColor"
+            app:trackTint="@color/semiTransparentColor" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/days_months_picker_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_middle"
+            app:boxStrokeWidthFocused="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/goal_notifications_text">
+
+            <AutoCompleteTextView
+                android:id="@+id/days_or_months_autocomplete_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:padding="@dimen/padding_small"
+                android:text="@string/days_or_months_hint" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/days_months_number_picker_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_middle"
+            android:layout_marginStart="12dp"
+            app:boxStrokeWidthFocused="1dp"
+            app:layout_constraintStart_toEndOf="@+id/send_notification_text"
+            app:layout_constraintTop_toBottomOf="@+id/goal_notifications_text">
+
+            <AutoCompleteTextView
+                android:id="@+id/days_or_months_numbers_autocomplete_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:padding="@dimen/padding_small"
+                android:text="@string/number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
