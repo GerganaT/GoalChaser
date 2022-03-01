@@ -1,9 +1,9 @@
-package com.example.android.goalchaser
+package com.example.android.goalchaser.remotedatasource
 
 /** Data models,which Moshi uses to convert image-related data from the Web
  * to Kotlin objects, which we can use in the app*/
 data class ImageOfTheDayData(
-    val urls:RandomImage,
+    val urls: RandomImage,
     val user: User
 ) {
 }

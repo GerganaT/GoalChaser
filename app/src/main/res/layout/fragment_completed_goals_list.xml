@@ -1,28 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/completed_tasks_list_root"
+    xmlns:tools="http://schemas.android.com/tools">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/completed_goals_list_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/completed_tasks_logo_header_image"
+        android:id="@+id/completed_goals_image_of_the_day_image"
         android:layout_width="0dp"
-        android:layout_height="306dp"
-        android:background="@color/semiTransparentColor"
+        android:layout_height="@dimen/image_of_the_day_height"
         android:paddingTop="@dimen/padding_very_large"
-        android:src="@drawable/logo_placeholder"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@id/completed_goals_list_recycler"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/completed_goals_photo_label_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/semiTransparentColor"
+        android:gravity="center"
+        android:text="@string/photo_by_label"
+        android:textColor="@color/primaryTextColor"
+        app:layout_constraintBottom_toBottomOf="@+id/completed_goals_image_of_the_day_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/completed_tasks_list_recycler"
+        android:id="@+id/completed_goals_list_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:paddingTop="@dimen/margin_small"
         android:paddingBottom="@dimen/margin_small"
-        app:layout_constraintTop_toBottomOf="@+id/completed_tasks_logo_header_image"
+        app:layout_constraintTop_toBottomOf="@+id/completed_goals_image_of_the_day_image"
         tools:listitem="@layout/completed_goal_list_item" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

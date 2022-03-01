@@ -3,46 +3,47 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/active_goals_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActiveGoalsListFragment">
+    tools:context=".ui.ActiveGoalsListFragment">
 
     <ImageView
-        android:id="@+id/image_of_the_day_image"
+        android:id="@+id/active_image_of_the_day_image"
         android:layout_width="0dp"
         android:layout_height="306dp"
         android:paddingTop="@dimen/padding_very_large"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@id/tasks_list_recycler"
+        app:layout_constraintBottom_toTopOf="@id/active_tasks_list_recycler"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:src="@tools:sample/backgrounds/scenic" />
 
     <TextView
-        android:id="@+id/photo_label_text"
+        android:id="@+id/active_photo_label_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/semiTransparentColor"
         android:gravity="center"
         android:text="@string/photo_by_label"
         android:textColor="@color/primaryTextColor"
-        app:layout_constraintBottom_toBottomOf="@+id/image_of_the_day_image"
+        app:layout_constraintBottom_toBottomOf="@+id/active_image_of_the_day_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tasks_list_recycler"
+        android:id="@+id/active_tasks_list_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:paddingTop="@dimen/margin_small"
         android:paddingBottom="@dimen/margin_small"
-        app:layout_constraintTop_toBottomOf="@+id/image_of_the_day_image"
+        app:layout_constraintTop_toBottomOf="@+id/active_image_of_the_day_image"
         tools:listitem="@layout/active_goal_list_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_task_fab"
+        android:id="@+id/add_active_task_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_middle"

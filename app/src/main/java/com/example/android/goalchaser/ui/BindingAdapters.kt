@@ -1,10 +1,9 @@
-package com.example.android.goalchaser
+package com.example.android.goalchaser.ui
 
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 
 /**
  * Uses the Glide library to load an image by URL into an [ImageView]

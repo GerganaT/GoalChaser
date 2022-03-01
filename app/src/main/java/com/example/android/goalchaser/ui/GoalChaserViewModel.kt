@@ -1,8 +1,9 @@
-package com.example.android.goalchaser
+package com.example.android.goalchaser.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.android.goalchaser.ImageOfTheDayApiService
 import kotlinx.coroutines.launch
 
 class GoalChaserViewModel: ViewModel() {

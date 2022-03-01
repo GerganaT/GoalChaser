@@ -1,4 +1,4 @@
-package com.example.android.goalchaser
+package com.example.android.goalchaser.ui
 
 import android.graphics.Color
 import android.os.Bundle
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.size
 import androidx.fragment.app.Fragment
+import com.example.android.goalchaser.R
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
@@ -58,8 +58,8 @@ class StatisticsFragment : Fragment() {
 
         )
         val pieColors = arrayListOf<Int>()
-        pieColors.add(ContextCompat.getColor( requireActivity(),R.color.darkPieColor))
-        pieColors.add(ContextCompat.getColor( requireActivity(),R.color.primaryColor))
+        pieColors.add(ContextCompat.getColor( requireActivity(), R.color.darkPieColor))
+        pieColors.add(ContextCompat.getColor( requireActivity(), R.color.primaryColor))
 
 
         val pieDataSet = PieDataSet(tasksPercentage, "")

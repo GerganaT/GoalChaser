@@ -18,5 +18,7 @@
     <dimen name="statistics_text_size">20sp</dimen>
     <dimen name="margin_very_large">50dp</dimen>
     <dimen name="edit_text_height">48dp</dimen>
-    <dimen name="switch_size">48dp</dimen>/>
+    <dimen name="switch_size">48dp</dimen>
+    <dimen name="fragment_about_divider_length">310dp</dimen>
+    <dimen name="image_of_the_day_height">306dp</dimen>/>
 </resources>

@@ -5,31 +5,41 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InstructionsFragment">
+    tools:context=".ui.InstructionsFragment">
 
 
     <ImageView
         android:id="@+id/instructions_header_image"
         android:layout_width="0dp"
-        android:layout_height="@dimen/nav_header_height_modified"
+        android:layout_height="0dp"
         android:background="@color/semiTransparentColor"
         android:paddingTop="@dimen/padding_very_large"
         android:scaleType="fitCenter"
         android:src="@drawable/logo_placeholder"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_instructions_guide"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/instructions_text"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_margin="@dimen/margin_middle"
+        android:layout_marginStart="@dimen/margin_middle"
+        android:paddingTop="@dimen/padding_very_large"
         android:text="@string/instructions_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/instructions_header_image"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/instructions_header_image" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_instructions_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/fragment_about_divider_length" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

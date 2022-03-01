@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/padding_mid"
-        tools:context=".CreateEditGoalFragment">
+        tools:context=".ui.CreateEditGoalFragment">
 
         <TextView
             android:id="@+id/before_goal_due_date_tex"
@@ -40,6 +40,7 @@
             android:background="@drawable/border"
             android:calendarViewShown="false"
             android:datePickerMode="spinner"
+            android:soundEffectsEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/goal_due_date_label_text" />
@@ -115,15 +116,10 @@
             android:id="@+id/enable_notifications_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:showText="false"
-            android:splitTrack="false"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="@dimen/goal_title_text_size"
             app:layout_constraintBottom_toBottomOf="@+id/goal_notifications_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/goal_notifications_text"
-            app:thumbTint="@color/primaryColor"
-            app:trackTint="@color/semiTransparentColor" />
+             />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/days_months_picker_layout"

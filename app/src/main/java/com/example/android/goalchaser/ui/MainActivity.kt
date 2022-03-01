@@ -1,4 +1,4 @@
-package com.example.android.goalchaser
+package com.example.android.goalchaser.ui
 
 import android.os.Bundle
 import android.view.Menu
@@ -10,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.instructionsFragment, R.id.aboutFragment, R.id.splashFragment,
-                R.id.goalsListFragment, R.id.completedgoalsListFragment,R.id.statisticsFragment
+                R.id.activeGoalsFragment, R.id.completedgoalsListFragment, R.id.statisticsFragment
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

@@ -1,4 +1,4 @@
-package com.example.android.goalchaser
+package com.example.android.goalchaser.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentCreateEditGoalBinding
 
 
@@ -40,11 +41,11 @@ class CreateEditGoalFragment : Fragment() {
         val dayMonthsNumberArray = arrayOf(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
         21,22,23,24,25,26,27,28,29,30,31)
         val dayMonthsNumberAdapter = ArrayAdapter(
-            requireActivity(),R.layout.days_months_dropdown_menu,
+            requireActivity(), R.layout.days_months_dropdown_menu,
             dayMonthsNumberArray)
         createEditGoalBinding.daysOrMonthsNumbersAutocompleteText.setAdapter(dayMonthsNumberAdapter)
     }
 }
-//TODO change switch color to grey when notifications are turned off - disable menus below
-//TODO create landscape orientation layout
+
+//TODO when notifications are turned off /on show toast
 //TODO optimize boilerplate above
