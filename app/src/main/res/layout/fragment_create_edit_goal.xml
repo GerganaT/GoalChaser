@@ -11,7 +11,7 @@
         tools:context=".ui.CreateEditGoalFragment">
 
         <TextView
-            android:id="@+id/before_goal_due_date_tex"
+            android:id="@+id/before_goal_due_date_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_middle"
@@ -98,12 +98,12 @@
             android:text="@string/goal_notifications_label"
             android:textSize="@dimen/goal_title_text_size"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/enable_notifications_switch"
+            app:layout_constraintEnd_toStartOf="@+id/enable_disable_notifications_switch"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/goal_date_picker" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/save_task_fab"
+            android:id="@+id/save_goal_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -113,13 +113,12 @@
             tools:ignore="SpeakableTextPresentCheck" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/enable_notifications_switch"
+            android:id="@+id/enable_disable_notifications_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@+id/goal_notifications_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/goal_notifications_text"
-             />
+            app:layout_constraintTop_toTopOf="@+id/goal_notifications_text" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/days_months_picker_layout"
@@ -152,7 +151,7 @@
             app:layout_constraintTop_toBottomOf="@+id/goal_notifications_text">
 
             <AutoCompleteTextView
-                android:id="@+id/days_or_months_numbers_autocomplete_text"
+                android:id="@+id/days_or_months_number_autocomplete_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"

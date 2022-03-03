@@ -34,18 +34,20 @@ class CreateEditGoalFragment : Fragment() {
         val dayMonthsArray = requireActivity().resources.getStringArray(R.array.days_months)
         val dayMonthsArrayAdapter = ArrayAdapter(
             requireActivity(),
-            R.layout.days_months_dropdown_menu,
+            R.layout.days_months_dropdown_menu_item,
             dayMonthsArray)
         createEditGoalBinding.daysOrMonthsAutocompleteText.setAdapter(dayMonthsArrayAdapter)
 
         val dayMonthsNumberArray = arrayOf(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
         21,22,23,24,25,26,27,28,29,30,31)
         val dayMonthsNumberAdapter = ArrayAdapter(
-            requireActivity(), R.layout.days_months_dropdown_menu,
+            requireActivity(), R.layout.days_months_dropdown_menu_item,
             dayMonthsNumberArray)
-        createEditGoalBinding.daysOrMonthsNumbersAutocompleteText.setAdapter(dayMonthsNumberAdapter)
+        createEditGoalBinding.daysOrMonthsNumberAutocompleteText.setAdapter(dayMonthsNumberAdapter)
     }
 }
 
 //TODO when notifications are turned off /on show toast
 //TODO optimize boilerplate above
+//TODO there's currently issue with menu's data in landscape and sometimes portrait.Implement viewmodel
+//TODO properly and see if it's resolved.

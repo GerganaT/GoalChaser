@@ -14,7 +14,7 @@
         android:layout_height="306dp"
         android:paddingTop="@dimen/padding_very_large"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@id/active_tasks_list_recycler"
+        app:layout_constraintBottom_toTopOf="@id/active_goals_list_recycler"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:src="@tools:sample/backgrounds/scenic" />
@@ -33,7 +33,7 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/active_tasks_list_recycler"
+        android:id="@+id/active_goals_list_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
@@ -43,7 +43,7 @@
         tools:listitem="@layout/active_goal_list_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_active_task_fab"
+        android:id="@+id/add_active_goal_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_middle"

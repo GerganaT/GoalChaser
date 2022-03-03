@@ -26,9 +26,9 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.mainAppToolbarIncluded.mainAppToolbar)
         val drawerLayout: DrawerLayout = binding.mainDrawerLayout
-        val navView: NavigationView = binding.navView
+        val navView: NavigationView = binding.mainDrawerNavView
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navController = findNavController(R.id.main_nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/completed_goals_list_root"
@@ -15,7 +15,7 @@
         tools:context=".ui.ActiveGoalsListFragment">
 
         <ImageView
-            android:id="@+id/completed_image_of_the_day_image"
+            android:id="@+id/completed_goals_image_of_the_day_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginEnd="@dimen/margin_small"
@@ -23,30 +23,30 @@
             android:paddingBottom="@dimen/padding_mid"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/completed_tasks_list_recycler"
+            app:layout_constraintEnd_toStartOf="@+id/completed_goals_list_recycler"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/backgrounds/scenic" />
 
         <TextView
-            android:id="@+id/completed_photo_label_text"
+            android:id="@+id/completed_goals_photo_label_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/semiTransparentColor"
             android:gravity="center"
             android:text="@string/photo_by_label"
             android:textColor="@color/primaryTextColor"
-            app:layout_constraintBottom_toBottomOf="@+id/completed_image_of_the_day_image"
-            app:layout_constraintEnd_toEndOf="@+id/completed_image_of_the_day_image"
+            app:layout_constraintBottom_toBottomOf="@+id/completed_goals_image_of_the_day_image"
+            app:layout_constraintEnd_toEndOf="@+id/completed_goals_image_of_the_day_image"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/completed_tasks_list_recycler"
+            android:id="@+id/completed_goals_list_recycler"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/completed_image_of_the_day_image"
+            app:layout_constraintStart_toEndOf="@+id/completed_goals_image_of_the_day_image"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/completed_goal_list_item">
 
