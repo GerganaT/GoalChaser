@@ -46,6 +46,7 @@
     <string name="send_notification_label">Notify me</string>
     <string name="before_goal_due_date_label">before goal due date.</string>
     <string name="number">1</string>
+    <string name="active_goals_drawer_menu_item">Active goals</string>
     <string-array name="days_months">
         <item>Day(s)</item>
         <item>Month(s)</item>

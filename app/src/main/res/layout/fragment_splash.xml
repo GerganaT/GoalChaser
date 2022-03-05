@@ -10,14 +10,15 @@
 
     <ImageView
         android:id="@+id/logo_image"
-        android:layout_width="264dp"
+        android:layout_width="0dp"
         android:layout_height="261dp"
-        android:src="@drawable/logo_placeholder"
+        android:src="@drawable/ic_logo_goal_chaser"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.36" />
+        app:layout_constraintVertical_bias="0.36"
+        app:srcCompat="@drawable/ic_logo_goal_chaser" />
 
     <ProgressBar
         android:id="@+id/initial_progress_bar"

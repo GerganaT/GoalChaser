@@ -8,19 +8,23 @@
         android:id="@+id/drawer_menu_group"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/instructions_menu"
-            android:icon="@drawable/ic_instructions"
-            android:title="@string/instructions_drawer_menu_item" />
+            android:id="@+id/activeGoalsFragment"
+            android:icon="@drawable/ic_active_goals"
+            android:title="@string/active_goals_drawer_menu_item" />
         <item
-            android:id="@+id/statistics_menu"
-            android:icon="@drawable/ic_statistics"
-            android:title="@string/statistics_drawer_menu_item" />
-        <item
-            android:id="@+id/completed_goals_menu"
+            android:id="@+id/completedgoalsListFragment"
             android:icon="@drawable/ic_completed_goals"
             android:title="@string/completed_goals_drawer_menu_item" />
         <item
-            android:id="@+id/about_menu"
+            android:id="@+id/statisticsFragment"
+            android:icon="@drawable/ic_statistics"
+            android:title="@string/statistics_drawer_menu_item" />
+        <item
+            android:id="@+id/instructionsFragment"
+            android:icon="@drawable/ic_instructions"
+            android:title="@string/instructions_drawer_menu_item" />
+        <item
+            android:id="@+id/aboutFragment"
             android:icon="@drawable/ic_about"
             android:title="@string/about_drawer_menu_item" />
     </group>

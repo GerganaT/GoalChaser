@@ -27,6 +27,9 @@
                 android:layout_height="match_parent"
                 app:defaultNavHost="true"
                 app:navGraph="@navigation/goals_navigation" />
+            <include
+                android:id="@+id/main_app_toolbar_included"
+                layout="@layout/action_bar_layout" />
 
             <com.google.android.material.navigation.NavigationView
                 android:id="@+id/main_drawer_nav_view"
@@ -41,9 +44,7 @@
 
             </com.google.android.material.navigation.NavigationView>
 
-            <include
-                android:id="@+id/main_app_toolbar_included"
-                layout="@layout/action_bar_layout" />
+
         </androidx.drawerlayout.widget.DrawerLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
