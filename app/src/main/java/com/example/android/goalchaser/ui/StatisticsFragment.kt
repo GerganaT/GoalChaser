@@ -42,7 +42,7 @@ class StatisticsFragment : Fragment() {
         pieChart.description.isEnabled = false
         pieChart.isDrawHoleEnabled = false
         val legend = pieChart.legend
-        legend.typeface = context?.let { ResourcesCompat.getFont(it, R.font.arapey_italic) }
+        legend.typeface = context?.let { ResourcesCompat.getFont(it, R.font.actor) }
         legend.textSize = 20f
         legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
         legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
@@ -69,7 +69,7 @@ class StatisticsFragment : Fragment() {
         pieData.setValueFormatter(PercentFormatter(pieChart))
         pieData.setValueTextSize(20f)
         pieData.setValueTextColor(Color.BLACK)
-        pieData.setValueTypeface(context?.let { ResourcesCompat.getFont(it, R.font.arapey_italic) })
+        pieData.setValueTypeface(context?.let { ResourcesCompat.getFont(it, R.font.actor) })
 
         pieChart.data = pieData
         pieChart.invalidate()
