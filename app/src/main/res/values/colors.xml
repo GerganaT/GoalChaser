@@ -4,10 +4,11 @@
   <color name="primaryLightColor">#FF8A65</color>
   <color name="primaryDarkColor">#FF8A65</color>
   <color name="secondaryColor">#FF8A65</color>
-  <color name="darkPieColor">#AF4929</color>
   <color name="semiTransparentColor">#60FF8A65</color>
   <color name="secondaryLightColor">#484848</color>
   <color name="secondaryDarkColor">#000000</color>
   <color name="primaryTextColor">#000000</color>
   <color name="secondaryTextColor">#000000</color>
+  <color name="colorAccent">#ACA8FF</color>
+  <color name="colorAccentSemiTransparent">#60ACA8FF</color>
 </resources>

@@ -33,6 +33,7 @@
 
             <com.google.android.material.navigation.NavigationView
                 android:id="@+id/main_drawer_nav_view"
+                app:theme="@style/ThemeOverlay.AppCompat.navTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
@@ -43,6 +44,8 @@
                 app:menu="@menu/activity_main_drawer">
 
             </com.google.android.material.navigation.NavigationView>
+
+
 
 
         </androidx.drawerlayout.widget.DrawerLayout>

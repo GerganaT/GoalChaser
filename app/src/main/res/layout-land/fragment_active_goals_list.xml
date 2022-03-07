@@ -32,7 +32,7 @@
             android:id="@+id/active_photo_label_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/semiTransparentColor"
+            android:background="@color/colorAccentSemiTransparent"
             android:gravity="center"
             android:text="@string/photo_by_label"
             android:textColor="@color/primaryTextColor"
@@ -60,7 +60,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_baseline_add_24"
-            app:backgroundTint="@color/primaryColor"
+            app:backgroundTint="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="SpeakableTextPresentCheck" />

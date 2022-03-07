@@ -32,7 +32,7 @@
             android:id="@+id/completed_goals_photo_label_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/semiTransparentColor"
+            android:background="@color/colorAccentSemiTransparent"
             android:gravity="center"
             android:text="@string/photo_by_label"
             android:textColor="@color/primaryTextColor"

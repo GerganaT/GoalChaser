@@ -58,7 +58,7 @@ class StatisticsFragment : Fragment() {
 
         )
         val pieColors = arrayListOf<Int>()
-        pieColors.add(ContextCompat.getColor( requireActivity(), R.color.darkPieColor))
+        pieColors.add(ContextCompat.getColor( requireActivity(), R.color.colorAccent))
         pieColors.add(ContextCompat.getColor( requireActivity(), R.color.primaryColor))
 
 
