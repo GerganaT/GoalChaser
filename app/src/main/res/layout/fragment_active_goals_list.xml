@@ -2,6 +2,11 @@
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="goalChaserViewModel"
+            type="com.example.android.goalchaser.ui.GoalChaserViewModel" />
+    </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/active_goals_root"
     android:layout_width="match_parent"
@@ -11,9 +16,10 @@
     <ImageView
         android:id="@+id/active_image_of_the_day_image"
         android:layout_width="0dp"
-        android:layout_height="306dp"
-        android:paddingTop="@dimen/padding_very_large"
+        android:layout_height="@dimen/image_of_the_day_height"
+        android:paddingTop="@dimen/padding_extra_large_portrait"
         android:scaleType="centerCrop"
+        app:imageUrl="@{goalChaserViewModel.pictureUrlString}"
         app:layout_constraintBottom_toTopOf="@id/active_goals_list_recycler"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +29,7 @@
         android:id="@+id/active_photo_label_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccentSemiTransparent"
+        android:background="@color/colorAccent"
         android:gravity="center"
         android:text="@string/photo_by_label"
         android:textColor="@color/primaryTextColor"

@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentActiveGoalsListBinding
 
@@ -13,6 +15,7 @@ import com.example.android.goalchaser.databinding.FragmentActiveGoalsListBinding
 class ActiveGoalsListFragment : Fragment() {
 
     lateinit var activeGoalsListBinding: FragmentActiveGoalsListBinding
+
 
 
     override fun onCreateView(
@@ -26,6 +29,9 @@ class ActiveGoalsListFragment : Fragment() {
             container,
             false
         )
+        activeGoalsListBinding.lifecycleOwner = viewLifecycleOwner
+        val viewModel: GoalChaserViewModel by viewModels()
+        activeGoalsListBinding.goalChaserViewModel = viewModel
         return activeGoalsListBinding.root
     }
 

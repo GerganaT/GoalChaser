@@ -2,13 +2,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="goalChaserViewModel"
+            type="com.example.android.goalchaser.ui.GoalChaserViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/completed_goals_list_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/margin_extra_large"
-        android:paddingStart="@dimen/padding_mid"
+        android:paddingStart="@dimen/padding_small"
         android:paddingBottom="@dimen/padding_small"
         app:layout_constraintEnd_toEndOf="@+id/active_image_of_the_day_image"
         app:layout_constraintStart_toEndOf="@+id/active_image_of_the_day_image"
@@ -19,20 +24,20 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginEnd="@dimen/margin_small"
-            android:background="@drawable/border"
             android:paddingBottom="@dimen/padding_mid"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/completed_goals_list_recycler"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/backgrounds/scenic" />
+            tools:src="@tools:sample/backgrounds/scenic"
+            app:imageUrl="@{goalChaserViewModel.pictureUrlString}"/>
 
         <TextView
             android:id="@+id/completed_goals_photo_label_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccentSemiTransparent"
+            android:background="@color/colorAccent"
             android:gravity="center"
             android:text="@string/photo_by_label"
             android:textColor="@color/primaryTextColor"

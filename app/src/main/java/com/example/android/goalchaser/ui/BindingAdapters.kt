@@ -17,3 +17,4 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
             .into(imgView)
     }
 }
+//TODO set image for error and while loading
