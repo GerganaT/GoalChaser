@@ -35,7 +35,8 @@ class ActiveGoalsListFragment : Fragment() {
         return activeGoalsListBinding.root
     }
 
-
+   //TODO show error image when there's no image in the db and no internet
+    //TODO show no list image when there're no tasks
     //TODO add transition to view/edit/create goal details
     //TODO add logic for fab button to reuse create_edit_goal fragment with label"create goal"
 

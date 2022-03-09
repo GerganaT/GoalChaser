@@ -51,3 +51,4 @@ interface TestApiService {
 object ImageOfTheDayApiService {
     val retrofitService: TestApiService by lazy { retrofit.create(TestApiService::class.java) }
 }
+//TODO obtain photographer's profile link and Unsplash's site

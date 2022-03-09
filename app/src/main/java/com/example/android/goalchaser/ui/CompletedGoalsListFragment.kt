@@ -31,6 +31,7 @@ class CompletedGoalsListFragment : Fragment() {
 
         return fragmentCompletedGoalsListBinding.root
     }
-
+//TODO show error image when there's no image in the db and no internet
+    //TODO show no list image when there're no tasks
 
 }
