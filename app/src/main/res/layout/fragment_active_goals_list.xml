@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
         android:gravity="center"
-        android:text="@string/photo_by_label"
+        app:setPhotographerData="@{goalChaserViewModel.photographerCredentials}"
         android:textColor="@color/primaryTextColor"
         app:layout_constraintBottom_toBottomOf="@+id/active_image_of_the_day_image"
         app:layout_constraintEnd_toEndOf="parent"

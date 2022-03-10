@@ -51,4 +51,8 @@
         <item>Day(s)</item>
         <item>Month(s)</item>
     </string-array>
+    <string name="photographer_credentials">Photo by %1$s on %2$s</string>
+    <string name="unsplash_website_title">Unsplash</string>
+    <string name="unsplash_website_url">https://unsplash.com</string>
+    <string name="no_data_error">No internet connectivity</string>
 </resources>

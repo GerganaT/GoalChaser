@@ -13,5 +13,9 @@ data class RandomImage(
 )
 
 data class User(
-    val name:String
+    val name:String,
+    val links:ProfileLink
+)
+data class ProfileLink(
+    val html:String
 )

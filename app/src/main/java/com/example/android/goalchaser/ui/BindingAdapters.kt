@@ -23,7 +23,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 package com.example.android.goalchaser.ui
 
+import android.text.Html
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieCompositionFactory
@@ -31,6 +35,7 @@ import com.airbnb.lottie.LottieDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.android.goalchaser.R
+import com.example.android.goalchaser.remotedatasource.User
 
 /**
  * Uses the Glide library to load an image by URL into an [ImageView]
@@ -49,6 +54,7 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 
                     }
                 }
+            error(R.drawable.ic_image_error)
             placeholder(lottieDrawable)
 
 
@@ -61,4 +67,31 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
             .into(imgView)
 
     }
+}
+
+@BindingAdapter("setPhotographerData")
+fun TextView.showPhotographerCredentials(photographerCredentials: User?) {
+
+        val photographerName = photographerCredentials?.name
+        if (photographerName!=null){
+            val photographersProfile = photographerCredentials?.links?.html
+            val unsplashSiteName = context.getString(R.string.unsplash_website_title)
+            val unsplashSiteUrl = context.getString(R.string.unsplash_website_url)
+
+            val photographerLabel = context.getString(
+                R.string.photographer_credentials,
+                "<a href=\"$photographersProfile\">$photographerName</a>",
+                "<a href=\"$unsplashSiteUrl\">$unsplashSiteName</a>"
+            )
+            Linkify.addLinks(this, Linkify.ALL)
+            text = Html.fromHtml(photographerLabel)
+            movementMethod = LinkMovementMethod.getInstance()
+        }
+    else{
+        text = context.getString(R.string.no_data_error)
+    }
+
+
+
+
 }

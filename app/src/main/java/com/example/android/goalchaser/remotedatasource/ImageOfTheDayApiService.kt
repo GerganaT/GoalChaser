@@ -1,6 +1,5 @@
-package com.example.android.goalchaser
+package com.example.android.goalchaser.remotedatasource
 
-import com.example.android.goalchaser.remotedatasource.ImageOfTheDayData
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
@@ -29,26 +28,20 @@ private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .build()
 
-/**
- * A public interface that exposes the [getQuoteOfTheDay] method
- */
-interface TestApiService {
-    /**
-     * Returns a Coroutine [List] of [testquote] which can be fetched with await() if in a Coroutine scope.
-     * The @GET annotation indicates that the "realestate" endpoint will be requested with the GET
-     * HTTP method
-     */
+interface ImageDataApiService {
+
 
 
    //TODO Insert key here -hidden for security purposes
     @GET("photos/random?collections=ssKIeMdFdRo")
     suspend fun getImageOfTheDay(): ImageOfTheDayData?
+
 }
 
 /**
  * A public Api object that exposes the lazy-initialized Retrofit service
  */
 object ImageOfTheDayApiService {
-    val retrofitService: TestApiService by lazy { retrofit.create(TestApiService::class.java) }
+    val retrofitService: ImageDataApiService by lazy { retrofit.create(ImageDataApiService::class.java) }
 }
 //TODO obtain photographer's profile link and Unsplash's site
