@@ -35,11 +35,8 @@ import com.airbnb.lottie.LottieDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.android.goalchaser.R
-import com.example.android.goalchaser.remotedatasource.User
+import com.example.android.goalchaser.remotedatasource.Photographer
 
-/**
- * Uses the Glide library to load an image by URL into an [ImageView]
- */
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
     imgUrl.let {
@@ -70,28 +67,25 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 }
 
 @BindingAdapter("setPhotographerData")
-fun TextView.showPhotographerCredentials(photographerCredentials: User?) {
+fun TextView.showPhotographerCredentials(photographerCredentials: Photographer?) {
 
-        val photographerName = photographerCredentials?.name
-        if (photographerName!=null){
-            val photographersProfile = photographerCredentials?.links?.html
-            val unsplashSiteName = context.getString(R.string.unsplash_website_title)
-            val unsplashSiteUrl = context.getString(R.string.unsplash_website_url)
+    val photographerName = photographerCredentials?.name
+    if (photographerName != null) {
+        val photographersProfile = photographerCredentials.profileLinks.profileLink
+        val unsplashSiteName = context.getString(R.string.unsplash_website_title)
+        val unsplashSiteUrl = "https://unsplash.com"
 
-            val photographerLabel = context.getString(
-                R.string.photographer_credentials,
-                "<a href=\"$photographersProfile\">$photographerName</a>",
-                "<a href=\"$unsplashSiteUrl\">$unsplashSiteName</a>"
-            )
-            Linkify.addLinks(this, Linkify.ALL)
-            text = Html.fromHtml(photographerLabel)
-            movementMethod = LinkMovementMethod.getInstance()
-        }
-    else{
+        val photographerLabel = context.getString(
+            R.string.photographer_credentials,
+            "<a href=\"$photographersProfile\">$photographerName</a>",
+            "<a href=\"$unsplashSiteUrl\">$unsplashSiteName</a>"
+        )
+        Linkify.addLinks(this, Linkify.ALL)
+        text = Html.fromHtml(photographerLabel)
+        movementMethod = LinkMovementMethod.getInstance()
+    } else {
         text = context.getString(R.string.no_data_error)
     }
-
-
 
 
 }

@@ -1,21 +1,23 @@
 package com.example.android.goalchaser.remotedatasource
 
-/** Data models,which Moshi uses to convert image-related data from the Web
- * to Kotlin objects, which we can use in the app*/
+import com.squareup.moshi.Json
+
 data class ImageOfTheDayData(
-    val urls: RandomImage,
-    val user: User
+    @Json(name = "urls") val randomImage: RandomImage,
+    @Json(name = "user") val photographer: Photographer
 ) {
 }
 
 data class RandomImage(
-    val small:String
+    @Json(name = "small") val imageLink: String?
 )
 
-data class User(
-    val name:String,
-    val links:ProfileLink
+data class Photographer(
+    val name: String?,
+    @Json(name = "links") val profileLinks: PhotographerProfile
 )
-data class ProfileLink(
-    val html:String
+
+data class PhotographerProfile(
+    @Json(name = "html") val profileLink: String?
 )
+
