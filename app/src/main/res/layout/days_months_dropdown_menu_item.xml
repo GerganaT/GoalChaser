@@ -4,4 +4,4 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="@dimen/padding_small"
-    android:textSize="@dimen/goal_title_text_size" />
+    android:textSize="@dimen/medium_text_size" />

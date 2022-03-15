@@ -39,11 +39,12 @@
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
             android:gravity="center"
-            app:setPhotographerData="@{goalChaserViewModel.photographerCredentials}"
             android:textColor="@color/primaryTextColor"
+            android:textSize="@dimen/medium_text_size"
             app:layout_constraintBottom_toBottomOf="@+id/active_image_of_the_day_image"
             app:layout_constraintEnd_toEndOf="@+id/active_image_of_the_day_image"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:setPhotographerData="@{goalChaserViewModel.photographerCredentials}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/active_goals_list_recycler"

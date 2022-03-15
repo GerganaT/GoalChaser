@@ -17,7 +17,7 @@
             android:layout_marginStart="@dimen/margin_middle"
             android:layout_marginTop="@dimen/margin_large"
             android:text="@string/before_goal_due_date_label"
-            android:textSize="@dimen/goal_title_text_size"
+            android:textSize="@dimen/medium_text_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/send_notification_text" />
 
@@ -28,7 +28,7 @@
             android:layout_marginStart="@dimen/margin_middle"
             android:layout_marginTop="@dimen/margin_large"
             android:text="@string/send_notification_label"
-            android:textSize="@dimen/goal_title_text_size"
+            android:textSize="@dimen/medium_text_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/goal_notifications_text" />
 
@@ -69,7 +69,7 @@
             android:layout_marginTop="@dimen/margin_middle"
             android:text="@string/goal_due_date_label"
             android:textAlignment="center"
-            android:textSize="@dimen/goal_title_text_size"
+            android:textSize="@dimen/medium_text_size"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +82,7 @@
             android:layout_marginTop="@dimen/margin_extra_large"
             android:text="@string/title_label_save_edit_fragment"
             android:textAlignment="center"
-            android:textSize="@dimen/goal_title_text_size"
+            android:textSize="@dimen/medium_text_size"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +96,7 @@
             android:gravity="center"
             android:paddingStart="@dimen/padding_very_large"
             android:text="@string/goal_notifications_label"
-            android:textSize="@dimen/goal_title_text_size"
+            android:textSize="@dimen/medium_text_size"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/enable_disable_notifications_switch"
             app:layout_constraintStart_toStartOf="parent"

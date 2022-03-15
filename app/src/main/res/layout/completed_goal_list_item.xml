@@ -30,7 +30,7 @@
         android:maxLines="1"
         android:text="TextView"
         android:textColor="@color/primaryTextColor"
-        android:textSize="@dimen/goal_title_text_size"
+        android:textSize="@dimen/medium_text_size"
         app:layout_constraintEnd_toStartOf="@+id/completed_goal_date_text"
         app:layout_constraintStart_toEndOf="@+id/completed_goal_checkmark_image"
         app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textColor="@color/primaryTextColor"
-        android:textSize="@dimen/goal_title_text_size"
+        android:textSize="@dimen/medium_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="21/3/2022" />
