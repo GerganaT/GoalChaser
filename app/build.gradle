@@ -76,6 +76,10 @@ dependencies {
     implementation "com.airbnb.android:lottie:$version_lottie"
     //Timber
     implementation "com.jakewharton.timber:timber:$version_timber"
+    //Room
+    implementation("androidx.room:room-runtime:$version_room")
+    kapt("androidx.room:room-compiler:$version_room")
+    implementation("androidx.room:room-ktx:$version_room")
     //Test
     testImplementation 'junit:junit:4.+'
     androidTestImplementation "androidx.test.ext:junit:$version_junit"

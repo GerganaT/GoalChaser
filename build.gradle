@@ -22,6 +22,7 @@ buildscript {
         version_timber="5.0.1"
         version_junit="1.1.3"
         version_espresso="3.4.0"
+        version_room="2.4.2"
 
 
     }
