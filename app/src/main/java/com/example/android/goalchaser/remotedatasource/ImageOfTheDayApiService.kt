@@ -25,7 +25,7 @@ interface ImageDataApiService {
 
     @Headers("Authorization: Client-ID $API_KEY")
     @GET("photos/random?collections=ssKIeMdFdRo")
-    suspend fun getImageOfTheDay(): ImageOfTheDayData?
+    suspend fun getImageOfTheDay(): ImageOfTheDayDataRemote?
 
 }
 
