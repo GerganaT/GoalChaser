@@ -32,38 +32,42 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieCompositionFactory
 import com.airbnb.lottie.LottieDrawable
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.remotedatasource.Photographer
+import com.squareup.picasso.Callback
+import com.squareup.picasso.NetworkPolicy
+import com.squareup.picasso.Picasso
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
-    imgUrl.let {
-        val imageRequestOptions = RequestOptions().apply {
-            val lottieDrawable = LottieDrawable()
-            LottieCompositionFactory.fromRawRes(imgView.context, R.raw.animated_image_loading)
-                .addListener { lottieComposition ->
-                    lottieDrawable.apply {
-                        composition = lottieComposition
-                        repeatCount = LottieDrawable.INFINITE
-                        playAnimation()
 
-                    }
-                }
-            error(R.drawable.ic_image_error)
-            placeholder(lottieDrawable)
+    val lottieDrawable = LottieDrawable()
+    LottieCompositionFactory.fromRawRes(imgView.context, R.raw.animated_image_loading)
+        .addListener { lottieComposition ->
+            lottieDrawable.apply {
+                composition = lottieComposition
+                repeatCount = LottieDrawable.INFINITE
+                playAnimation()
 
-
+            }
         }
 
-        val imgUri = imgUrl?.toUri()?.buildUpon()?.scheme("https")?.build()
-        Glide.with(imgView.context)
-            .load(imgUri)
-            .apply(imageRequestOptions)
-            .into(imgView)
+//TODO Cannot retrieve image from disk
+    val imgUri = imgUrl?.toUri()?.buildUpon()?.scheme("https")?.build()
+    val request = Picasso.get()
+        .load(imgUri)
+        .placeholder(lottieDrawable)
+        .error(R.drawable.ic_image_error)
 
-    }
+    request.networkPolicy(NetworkPolicy.OFFLINE)
+        .into(imgView, object : Callback.EmptyCallback() {
+            override fun onError(e: Exception?) {
+                super.onError(e)
+                request.into(imgView)
+            }
+        })
+
+
 }
 
 @BindingAdapter("setPhotographerData")
