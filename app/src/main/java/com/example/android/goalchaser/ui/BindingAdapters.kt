@@ -33,10 +33,13 @@ import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieCompositionFactory
 import com.airbnb.lottie.LottieDrawable
 import com.example.android.goalchaser.R
-import com.example.android.goalchaser.remotedatasource.Photographer
+import com.example.android.goalchaser.localdatasource.ImageLocalData
+import com.example.android.goalchaser.ui.uistate.ImageDataUiState
 import com.squareup.picasso.Callback
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
+import timber.log.Timber
+import java.lang.Exception
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
@@ -54,28 +57,34 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 
 //TODO Cannot retrieve image from disk
     val imgUri = imgUrl?.toUri()?.buildUpon()?.scheme("https")?.build()
-    val request = Picasso.get()
+    Picasso.get()
         .load(imgUri)
         .placeholder(lottieDrawable)
         .error(R.drawable.ic_image_error)
-
-    request.networkPolicy(NetworkPolicy.OFFLINE)
-        .into(imgView, object : Callback.EmptyCallback() {
-            override fun onError(e: Exception?) {
-                super.onError(e)
-                request.into(imgView)
+        .networkPolicy(NetworkPolicy.OFFLINE)
+        .into(imgView,object :Callback{
+            override fun onSuccess() {
             }
+
+            override fun onError(e: Exception?) {
+                Picasso.get()
+                    .load(imgUri)
+                    .placeholder(lottieDrawable)
+                    .error(R.drawable.ic_image_error)
+                    .into(imgView)
+            }
+
         })
 
 
 }
 
 @BindingAdapter("setPhotographerData")
-fun TextView.showPhotographerCredentials(photographerCredentials: Photographer?) {
+fun TextView.showPhotographerCredentials(photographerCredentials: ImageDataUiState?) {
 
-    val photographerName = photographerCredentials?.name
+    val photographerName = photographerCredentials?.photographerName
     if (photographerName != null) {
-        val photographersProfile = photographerCredentials.profileLinks.profileLink
+        val photographersProfile = photographerCredentials.photographerProfile
         val unsplashSiteName = context.getString(R.string.unsplash_website_title)
         val unsplashSiteUrl = "https://unsplash.com"
 

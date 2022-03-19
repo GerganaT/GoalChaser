@@ -2,7 +2,7 @@ package com.example.android.goalchaser.remotedatasource
 
 import com.squareup.moshi.Json
 
-data class ImageOfTheDayDataRemote(
+data class ImageRemoteData(
     @Json(name = "urls") val randomImage: RandomImage,
     @Json(name = "user") val photographer: Photographer
 ) {

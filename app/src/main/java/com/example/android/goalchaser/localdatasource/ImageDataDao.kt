@@ -6,13 +6,13 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface ImageDao {
+interface ImageDataDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveLastLoadedImageData(imageOfTheDayDataLocal: ImageData)
+    suspend fun saveLastLoadedImageData(imageOfTheDayDataLocal: ImageLocalData)
 
     @Query("SELECT * FROM image_data ORDER BY ImageDataId DESC LIMIT 1")
-    suspend fun getLastSavedImageData():ImageData
+    suspend fun getLastSavedImageData():ImageLocalData?
 
 
 }
