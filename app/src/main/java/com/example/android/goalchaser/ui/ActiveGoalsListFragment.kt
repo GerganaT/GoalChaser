@@ -1,5 +1,6 @@
 package com.example.android.goalchaser.ui
 
+import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,15 @@ import com.example.android.goalchaser.databinding.FragmentActiveGoalsListBinding
 class ActiveGoalsListFragment : Fragment() {
 
     lateinit var activeGoalsListBinding: FragmentActiveGoalsListBinding
+    private val viewModel: GoalChaserViewModel by lazy {
+        val fragmentActivity = requireNotNull(this.activity)
 
+        ViewModelProvider(
+            this, GoalChaserViewModel.GoalChaserViewModelFactory(
+                fragmentActivity.application
+            )
+        )[GoalChaserViewModel::class.java]
+    }
 
 
     override fun onCreateView(
@@ -30,7 +39,8 @@ class ActiveGoalsListFragment : Fragment() {
             false
         )
         activeGoalsListBinding.lifecycleOwner = viewLifecycleOwner
-        val viewModel: GoalChaserViewModel by viewModels()
+      //  val viewModel: GoalChaserViewModel by viewModels()
+
         activeGoalsListBinding.goalChaserViewModel = viewModel
         return activeGoalsListBinding.root
     }

@@ -1,9 +1,7 @@
 package com.example.android.goalchaser.ui
 
 import android.app.Application
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.android.goalchaser.localdatasource.getGoalChaserDatabase
 import com.example.android.goalchaser.remotedatasource.ImageOfTheDayDataApiService
 import com.example.android.goalchaser.repository.ImageDataRepository
@@ -11,9 +9,10 @@ import com.example.android.goalchaser.ui.uistate.ImageDataUiState
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class GoalChaserViewModel : ViewModel() {
+class GoalChaserViewModel(application: Application) : AndroidViewModel(application) {
     val pictureUrlString = MutableLiveData<String>()
     val photographerCredentials = MutableLiveData<ImageDataUiState>()
+    val goalChaserDatabase = getGoalChaserDatabase(application)
 
 
     init {
@@ -24,22 +23,23 @@ class GoalChaserViewModel : ViewModel() {
     private fun qetMotivationalQuoteImage() {
 
         viewModelScope.launch {
-            val repository = ImageDataRepository(
-                ImageOfTheDayDataApiService.retrofitService,
-                getGoalChaserDatabase(Application()).imageDao
-            )
+
 
             try {
+                val repository = ImageDataRepository(
+                    ImageOfTheDayDataApiService.retrofitService,
+                    goalChaserDatabase.imageDao
+                )
 
                 repository.saveImageData()
-                val imageDataUiState = repository.getImageData()?.run { ImageDataUiState(
-                    imageLink, photographerName, photographerProfile
-                )
+                val imageDataUiState = repository.getImageData()?.run {
+                    ImageDataUiState(
+                        imageLink, photographerName, photographerProfile
+                    )
                 }
                 pictureUrlString.value =
                     imageDataUiState?.imageLink?.let { it }
                 photographerCredentials.value = imageDataUiState?.let { it }
-
 
 
             } catch (e: Exception) {
@@ -51,5 +51,22 @@ class GoalChaserViewModel : ViewModel() {
 
     }
 
+    //TODO Use coin for dep.injection
+    class GoalChaserViewModelFactory(private val application: Application) :
+        ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(GoalChaserViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return GoalChaserViewModel(application) as T
+            }
+
+            throw  IllegalArgumentException("Unable to construct ViewModel")
+        }
+
+    }
+
+
 }
-//TODO rewrite the view model to use the repo
+
+
+

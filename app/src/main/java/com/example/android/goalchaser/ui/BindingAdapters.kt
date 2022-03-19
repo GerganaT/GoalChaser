@@ -55,28 +55,13 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
             }
         }
 
-//TODO Cannot retrieve image from disk
     val imgUri = imgUrl?.toUri()?.buildUpon()?.scheme("https")?.build()
     Picasso.get()
         .load(imgUri)
         .placeholder(lottieDrawable)
         .error(R.drawable.ic_image_error)
-        .networkPolicy(NetworkPolicy.OFFLINE)
-        .into(imgView,object :Callback{
-            override fun onSuccess() {
-            }
-
-            override fun onError(e: Exception?) {
-                Picasso.get()
-                    .load(imgUri)
-                    .placeholder(lottieDrawable)
-                    .error(R.drawable.ic_image_error)
-                    .into(imgView)
-            }
-
-        })
-
-
+        .into(imgView)
+//TODO error when no internet and no image in cache
 }
 
 @BindingAdapter("setPhotographerData")
