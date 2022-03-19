@@ -9,7 +9,7 @@ data class ImageRemoteData(
 }
 
 data class RandomImage(
-    @Json(name = "small") val imageLink: String? = "" +"&fit=clamp"
+    @Json(name = "small") val imageLink: String?
 )
 
 data class Photographer(
