@@ -27,11 +27,6 @@
         android:label="@string/instructions_fragment_label"
         tools:layout="@layout/fragment_instructions" />
     <fragment
-        android:id="@+id/aboutFragment"
-        android:name="com.example.android.goalchaser.ui.AboutFragment"
-        android:label="@string/about_fragment_label"
-        tools:layout="@layout/fragment_about" />
-    <fragment
         android:id="@+id/completedgoalsListFragment"
         android:name="com.example.android.goalchaser.ui.CompletedGoalsListFragment"
         android:label="@string/completed_goals_fragment_label"

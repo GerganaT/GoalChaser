@@ -23,9 +23,5 @@
             android:id="@+id/instructionsFragment"
             android:icon="@drawable/ic_instructions"
             android:title="@string/instructions_drawer_menu_item" />
-        <item
-            android:id="@+id/aboutFragment"
-            android:icon="@drawable/ic_about"
-            android:title="@string/about_drawer_menu_item" />
     </group>
 </menu>
