@@ -1,4 +1,4 @@
-package com.example.android.goalchaser.ui
+package com.example.android.goalchaser.ui.activecompletedgoals
 
 import android.app.Application
 import androidx.lifecycle.*
@@ -9,10 +9,10 @@ import com.example.android.goalchaser.ui.uistate.ImageDataUiState
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class GoalChaserViewModel(application: Application) : AndroidViewModel(application) {
+class ActiveCompletedGoalsViewModel(application: Application) : AndroidViewModel(application) {
     val pictureUrlString = MutableLiveData<String>()
     val photographerCredentials = MutableLiveData<ImageDataUiState>()
-    val goalChaserDatabase = getGoalChaserDatabase(application)
+    private val goalChaserDatabase = getGoalChaserDatabase(application)
 
 
     init {
@@ -55,9 +55,9 @@ class GoalChaserViewModel(application: Application) : AndroidViewModel(applicati
     class GoalChaserViewModelFactory(private val application: Application) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(GoalChaserViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(ActiveCompletedGoalsViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return GoalChaserViewModel(application) as T
+                return ActiveCompletedGoalsViewModel(application) as T
             }
 
             throw  IllegalArgumentException("Unable to construct ViewModel")

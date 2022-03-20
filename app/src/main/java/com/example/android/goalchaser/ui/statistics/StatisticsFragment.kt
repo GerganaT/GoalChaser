@@ -1,4 +1,4 @@
-package com.example.android.goalchaser.ui
+package com.example.android.goalchaser.ui.statistics
 
 import android.graphics.Color
 import android.os.Bundle

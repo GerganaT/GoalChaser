@@ -5,7 +5,7 @@
     android:id="@+id/statistics_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.StatisticsFragment">
+    tools:context=".ui.statistics.StatisticsFragment">
 
     <TextView
         android:id="@+id/statistics_header_text"

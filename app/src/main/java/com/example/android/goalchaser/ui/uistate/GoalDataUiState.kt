@@ -7,4 +7,5 @@ data class GoalDataUiState(
     val timeUnitNumber: Int?,
     val days: Boolean = false,
     val months: Boolean = false,
+    val isCompleted:Boolean=false
 )

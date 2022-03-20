@@ -5,13 +5,13 @@
     <data>
         <variable
             name="goalChaserViewModel"
-            type="com.example.android.goalchaser.ui.GoalChaserViewModel" />
+            type="com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalsViewModel" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/active_goals_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ActiveGoalsListFragment">
+    tools:context=".ui.activecompletedgoals.ActiveGoalsListFragment">
 
     <ImageView
         android:id="@+id/active_image_of_the_day_image"

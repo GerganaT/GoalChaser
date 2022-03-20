@@ -6,7 +6,7 @@
     app:startDestination="@id/splashFragment">
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.android.goalchaser.ui.SplashFragment"
+        android:name="com.example.android.goalchaser.ui.splash.SplashFragment"
         tools:layout="@layout/fragment_splash" >
         <action
             android:id="@+id/action_splashFragment_to_activeGoalsFragment"
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/activeGoalsFragment"
-        android:name="com.example.android.goalchaser.ui.ActiveGoalsListFragment"
+        android:name="com.example.android.goalchaser.ui.activecompletedgoals.ActiveGoalsListFragment"
         android:label="@string/active_goals_fragment_label"
         tools:layout="@layout/fragment_active_goals_list" >
         <action
@@ -23,22 +23,22 @@
     </fragment>
     <fragment
         android:id="@+id/instructionsFragment"
-        android:name="com.example.android.goalchaser.ui.InstructionsFragment"
+        android:name="com.example.android.goalchaser.ui.instructions.InstructionsFragment"
         android:label="@string/instructions_fragment_label"
         tools:layout="@layout/fragment_instructions" />
     <fragment
         android:id="@+id/completedgoalsListFragment"
-        android:name="com.example.android.goalchaser.ui.CompletedGoalsListFragment"
+        android:name="com.example.android.goalchaser.ui.activecompletedgoals.CompletedGoalsListFragment"
         android:label="@string/completed_goals_fragment_label"
         tools:layout="@layout/fragment_completed_goals_list" />
     <fragment
         android:id="@+id/statisticsFragment"
-        android:name="com.example.android.goalchaser.ui.StatisticsFragment"
+        android:name="com.example.android.goalchaser.ui.statistics.StatisticsFragment"
         android:label="@string/statistcs_fragment_label"
         tools:layout="@layout/fragment_statistics" />
     <fragment
         android:id="@+id/createEditGoalFragment"
-        android:name="com.example.android.goalchaser.ui.CreateEditGoalFragment"
+        android:name="com.example.android.goalchaser.ui.createeditgoal.CreateEditGoalFragment"
         android:label="@string/create_edit_goal_fragment_label"
         tools:layout="@layout/fragment_create_edit_goal" />
 </navigation>

@@ -6,7 +6,7 @@
     android:id="@+id/instructions_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.InstructionsFragment">
+    tools:context=".ui.instructions.InstructionsFragment">
 
 
     <ImageView
@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/fragment_about_divider_length" />
+        app:layout_constraintGuide_begin="@dimen/fragment_instructions_divider_length" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

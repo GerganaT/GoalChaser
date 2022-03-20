@@ -1,4 +1,4 @@
-package com.example.android.goalchaser.ui
+package com.example.android.goalchaser.ui.createeditgoal
 
 import android.os.Bundle
 import android.view.LayoutInflater

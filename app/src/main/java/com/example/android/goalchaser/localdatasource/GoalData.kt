@@ -11,6 +11,7 @@ data class GoalData(
     val timeUnitNumber: Int?,
     val days: Boolean = false,
     val months: Boolean = false,
+    val isCompleted:Boolean=false,
     @PrimaryKey(autoGenerate = true) var goalId: Int=0
 )
 

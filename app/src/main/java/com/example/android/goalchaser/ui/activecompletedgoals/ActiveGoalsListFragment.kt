@@ -1,13 +1,11 @@
-package com.example.android.goalchaser.ui
+package com.example.android.goalchaser.ui.activecompletedgoals
 
-import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentActiveGoalsListBinding
@@ -16,14 +14,14 @@ import com.example.android.goalchaser.databinding.FragmentActiveGoalsListBinding
 class ActiveGoalsListFragment : Fragment() {
 
     lateinit var activeGoalsListBinding: FragmentActiveGoalsListBinding
-    private val viewModel: GoalChaserViewModel by lazy {
+    private val viewModel: ActiveCompletedGoalsViewModel by lazy {
         val fragmentActivity = requireNotNull(this.activity)
 
         ViewModelProvider(
-            this, GoalChaserViewModel.GoalChaserViewModelFactory(
+            this, ActiveCompletedGoalsViewModel.GoalChaserViewModelFactory(
                 fragmentActivity.application
             )
-        )[GoalChaserViewModel::class.java]
+        )[ActiveCompletedGoalsViewModel::class.java]
     }
 
 
