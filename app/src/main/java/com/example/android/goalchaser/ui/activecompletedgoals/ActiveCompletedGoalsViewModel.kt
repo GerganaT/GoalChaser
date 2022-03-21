@@ -1,18 +1,39 @@
 package com.example.android.goalchaser.ui.activecompletedgoals
 
 import android.app.Application
-import androidx.lifecycle.*
-import com.example.android.goalchaser.localdatasource.getGoalChaserDatabase
-import com.example.android.goalchaser.remotedatasource.ImageOfTheDayDataApiService
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.android.goalchaser.localdatasource.GoalData
+import com.example.android.goalchaser.repository.GoalsRepository
 import com.example.android.goalchaser.repository.ImageDataRepository
+import com.example.android.goalchaser.ui.uistate.GoalDataUiState
 import com.example.android.goalchaser.ui.uistate.ImageDataUiState
+import com.example.android.goalchaser.utils.Result
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class ActiveCompletedGoalsViewModel(application: Application) : AndroidViewModel(application) {
-    val pictureUrlString = MutableLiveData<String>()
-    val photographerCredentials = MutableLiveData<ImageDataUiState>()
-    private val goalChaserDatabase = getGoalChaserDatabase(application)
+class ActiveCompletedGoalsViewModel(
+    application: Application,
+    private val imageDataRepository: ImageDataRepository,
+    private val goalsRepository: GoalsRepository
+) : AndroidViewModel(application) {
+
+    val pictureUrlString : LiveData<String>
+    get() = _pictureUrlString
+    private val _pictureUrlString = MutableLiveData<String>()
+
+    val photographerCredentials:LiveData<ImageDataUiState>
+    get() = _photographerCredentials
+
+    private val _photographerCredentials = MutableLiveData<ImageDataUiState>()
+
+
+
+    val goals: LiveData<List<GoalDataUiState>>
+        get() = _goals
+    private val _goals = MutableLiveData<List<GoalDataUiState>>()
 
 
     init {
@@ -26,20 +47,15 @@ class ActiveCompletedGoalsViewModel(application: Application) : AndroidViewModel
 
 
             try {
-                val repository = ImageDataRepository(
-                    ImageOfTheDayDataApiService.retrofitService,
-                    goalChaserDatabase.imageDao
-                )
-
-                repository.saveImageData()
-                val imageDataUiState = repository.getImageData()?.run {
+                imageDataRepository.saveImageData()
+                val imageDataUiState = imageDataRepository.getImageData()?.run {
                     ImageDataUiState(
                         imageLink, photographerName, photographerProfile
                     )
                 }
-                pictureUrlString.value =
+                _pictureUrlString.value =
                     imageDataUiState?.imageLink?.let { it }
-                photographerCredentials.value = imageDataUiState?.let { it }
+                _photographerCredentials.value = imageDataUiState?.let { it }
 
 
             } catch (e: Exception) {
@@ -51,19 +67,35 @@ class ActiveCompletedGoalsViewModel(application: Application) : AndroidViewModel
 
     }
 
-    //TODO Use coin for dep.injection
-    class GoalChaserViewModelFactory(private val application: Application) :
-        ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(ActiveCompletedGoalsViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return ActiveCompletedGoalsViewModel(application) as T
+    fun getGoals() {
+        viewModelScope.launch {
+            val result = goalsRepository.getGoals()
+            when (result) {
+                is Result.Success -> {
+                    _goals.value =
+                        result.data.map { gd: GoalData ->
+                            GoalDataUiState(
+                                gd.title,
+                                gd.dueDate,
+                                gd.sendNotification,
+                                gd.timeUnitNumber,
+                                gd.days,
+                                gd.months,
+                                gd.isCompleted
+                            )
+
+                        }
+                }
+                is Result.Error -> {
+                    Timber.e(result.message)
+                }
             }
 
-            throw  IllegalArgumentException("Unable to construct ViewModel")
         }
 
     }
+    //TODO Finish this viewmodel
+    //TODO Use coin for dep.injection and implement properly in active/completed goals fragments
 
 
 }

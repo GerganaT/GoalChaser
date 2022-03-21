@@ -30,5 +30,7 @@ interface ImageDataApiService {
 }
 
 object ImageOfTheDayDataApiService {
-    val retrofitService: ImageDataApiService by lazy { retrofit.create(ImageDataApiService::class.java) }
+    val retrofitService: ImageDataApiService by lazy {
+        retrofit.create(ImageDataApiService::class.java)
+    }
 }

@@ -87,6 +87,9 @@ dependencies {
     implementation("androidx.room:room-runtime:$version_room")
     kapt("androidx.room:room-compiler:$version_room")
     implementation("androidx.room:room-ktx:$version_room")
+
+    //Koin
+    implementation "io.insert-koin:koin-android:$version_koin"
     //Test
     testImplementation 'junit:junit:4.+'
     androidTestImplementation "androidx.test.ext:junit:$version_junit"

@@ -13,3 +13,4 @@ class GoalChaserApplication : Application() {
         }
     }
 }
+//TODO Add koin module

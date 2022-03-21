@@ -62,6 +62,8 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
         .error(R.drawable.ic_image_error)
         .into(imgView)
 //TODO error when no internet and no image in cache
+    //TODO delete older images - set some bool on old images to mark them as old
+    // this will include database items deletion as well.
 }
 
 @BindingAdapter("setPhotographerData")

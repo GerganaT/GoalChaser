@@ -5,10 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [ImageLocalData::class, GoalData::class], version = 1)
+@Database(version = 2, entities = [ImageLocalData::class, GoalData::class])
 abstract class GoalChaserDatabase : RoomDatabase() {
-    abstract val imageDao:ImageDataDao
-    abstract val goalsDao:GoalsDao
+    abstract val imageDao: ImageDataDao
+    abstract val goalsDao: GoalsDao
 }
 
 @Volatile
@@ -22,11 +22,10 @@ fun getGoalChaserDatabase(context: Context): GoalChaserDatabase {
             INSTANCE = Room.databaseBuilder(
                 context.applicationContext,
                 GoalChaserDatabase::class.java, "goal-chaser-db"
-            ).build()
+            ).fallbackToDestructiveMigration()
+                .build()
         }
     }
 
     return INSTANCE
 }
-
-//TODO test if db works
