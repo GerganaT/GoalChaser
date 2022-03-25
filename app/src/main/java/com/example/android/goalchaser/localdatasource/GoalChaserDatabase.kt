@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(version = 2, entities = [ImageLocalData::class, GoalData::class])
+@Database(version = 2, entities = [ImageData::class, GoalData::class])
 abstract class GoalChaserDatabase : RoomDatabase() {
     abstract val imageDao: ImageDataDao
     abstract val goalsDao: GoalsDao

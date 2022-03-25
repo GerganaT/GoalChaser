@@ -20,15 +20,14 @@ class ActiveCompletedGoalsViewModel(
     private val goalsRepository: GoalsRepository
 ) : AndroidViewModel(application) {
 
-    val pictureUrlString : LiveData<String>
-    get() = _pictureUrlString
-    private val _pictureUrlString = MutableLiveData<String>()
+    val pictureUrlString: LiveData<String>
+        get() = _pictureUrl
+    private val _pictureUrl = MutableLiveData<String>()
 
-    val photographerCredentials:LiveData<ImageDataUiState>
-    get() = _photographerCredentials
+    val photographerCredentials: LiveData<ImageDataUiState>
+        get() = _photographerCredentials
 
     private val _photographerCredentials = MutableLiveData<ImageDataUiState>()
-
 
 
     val goals: LiveData<List<GoalDataUiState>>
@@ -38,29 +37,30 @@ class ActiveCompletedGoalsViewModel(
 
     init {
 
-        qetMotivationalQuoteImage()
+        getImageData()
     }
 
-    private fun qetMotivationalQuoteImage() {
+
+    private fun getImageData() {
 
         viewModelScope.launch {
+            imageDataRepository.getImageData().run {
+                when (this) {
+                    is Result.Success -> {
+                        data.run {
+                            val imageUiState = ImageDataUiState(
+                                imageLink, photographerName, photographerProfile
+                            )
+                            _pictureUrl.value =
+                                imageUiState.imageLink
+                            _photographerCredentials.value = imageUiState
+                        }
+                    }
 
-
-            try {
-                imageDataRepository.saveImageData()
-                val imageDataUiState = imageDataRepository.getImageData()?.run {
-                    ImageDataUiState(
-                        imageLink, photographerName, photographerProfile
-                    )
+                    is Result.Error -> Timber.e(message)
                 }
-                _pictureUrlString.value =
-                    imageDataUiState?.imageLink?.let { it }
-                _photographerCredentials.value = imageDataUiState?.let { it }
-
-
-            } catch (e: Exception) {
-                Timber.e("Cannot connect to the web")
             }
+
 
         }
 
@@ -69,27 +69,29 @@ class ActiveCompletedGoalsViewModel(
 
     fun getGoals() {
         viewModelScope.launch {
-            val result = goalsRepository.getGoals()
-            when (result) {
-                is Result.Success -> {
-                    _goals.value =
-                        result.data.map { gd: GoalData ->
-                            GoalDataUiState(
-                                gd.title,
-                                gd.dueDate,
-                                gd.sendNotification,
-                                gd.timeUnitNumber,
-                                gd.days,
-                                gd.months,
-                                gd.isCompleted
-                            )
+            goalsRepository.getGoals().run {
+                when (this) {
+                    is Result.Success -> {
+                        _goals.value =
+                            data.map { gd: GoalData ->
+                                GoalDataUiState(
+                                    gd.title,
+                                    gd.dueDate,
+                                    gd.sendNotification,
+                                    gd.timeUnitNumber,
+                                    gd.days,
+                                    gd.months,
+                                    gd.isCompleted
+                                )
 
-                        }
-                }
-                is Result.Error -> {
-                    Timber.e(result.message)
+                            }
+                    }
+                    is Result.Error -> {
+                        Timber.e(message)
+                    }
                 }
             }
+
 
         }
 

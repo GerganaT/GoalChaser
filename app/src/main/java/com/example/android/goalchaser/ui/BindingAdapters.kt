@@ -33,13 +33,8 @@ import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieCompositionFactory
 import com.airbnb.lottie.LottieDrawable
 import com.example.android.goalchaser.R
-import com.example.android.goalchaser.localdatasource.ImageLocalData
 import com.example.android.goalchaser.ui.uistate.ImageDataUiState
-import com.squareup.picasso.Callback
-import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
-import timber.log.Timber
-import java.lang.Exception
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {

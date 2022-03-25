@@ -1,8 +1,9 @@
 package com.example.android.goalchaser.repository
 
 import com.example.android.goalchaser.localdatasource.ImageDataDao
-import com.example.android.goalchaser.localdatasource.ImageLocalData
+import com.example.android.goalchaser.localdatasource.ImageData
 import com.example.android.goalchaser.remotedatasource.ImageDataApiService
+import com.example.android.goalchaser.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -11,13 +12,13 @@ class ImageDataRepository(
     private val imageDataApiService: ImageDataApiService,
     private val imageDataDao: ImageDataDao
 ) {
-    suspend fun saveImageData() {
+    private suspend fun saveImageData() {
         try {
             withContext(Dispatchers.IO) {
                 val remoteImageData = imageDataApiService.getImageOfTheDayData()
                 val imageLocalData =
                     remoteImageData.run {
-                        ImageLocalData(
+                        ImageData(
                             randomImage.imageLink,
                             photographer.name,
                             photographer.profileLinks.profileLink
@@ -34,19 +35,18 @@ class ImageDataRepository(
         }
     }
 
-    suspend fun getImageData(): ImageLocalData? {
-        var imageLocalData: ImageLocalData?
+    suspend fun getImageData(): Result<ImageData> =
+
         try {
             withContext(Dispatchers.IO) {
-
-                imageLocalData = imageDataDao.getLastSavedImageData()
+                saveImageData()
+                Result.Success(imageDataDao.getLastSavedImageData())
             }
         } catch (exception: Exception) {
             Timber.i(exception.localizedMessage)
-            imageLocalData = null
-        }
-        return imageLocalData
+            Result.Error(exception.localizedMessage)
 
-    }
+        }
+
 
 }

@@ -4,11 +4,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "image_data")
-data class ImageLocalData(
+data class ImageData(
 
-    val imageLink: String?,
-    val photographerName: String?,
-    val photographerProfile: String?,
+    val imageLink: String,
+    val photographerName: String,
+    val photographerProfile: String,
     @PrimaryKey(autoGenerate = true) var ImageDataId: Int = 0,
 )
 

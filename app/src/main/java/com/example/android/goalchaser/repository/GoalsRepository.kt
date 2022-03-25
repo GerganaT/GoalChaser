@@ -9,18 +9,32 @@ import kotlinx.coroutines.withContext
 class GoalsRepository(
     private val goalsDao: GoalsDao
 ) {
-    suspend fun getGoals() = withContext(Dispatchers.IO) {
-        try {
-            return@withContext Result.Success(goalsDao.getAllGoals())
-        } catch (e: Exception) {
-            return@withContext Result.Error(e.localizedMessage)
+    suspend fun getGoals(): Result<List<GoalData>> =
+        withContext(Dispatchers.IO) {
+            try {
+                Result.Success(goalsDao.getAllGoals())
+            } catch (e: Exception) {
+                Result.Error(e.localizedMessage)
+            }
         }
-    }
 
-    suspend fun deleteGoals() = goalsDao.deleteAllGoals()
+    suspend fun deleteGoals() =
+        withContext(Dispatchers.IO) {
+            goalsDao.deleteAllGoals()
+        }
 
-    suspend fun insertGoal(goalData: GoalData) = goalsDao.insertGoal(goalData)
+    suspend fun saveGoal(goalData: GoalData): Result<GoalData> =
+        withContext(Dispatchers.IO) {
+            try {
+                goalsDao.insertGoal(goalData)
+                Result.Success(goalData)
+            } catch (e: Exception) {
+                Result.Error(e.localizedMessage)
+            }
+        }
 
-    suspend fun deleteGoal(goalId: Int) = goalsDao.deleteGoal(goalId)
+    suspend fun deleteGoal(goalId: Int) =
+        withContext(Dispatchers.IO) {
+            goalsDao.deleteGoal(goalId)
+        }
 }
-

@@ -9,15 +9,15 @@ data class ImageRemoteData(
 }
 
 data class RandomImage(
-    @Json(name = "small") val imageLink: String?
+    @Json(name = "small") val imageLink: String
 )
 
 data class Photographer(
-    val name: String?,
+    val name: String,
     @Json(name = "links") val profileLinks: PhotographerProfile
 )
 
 data class PhotographerProfile(
-    @Json(name = "html") val profileLink: String?
+    @Json(name = "html") val profileLink: String
 )
 
