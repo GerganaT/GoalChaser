@@ -18,23 +18,35 @@ class GoalsRepository(
             }
         }
 
-    suspend fun deleteGoals() =
+    suspend fun deleteGoals(): Result<Boolean> =
         withContext(Dispatchers.IO) {
-            goalsDao.deleteAllGoals()
+            try {
+                goalsDao.deleteAllGoals()
+                Result.Success(true)
+            } catch (e: Exception) {
+                Result.Error(e.localizedMessage)
+            }
+
         }
 
-    suspend fun saveGoal(goalData: GoalData): Result<GoalData> =
+    suspend fun saveGoal(goalData: GoalData): Result<Boolean> =
         withContext(Dispatchers.IO) {
             try {
                 goalsDao.insertGoal(goalData)
-                Result.Success(goalData)
+                Result.Success(true)
             } catch (e: Exception) {
                 Result.Error(e.localizedMessage)
             }
         }
 
-    suspend fun deleteGoal(goalId: Int) =
+    suspend fun deleteGoal(goalId: Int): Result<Boolean> =
         withContext(Dispatchers.IO) {
-            goalsDao.deleteGoal(goalId)
+            try {
+                goalsDao.deleteGoal(goalId)
+                Result.Success(true)
+            } catch (e: Exception) {
+                Result.Error(e.localizedMessage)
+            }
+
         }
 }

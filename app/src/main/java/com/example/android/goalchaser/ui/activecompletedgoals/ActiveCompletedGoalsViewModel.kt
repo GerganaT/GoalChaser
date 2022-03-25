@@ -26,13 +26,24 @@ class ActiveCompletedGoalsViewModel(
 
     val photographerCredentials: LiveData<ImageDataUiState>
         get() = _photographerCredentials
-
     private val _photographerCredentials = MutableLiveData<ImageDataUiState>()
 
 
     val goals: LiveData<List<GoalDataUiState>>
         get() = _goals
     private val _goals = MutableLiveData<List<GoalDataUiState>>()
+
+    val goalsAreDeleted: LiveData<Boolean>
+        get() = _goalsAreDeleted
+    private val _goalsAreDeleted = MutableLiveData<Boolean>()
+
+    val goalIsDeleted: LiveData<Boolean>
+        get() = _goalIsDeleted
+    private val _goalIsDeleted = MutableLiveData<Boolean>()
+
+    val goalIsSaved: LiveData<Boolean>
+        get() = _goalIsSaved
+    private val _goalIsSaved = MutableLiveData<Boolean>()
 
 
     init {
@@ -81,7 +92,8 @@ class ActiveCompletedGoalsViewModel(
                                     gd.timeUnitNumber,
                                     gd.days,
                                     gd.months,
-                                    gd.isCompleted
+                                    gd.isCompleted,
+                                    gd.goalId
                                 )
 
                             }
@@ -96,11 +108,67 @@ class ActiveCompletedGoalsViewModel(
         }
 
     }
-    //TODO Finish this viewmodel
-    //TODO Use coin for dep.injection and implement properly in active/completed goals fragments
+
+    fun deleteGoals() {
+        viewModelScope.launch {
+            goalsRepository.deleteGoals().run {
+                _goalsAreDeleted.value = when (this) {
+                    is Result.Success -> data
+                    is Result.Error -> false
+                }
+            }
+        }
+    }
+
+    fun saveGoal(goalDataUiState: GoalDataUiState) {
+        viewModelScope.launch {
+            val goalData = goalDataUiState.run {
+                GoalData(
+                    title,
+                    dueDate,
+                    sendNotification,
+                    timeUnitNumber,
+                    days,
+                    months,
+                    isCompleted
+                )
+            }
+            goalsRepository.saveGoal(goalData).run {
+                _goalIsDeleted.value = when (this) {
+                    is Result.Success -> data
+                    is Result.Error -> false
+                }
+            }
+        }
+    }
+
+
+    fun deleteGoal(goalId: Int) {
+        viewModelScope.launch {
+            goalsRepository.deleteGoal(goalId).run {
+                _goalIsDeleted.value = when (this) {
+                    is Result.Success -> data
+                    is Result.Error -> false
+                }
+            }
+        }
+    }
 
 
 }
+//TODO Construct the new goal object from user input
+val goalTitle = MutableLiveData<String>()
+val dueDate= MutableLiveData<String>()
+//TODO Set formatted string from values for MM/DD/YYYY
+var sendNotification: Boolean = false
+var timeUnitNumber: Int? = null
+var days: Boolean = false
+var months: Boolean = false
+var isCompleted: Boolean = false
+//TODO Use coin for dep.injection and implement properly in active/completed goals fragments
+
+
+
 
 
 
