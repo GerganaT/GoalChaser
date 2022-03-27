@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="goalChaserViewModel"
+            name="viewModel"
             type="com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalsViewModel" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +19,7 @@
         android:layout_height="@dimen/image_of_the_day_height"
         android:paddingTop="@dimen/padding_extra_large_portrait"
         android:scaleType="centerCrop"
-        app:imageUrl="@{goalChaserViewModel.pictureUrlString}"
+        app:imageUrl="@{viewModel.pictureUrlString}"
         app:layout_constraintBottom_toTopOf="@id/active_goals_list_recycler"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/active_image_of_the_day_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:setPhotographerData="@{goalChaserViewModel.photographerCredentials}" />
+        app:setPhotographerData="@{viewModel.photographerCredentials}" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/active_goals_list_recycler"
@@ -45,8 +45,9 @@
         android:clipToPadding="false"
         android:paddingTop="@dimen/margin_small"
         android:paddingBottom="@dimen/margin_small"
+        app:feedLiveData="@{viewModel.goals}"
         app:layout_constraintTop_toBottomOf="@+id/active_image_of_the_day_image"
-        tools:listitem="@layout/active_goal_list_item" />
+        tools:listitem="@layout/goal_list_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_active_goal_fab"

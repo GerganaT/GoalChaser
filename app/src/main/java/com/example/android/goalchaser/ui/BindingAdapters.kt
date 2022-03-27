@@ -30,9 +30,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.LiveData
+import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieCompositionFactory
 import com.airbnb.lottie.LottieDrawable
 import com.example.android.goalchaser.R
+import com.example.android.goalchaser.ui.activecompletedgoals.recyclerView.GoalsRecyclerViewAdapter
 import com.example.android.goalchaser.ui.uistate.ImageDataUiState
 import com.squareup.picasso.Picasso
 
@@ -83,4 +86,15 @@ fun TextView.showPhotographerCredentials(photographerCredentials: ImageDataUiSta
     }
 
 
+}
+
+@Suppress("UNCHECKED_CAST")
+@BindingAdapter("feedLiveData")
+fun <T> setRecyclerViewData(recyclerView: RecyclerView, items: LiveData<List<T>>?) {
+    items?.value?.let { itemList ->
+        (recyclerView.adapter as? GoalsRecyclerViewAdapter<T>)?.apply {
+            clear()
+            addData(itemList)
+        }
+    }
 }

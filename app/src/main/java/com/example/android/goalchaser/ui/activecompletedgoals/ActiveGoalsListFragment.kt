@@ -6,23 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentActiveGoalsListBinding
+import org.koin.android.ext.android.inject
 
 
 class ActiveGoalsListFragment : Fragment() {
 
     lateinit var activeGoalsListBinding: FragmentActiveGoalsListBinding
-    private val viewModel: ActiveCompletedGoalsViewModel by lazy {
-        val fragmentActivity = requireNotNull(this.activity)
-
-        ViewModelProvider(
-            this, ActiveCompletedGoalsViewModel.GoalChaserViewModelFactory(
-                fragmentActivity.application
-            )
-        )[ActiveCompletedGoalsViewModel::class.java]
-    }
+    private val viewModel: ActiveCompletedGoalsViewModel by inject()
 
 
     override fun onCreateView(
@@ -37,9 +31,8 @@ class ActiveGoalsListFragment : Fragment() {
             false
         )
         activeGoalsListBinding.lifecycleOwner = viewLifecycleOwner
-      //  val viewModel: GoalChaserViewModel by viewModels()
 
-        activeGoalsListBinding.goalChaserViewModel = viewModel
+        activeGoalsListBinding.viewModel = viewModel
         return activeGoalsListBinding.root
     }
 

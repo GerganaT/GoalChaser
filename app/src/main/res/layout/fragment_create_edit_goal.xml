@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/padding_mid"
-        tools:context=".ui.createeditgoal.CreateEditGoalFragment">
+        tools:context=".ui.createeditgoal.SaveEditGoalFragment">
 
         <TextView
             android:id="@+id/before_goal_due_date_text"

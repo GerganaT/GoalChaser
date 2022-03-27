@@ -11,7 +11,7 @@ import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentCreateEditGoalBinding
 
 
-class CreateEditGoalFragment : Fragment() {
+class SaveEditGoalFragment : Fragment() {
 
     lateinit var createEditGoalBinding: FragmentCreateEditGoalBinding
 

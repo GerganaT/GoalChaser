@@ -2,11 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <data>
-        <variable
-            name="goalChaserViewModel"
-            type="com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalsViewModel" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/active_goals_root"
@@ -26,7 +21,7 @@
             android:layout_marginEnd="@dimen/margin_small"
             android:paddingBottom="@dimen/padding_mid"
             android:scaleType="centerCrop"
-            app:imageUrl="@{goalChaserViewModel.pictureUrlString}"
+            app:imageUrl="@{viewModel.pictureUrlString}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/active_goals_list_recycler"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,17 +39,18 @@
             app:layout_constraintBottom_toBottomOf="@+id/active_image_of_the_day_image"
             app:layout_constraintEnd_toEndOf="@+id/active_image_of_the_day_image"
             app:layout_constraintStart_toStartOf="parent"
-            app:setPhotographerData="@{goalChaserViewModel.photographerCredentials}" />
+            app:setPhotographerData="@{viewModel.photographerCredentials}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/active_goals_list_recycler"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:feedLiveData="@{viewModel.goals}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/active_image_of_the_day_image"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/active_goal_list_item">
+            tools:listitem="@layout/goal_list_item">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -72,4 +68,11 @@
             tools:ignore="SpeakableTextPresentCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalsViewModel" />
+    </data>
 </layout>
