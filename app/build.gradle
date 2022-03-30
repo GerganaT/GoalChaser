@@ -4,6 +4,8 @@ plugins {
     id 'kotlin-android'
 }
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'kotlin-android-extensions'
 
 def localPropertiesFile = rootProject.file("local.properties")
 def localProperties = new Properties()
@@ -89,7 +91,10 @@ dependencies {
     implementation("androidx.room:room-ktx:$version_room")
 
     //Koin
-    implementation "io.insert-koin:koin-android:$version_koin"
+  //  implementation "io.insert-koin:koin-android:$version_koin"
+    implementation "org.koin:koin-android:$version_koin"
+    implementation "org.koin:koin-androidx-viewmodel:$version_koin"
+    implementation "org.koin:koin-core:$version_koin"
     //Test
     testImplementation 'junit:junit:4.+'
     androidTestImplementation "androidx.test.ext:junit:$version_junit"

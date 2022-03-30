@@ -10,15 +10,24 @@ import com.example.android.goalchaser.ui.uistate.GoalDataUiState
 import com.example.android.goalchaser.utils.Result
 import kotlinx.coroutines.launch
 
-class SaveEditGoalViewModel(
+class CreateEditGoalViewModel(
     private val goalsRepository: GoalsRepository
 ) : ViewModel() {
+
+    val goalTitle = MutableLiveData<String>()
+    val goalDueDate = MutableLiveData<String>()
+    val activeNotification = MutableLiveData<Boolean>() // false
+    val timeUnitCount = MutableLiveData<Int>()
+    val timeTypeDays = MutableLiveData<Boolean>() //false
+    val timeTypeMonths = MutableLiveData<Boolean>() // false
+    val isActive = MutableLiveData<Boolean>() // false
 
     val goalIsSaved: LiveData<Boolean>
         get() = _goalIsSaved
     private val _goalIsSaved = MutableLiveData<Boolean>()
 
-    fun saveGoal(goalDataUiState: GoalDataUiState) {
+
+    private fun saveUiState(goalDataUiState: GoalDataUiState) {
         viewModelScope.launch {
             val goalData = goalDataUiState.run {
                 GoalData(
@@ -39,16 +48,26 @@ class SaveEditGoalViewModel(
             }
         }
     }
-    //TODO Construct the new goal object from user input
-    val goalTitle = MutableLiveData<String>()
-    val dueDate = MutableLiveData<String>()
 
-    //TODO Set formatted string from values for MM/DD/YYYY
-    var sendNotification: Boolean = false
-    var timeUnitNumber: Int? = null
-    var days: Boolean = false
-    var months: Boolean = false
-    var isCompleted: Boolean = false
+    fun saveGoal() {
+        viewModelScope.launch {
+            if (goalTitle.value.isNullOrEmpty() || goalDueDate.value.isNullOrEmpty()) {
+            GoalDataUiState(
+                goalTitle.value  ,
+                goalDueDate.value  ,
+                activeNotification.value  ,
+                timeUnitCount.value,
+                timeTypeDays.value ,
+                timeTypeMonths.value ,
+                isActive.value
+            ).run { saveUiState(this) }
+            }
+
+        }
+    }
+
+    //TODO Construct the new goal object from user input
+
 //TODO finish the viewmodel
 }
 

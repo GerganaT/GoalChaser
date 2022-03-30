@@ -2,13 +2,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.android.goalchaser.ui.createeditgoal.CreateEditGoalViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/create_edit_goal_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/padding_mid"
-        tools:context=".ui.createeditgoal.SaveEditGoalFragment">
+        tools:context=".ui.createeditgoal.CreateEditGoalFragment">
 
         <TextView
             android:id="@+id/before_goal_due_date_text"
@@ -43,7 +48,8 @@
             android:soundEffectsEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/goal_due_date_label_text" />
+            app:layout_constraintTop_toBottomOf="@+id/goal_due_date_label_text"
+            app:insertDate="@{viewModel.goalDueDate}"/>
 
         <EditText
             android:id="@+id/goal_title_edit_text"
@@ -60,6 +66,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/goal_title_label_text"
             tools:ignore="TextContrastCheck"
+            android:text="@={viewModel.goalTitle}"
             tools:text="Goal title" />
 
         <TextView

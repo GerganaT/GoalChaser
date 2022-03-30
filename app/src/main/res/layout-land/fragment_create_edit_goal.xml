@@ -2,13 +2,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.android.goalchaser.ui.createeditgoal.CreateEditGoalViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/create_edit_goal_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/padding_mid"
-        tools:context=".ui.createeditgoal.SaveEditGoalFragment">
+        tools:context=".ui.createeditgoal.CreateEditGoalFragment">
 
         <DatePicker
             android:id="@+id/goal_date_picker"
@@ -20,7 +25,8 @@
             android:datePickerMode="spinner"
             android:soundEffectsEnabled="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/goal_due_date_label_text" />
+            app:layout_constraintTop_toBottomOf="@+id/goal_due_date_label_text"
+            app:insertDate="@{viewModel.goalDueDate}"/>
 
         <EditText
             android:id="@+id/goal_title_edit_text"
@@ -33,6 +39,7 @@
             android:inputType="textMultiLine"
             android:maxLines="@integer/max_lines_edit_text"
             android:padding="@dimen/padding_mid"
+            android:text="@={viewModel.goalTitle}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/send_notification_text"
             app:layout_constraintTop_toBottomOf="@+id/goal_title_label_text"

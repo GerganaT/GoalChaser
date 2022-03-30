@@ -9,7 +9,9 @@ import com.example.android.goalchaser.remotedatasource.ImageOfTheDayDataApiServi
 import com.example.android.goalchaser.repository.GoalsRepository
 import com.example.android.goalchaser.repository.ImageDataRepository
 import com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalsViewModel
+import com.example.android.goalchaser.ui.createeditgoal.CreateEditGoalViewModel
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import timber.log.Timber
@@ -24,6 +26,12 @@ class GoalChaserApplication : Application() {
         }
         //use Koin for dependency injection
         val koinModule = module {
+
+              viewModel {
+                  CreateEditGoalViewModel(
+                      get() as GoalsRepository
+                  )
+              }
 
             single {
                 ActiveCompletedGoalsViewModel(

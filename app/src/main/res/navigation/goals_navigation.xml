@@ -38,7 +38,14 @@
         tools:layout="@layout/fragment_statistics" />
     <fragment
         android:id="@+id/createEditGoalFragment"
-        android:name="com.example.android.goalchaser.ui.createeditgoal.SaveEditGoalFragment"
+        android:name="com.example.android.goalchaser.ui.createeditgoal.CreateEditGoalFragment"
         android:label="@string/create_edit_goal_fragment_label"
-        tools:layout="@layout/fragment_create_edit_goal" />
+        tools:layout="@layout/fragment_create_edit_goal" >
+        <action
+            android:id="@+id/action_createEditGoalFragment_to_completedgoalsListFragment"
+            app:destination="@id/completedgoalsListFragment" />
+        <action
+            android:id="@+id/action_createEditGoalFragment_to_activeGoalsFragment"
+            app:destination="@id/activeGoalsFragment" />
+    </fragment>
 </navigation>
