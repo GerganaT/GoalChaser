@@ -51,7 +51,7 @@ class CreateEditGoalViewModel(
 
     fun saveGoal() {
         viewModelScope.launch {
-            if (goalTitle.value.isNullOrEmpty() || goalDueDate.value.isNullOrEmpty()) {
+       //     if (goalTitle.value.isNullOrEmpty() || goalDueDate.value.isNullOrEmpty()) {
             GoalDataUiState(
                 goalTitle.value  ,
                 goalDueDate.value  ,
@@ -61,7 +61,7 @@ class CreateEditGoalViewModel(
                 timeTypeMonths.value ,
                 isActive.value
             ).run { saveUiState(this) }
-            }
+         //   }
 
         }
     }

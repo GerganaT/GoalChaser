@@ -23,7 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 package com.example.android.goalchaser.ui
 
-import android.app.DatePickerDialog
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
@@ -32,7 +31,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
-import androidx.fragment.app.findFragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
@@ -105,9 +103,10 @@ fun <T> setRecyclerViewData(recyclerView: RecyclerView, items: LiveData<List<T>>
 
 @BindingAdapter("insertDate")
 fun DatePicker.saveDate(dateToBeSaved: MutableLiveData<String>) {
-    val saveDateEntry = { _: DatePicker, _: Int, _: Int, _: Int ->
-        dateToBeSaved.value = context.getString(R.string.user_entered_date, month, dayOfMonth, year)
-    }
-    DatePickerDialog.OnDateSetListener(saveDateEntry)
-//TODO Cannot save data from picker,fix it
+    //month + 1 used to match the month name on the dialog to the month number we will display
+    // in the goals' list once the goal is saved.
+    dateToBeSaved.value = context.getString(
+        R.string.user_entered_date, month + 1, dayOfMonth, year
+    )
+
 }
