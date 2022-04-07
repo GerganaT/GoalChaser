@@ -39,7 +39,6 @@ class ActiveCompletedGoalsViewModel(
 
 
     init {
-
         getImageData()
         getGoals()
     }
@@ -71,7 +70,7 @@ class ActiveCompletedGoalsViewModel(
 
     }
 
-    private fun getGoals() {
+     private fun getGoals() {
         viewModelScope.launch {
             goalsRepository.getGoals().run {
                 when (this) {
@@ -101,6 +100,9 @@ class ActiveCompletedGoalsViewModel(
         }
 
     }
+    // resolve data binding library issue , which doesn't allow me to call getGoals directly
+    //in the fragment
+    fun refreshGoals() = getGoals()
 
     fun deleteGoals() {
         viewModelScope.launch {

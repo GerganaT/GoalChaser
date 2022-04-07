@@ -42,6 +42,7 @@ import com.example.android.goalchaser.ui.uistate.ImageDataUiState
 import com.squareup.picasso.Picasso
 
 @BindingAdapter("imageUrl")
+
 fun bindImage(imgView: ImageView, imgUrl: String?) {
 
     val lottieDrawable = LottieDrawable()
@@ -67,6 +68,7 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 }
 
 @BindingAdapter("setPhotographerData")
+
 fun TextView.showPhotographerCredentials(photographerCredentials: ImageDataUiState?) {
 
     val photographerName = photographerCredentials?.photographerName
@@ -92,16 +94,20 @@ fun TextView.showPhotographerCredentials(photographerCredentials: ImageDataUiSta
 
 @Suppress("UNCHECKED_CAST")
 @BindingAdapter("feedLiveData")
+
 fun <T> setRecyclerViewData(recyclerView: RecyclerView, items: LiveData<List<T>>?) {
     items?.value?.let { itemList ->
         (recyclerView.adapter as? GoalsRecyclerViewAdapter<T>)?.apply {
             clear()
             addData(itemList)
+
+
         }
     }
 }
 
 @BindingAdapter("insertDate")
+
 fun DatePicker.saveDate(dateToBeSaved: MutableLiveData<String>) {
     //month + 1 used to match the month name on the dialog to the month number we will display
     // in the goals' list once the goal is saved.

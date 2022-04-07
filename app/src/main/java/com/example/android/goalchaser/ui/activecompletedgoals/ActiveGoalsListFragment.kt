@@ -47,14 +47,18 @@ class ActiveGoalsListFragment : Fragment() {
         }
     }
 
-    private fun setupAdapter(){
-        val adapter  = GoalsListAdapter{_:GoalDataUiState,_:View ->}
-        activeGoalsListBinding.activeGoalsListRecycler.adapter =  adapter
+    private fun setupAdapter() {
+        val adapter = GoalsListAdapter { _: GoalDataUiState, _: View -> }
+
+        activeGoalsListBinding.activeGoalsListRecycler.adapter = adapter
+
+
     }
 
-
-
-    //TODO refresh the goals list once a goal has been saved
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshGoals()
+    }
     //TODO show no list image when there're no tasks
     //TODO add transition to view/edit/create goal details
     //TODO add logic for fab button to reuse create_edit_goal fragment with label"create goal"

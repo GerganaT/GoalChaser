@@ -66,7 +66,8 @@ class CreateEditGoalViewModel(
         }
     }
 
-    //TODO Construct the new goal object from user input
+    //TODO Save all the values - even the defaults
+    //TODO fix the save logic the outcommented code
 
 //TODO finish the viewmodel
 }
