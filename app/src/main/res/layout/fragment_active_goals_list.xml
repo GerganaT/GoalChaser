@@ -45,7 +45,6 @@
         android:paddingTop="@dimen/margin_small"
         android:paddingBottom="@dimen/margin_small"
         app:feedLiveData="@{viewModel.goals}"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

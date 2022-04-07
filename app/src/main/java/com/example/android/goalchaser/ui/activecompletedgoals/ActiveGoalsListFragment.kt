@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentActiveGoalsListBinding
 import com.example.android.goalchaser.ui.activecompletedgoals.recyclerView.GoalsListAdapter
@@ -51,6 +52,8 @@ class ActiveGoalsListFragment : Fragment() {
         val adapter = GoalsListAdapter { _: GoalDataUiState, _: View -> }
 
         activeGoalsListBinding.activeGoalsListRecycler.adapter = adapter
+        activeGoalsListBinding.activeGoalsListRecycler.layoutManager = LinearLayoutManager(context,
+        LinearLayoutManager.VERTICAL,false)
 
 
     }
@@ -60,6 +63,7 @@ class ActiveGoalsListFragment : Fragment() {
         viewModel.refreshGoals()
     }
     //TODO show no list image when there're no tasks
+    //TODO dont allow saving of past periods/before today/
     //TODO add transition to view/edit/create goal details
     //TODO add logic for fab button to reuse create_edit_goal fragment with label"create goal"
 

@@ -48,6 +48,8 @@ abstract class GoalsRecyclerViewAdapter<T>(private val callback: ((item: T, adap
      */
     fun addData(items: List<T>) {
         _items.addAll(items)
+
+
     }
 
     /**
