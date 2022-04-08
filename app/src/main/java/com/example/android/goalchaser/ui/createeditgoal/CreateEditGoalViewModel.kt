@@ -51,19 +51,26 @@ class CreateEditGoalViewModel(
 
     fun saveGoal() {
         viewModelScope.launch {
-       //     if (goalTitle.value.isNullOrEmpty() || goalDueDate.value.isNullOrEmpty()) {
+            //     if (goalTitle.value.isNullOrEmpty() || goalDueDate.value.isNullOrEmpty()) {
             GoalDataUiState(
-                goalTitle.value  ,
-                goalDueDate.value  ,
-                activeNotification.value  ,
+                goalTitle.value,
+                goalDueDate.value,
+                activeNotification.value,
                 timeUnitCount.value,
-                timeTypeDays.value ,
-                timeTypeMonths.value ,
+                timeTypeDays.value,
+                timeTypeMonths.value,
                 isActive.value
             ).run { saveUiState(this) }
-         //   }
+            //   }
 
         }
+    }
+
+    fun saveDays(days: String) {
+        if (activeNotification.value == true) {   //TODO logic doesn't work as expected.saves only 1
+            timeUnitCount.value = days.toInt()
+        }
+        timeUnitCount.value = days.toInt()
     }
 
     //TODO Save all the values - even the defaults

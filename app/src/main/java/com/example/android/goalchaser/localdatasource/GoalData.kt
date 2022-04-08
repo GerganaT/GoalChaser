@@ -5,13 +5,13 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "goals")
 data class GoalData(
-    var title: String?,
-    var dueDate: String?,
-    var sendNotification: Boolean? = false,
-    var timeUnitNumber: Int? = null,
-    var days: Boolean? = false,
-    var months: Boolean? = false,
-    var isCompleted: Boolean ?= false,
+    val title: String?,
+    val dueDate: String?,
+    val sendNotification: Boolean?,
+    val timeUnitNumber: Int?,
+    val days: Boolean?,
+    val months: Boolean?,
+    val isCompleted: Boolean?,
     @PrimaryKey(autoGenerate = true) var goalId: Int = 0
 )
 

@@ -26,6 +26,7 @@ package com.example.android.goalchaser.ui
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
+import android.widget.AutoCompleteTextView
 import android.widget.DatePicker
 import android.widget.ImageView
 import android.widget.TextView
@@ -38,7 +39,9 @@ import com.airbnb.lottie.LottieCompositionFactory
 import com.airbnb.lottie.LottieDrawable
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.ui.activecompletedgoals.recyclerView.GoalsRecyclerViewAdapter
+import com.example.android.goalchaser.ui.createeditgoal.CreateEditGoalViewModel
 import com.example.android.goalchaser.ui.uistate.ImageDataUiState
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.squareup.picasso.Picasso
 
 @BindingAdapter("imageUrl")
@@ -115,4 +118,15 @@ fun DatePicker.saveDate(dateToBeSaved: MutableLiveData<String>) {
         R.string.user_entered_date, month + 1, dayOfMonth, year
     )
 
+}
+
+@BindingAdapter("isSwitched")
+
+fun SwitchMaterial.getSwitchState(switchState: MutableLiveData<Boolean>) {
+    switchState.value = isChecked
+}
+
+@BindingAdapter("getDays")
+fun AutoCompleteTextView.getDays(viewModel: CreateEditGoalViewModel) {
+    viewModel.saveDays(text.toString())
 }
