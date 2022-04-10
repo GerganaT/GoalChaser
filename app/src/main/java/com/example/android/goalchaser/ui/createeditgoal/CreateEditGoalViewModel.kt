@@ -9,6 +9,7 @@ import com.example.android.goalchaser.repository.GoalsRepository
 import com.example.android.goalchaser.ui.uistate.GoalDataUiState
 import com.example.android.goalchaser.utils.Result
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class CreateEditGoalViewModel(
     private val goalsRepository: GoalsRepository
@@ -22,11 +23,25 @@ class CreateEditGoalViewModel(
     val timeTypeMonths = MutableLiveData<Boolean>() // false
     val isActive = MutableLiveData<Boolean>() // false
 
+
     val goalIsSaved: LiveData<Boolean>
         get() = _goalIsSaved
     private val _goalIsSaved = MutableLiveData<Boolean>()
 
+    //TODO activeNotification.value is always null...
+    fun saveDays(days: String) {
+        if (activeNotification.value == true) {
+            timeUnitCount.value = days.toInt()
+        }
+        Timber.i("active notification value is ${activeNotification.value}")
 
+
+
+        //TODO Save all the values - even the defaults
+        //TODO fix the save logic the outcommented code
+
+//TODO finish the viewmodel
+    }
     private fun saveUiState(goalDataUiState: GoalDataUiState) {
         viewModelScope.launch {
             val goalData = goalDataUiState.run {
@@ -66,17 +81,7 @@ class CreateEditGoalViewModel(
         }
     }
 
-    fun saveDays(days: String) {
-        if (activeNotification.value == true) {   //TODO logic doesn't work as expected.saves only 1
-            timeUnitCount.value = days.toInt()
-        }
-        timeUnitCount.value = days.toInt()
-    }
 
-    //TODO Save all the values - even the defaults
-    //TODO fix the save logic the outcommented code
-
-//TODO finish the viewmodel
 }
 
 

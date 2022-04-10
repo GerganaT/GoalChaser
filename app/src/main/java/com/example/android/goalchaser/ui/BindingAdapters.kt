@@ -129,4 +129,5 @@ fun SwitchMaterial.getSwitchState(switchState: MutableLiveData<Boolean>) {
 @BindingAdapter("getDays")
 fun AutoCompleteTextView.getDays(viewModel: CreateEditGoalViewModel) {
     viewModel.saveDays(text.toString())
+
 }
