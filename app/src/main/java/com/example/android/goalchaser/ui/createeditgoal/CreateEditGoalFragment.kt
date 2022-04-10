@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentCreateEditGoalBinding
+import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -41,11 +40,23 @@ class CreateEditGoalFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         createEditGoalBinding.saveGoalFab.setOnClickListener {
             viewModel.saveGoal()
+            viewModel.isTitleEntered.observe(viewLifecycleOwner){
+                isTitleEntered -> if (!isTitleEntered){
+                val snackbar =    Snackbar.make(createEditGoalBinding.root,R.string.no_title_entered_notification,
+                    Snackbar.LENGTH_INDEFINITE)
+                snackbar.setAction(R.string.ok){snackbar.dismiss()}
+                snackbar.show()
+                }
+            }
             viewModel.goalIsSaved.observe(viewLifecycleOwner) { isSaved ->
-              if (isSaved){
-                  findNavController().navigate(CreateEditGoalFragmentDirections
-                      .actionCreateEditGoalFragmentToActiveGoalsFragment())
-              }
+                if (isSaved && findNavController()
+                        .currentDestination?.id == R.id.createEditGoalFragment
+                ) {
+                    findNavController().navigate(
+                        CreateEditGoalFragmentDirections
+                            .actionCreateEditGoalFragmentToActiveGoalsFragment()
+                    )
+                }
             }
         }
     }
@@ -73,5 +84,4 @@ class CreateEditGoalFragment : Fragment() {
 
 //TODO when notifications are turned off /on show toast
 //TODO optimize boilerplate above
-//TODO there's currently issue with menu's data in landscape and sometimes portrait.Implement viewmodel
-//TODO properly and see if it's resolved.
+//TODO Persist recycler view adapter item position throughout orientations

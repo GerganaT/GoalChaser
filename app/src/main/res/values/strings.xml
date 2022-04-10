@@ -44,4 +44,6 @@
     <string name="user_entered_date">%1$d/%2$d/%3$d</string>
     <string name="unsplash_website_title">Unsplash</string>
     <string name="no_data_error">No internet connectivity</string>
+    <string name="no_title_entered_notification">Please enter title</string>
+    <string name="ok">OK</string>
 </resources>

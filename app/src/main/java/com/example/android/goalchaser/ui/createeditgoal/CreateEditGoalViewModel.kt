@@ -28,6 +28,10 @@ class CreateEditGoalViewModel(
         get() = _goalIsSaved
     private val _goalIsSaved = MutableLiveData<Boolean>()
 
+    val isTitleEntered: LiveData<Boolean>
+        get() = _isTitleEntered
+    private val _isTitleEntered = MutableLiveData<Boolean>()
+
 
     private fun saveUiState(goalDataUiState: GoalDataUiState) {
         viewModelScope.launch {
@@ -53,17 +57,20 @@ class CreateEditGoalViewModel(
 
     fun saveGoal() {
         viewModelScope.launch {
-            //     if (goalTitle.value.isNullOrEmpty() || goalDueDate.value.isNullOrEmpty()) {
-            GoalDataUiState(
-                goalTitle.value,
-                goalDueDate.value,
-                activeNotification.value,
-                timeUnitCount.value,
-                timeTypeDays.value,
-                timeTypeMonths.value,
-                isActive.value
-            ).run { saveUiState(this) }
-            //   }
+            if (!goalTitle.value.isNullOrEmpty()) {
+                _isTitleEntered.value = true
+                GoalDataUiState(
+                    goalTitle.value,
+                    goalDueDate.value,
+                    activeNotification.value,
+                    timeUnitCount.value,
+                    timeTypeDays.value,
+                    timeTypeMonths.value,
+                    isActive.value
+                ).run { saveUiState(this) }
+            } else {
+                _isTitleEntered.value = false
+            }
 
         }
     }
@@ -78,7 +85,6 @@ class CreateEditGoalViewModel(
 }
 
 //TODO Save all the values - even the defaults
-//TODO fix the save logic the outcommented code
-
+//TODO idea animate notification settings to pop up once notifications are enabled
 //TODO finish the viewmodel
 
