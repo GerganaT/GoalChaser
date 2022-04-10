@@ -28,20 +28,7 @@ class CreateEditGoalViewModel(
         get() = _goalIsSaved
     private val _goalIsSaved = MutableLiveData<Boolean>()
 
-    //TODO activeNotification.value is always null...
-    fun saveDays(days: String) {
-        if (activeNotification.value == true) {
-            timeUnitCount.value = days.toInt()
-        }
-        Timber.i("active notification value is ${activeNotification.value}")
 
-
-
-        //TODO Save all the values - even the defaults
-        //TODO fix the save logic the outcommented code
-
-//TODO finish the viewmodel
-    }
     private fun saveUiState(goalDataUiState: GoalDataUiState) {
         viewModelScope.launch {
             val goalData = goalDataUiState.run {
@@ -81,7 +68,17 @@ class CreateEditGoalViewModel(
         }
     }
 
-
+    //TODO activeNotification.value is always null...
+    fun saveDays(days: String) {
+        if (activeNotification.value == true) {
+            timeUnitCount.value = days.toInt()
+        }
+        Timber.i("active notification value is ${activeNotification.value}")
+    }
 }
 
+//TODO Save all the values - even the defaults
+//TODO fix the save logic the outcommented code
+
+//TODO finish the viewmodel
 

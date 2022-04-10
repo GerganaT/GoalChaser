@@ -26,10 +26,7 @@ package com.example.android.goalchaser.ui
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
-import android.widget.AutoCompleteTextView
-import android.widget.DatePicker
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
@@ -124,6 +121,7 @@ fun DatePicker.saveDate(dateToBeSaved: MutableLiveData<String>) {
 
 fun SwitchMaterial.getSwitchState(switchState: MutableLiveData<Boolean>) {
     switchState.value = isChecked
+
 }
 
 @BindingAdapter("getDays")
