@@ -124,7 +124,7 @@
             android:id="@+id/enable_disable_notifications_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:isSwitched="@{viewModel.activeNotification}"
+            android:checked="@={viewModel.activeNotification}"
             app:layout_constraintBottom_toBottomOf="@+id/goal_notifications_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/goal_notifications_text" />

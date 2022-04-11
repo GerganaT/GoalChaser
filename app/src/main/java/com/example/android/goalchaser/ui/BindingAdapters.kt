@@ -117,12 +117,12 @@ fun DatePicker.saveDate(dateToBeSaved: MutableLiveData<String>) {
 
 }
 
-@BindingAdapter("isSwitched")
-
-fun SwitchMaterial.getSwitchState(switchState: MutableLiveData<Boolean>) {
-    switchState.value = isChecked
-
-}
+//@BindingAdapter("isSwitched")
+//
+//fun SwitchMaterial.getSwitchState(switchState: MutableLiveData<Boolean>) {
+//    switchState.value = isChecked
+//
+//}
 
 @BindingAdapter("getDays")
 fun AutoCompleteTextView.getDays(viewModel: CreateEditGoalViewModel) {

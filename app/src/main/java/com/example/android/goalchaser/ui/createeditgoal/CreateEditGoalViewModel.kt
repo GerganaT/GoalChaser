@@ -81,7 +81,9 @@ class CreateEditGoalViewModel(
             timeUnitCount.value = days.toInt()
         }
         Timber.i("active notification value is ${activeNotification.value}")
+
     }
+
 }
 
 //TODO Save all the values - even the defaults
