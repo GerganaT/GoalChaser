@@ -9,7 +9,6 @@ import com.example.android.goalchaser.repository.GoalsRepository
 import com.example.android.goalchaser.ui.uistate.GoalDataUiState
 import com.example.android.goalchaser.utils.Result
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class CreateEditGoalViewModel(
     private val goalsRepository: GoalsRepository
@@ -23,6 +22,9 @@ class CreateEditGoalViewModel(
     val timeTypeMonths = MutableLiveData<Boolean>() // false
     val isActive = MutableLiveData<Boolean>() // false
 
+    val days: LiveData<Array<Int>>
+        get() = _days
+    private val _days = MutableLiveData<Array<Int>>()
 
     val goalIsSaved: LiveData<Boolean>
         get() = _goalIsSaved
@@ -31,6 +33,10 @@ class CreateEditGoalViewModel(
     val isTitleEntered: LiveData<Boolean>
         get() = _isTitleEntered
     private val _isTitleEntered = MutableLiveData<Boolean>()
+
+    init {
+        _days.value = Array(31) { it + 1 }
+    }
 
 
     private fun saveUiState(goalDataUiState: GoalDataUiState) {
@@ -75,13 +81,8 @@ class CreateEditGoalViewModel(
         }
     }
 
-    //TODO activeNotification.value is always null...
     fun saveDays(days: String) {
-        if (activeNotification.value == true) {
-            timeUnitCount.value = days.toInt()
-        }
-        Timber.i("active notification value is ${activeNotification.value}")
-
+        timeUnitCount.value = days.toInt()
     }
 
 }

@@ -46,4 +46,5 @@
     <string name="no_data_error">No internet connectivity</string>
     <string name="no_title_entered_notification">Please enter title</string>
     <string name="ok">OK</string>
+    <string name="days_hint">0</string>
 </resources>

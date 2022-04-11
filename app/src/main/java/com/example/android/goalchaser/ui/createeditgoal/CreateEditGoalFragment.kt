@@ -32,22 +32,33 @@ class CreateEditGoalFragment : Fragment() {
             )
         createEditGoalBinding.viewModel = viewModel
         createEditGoalBinding.lifecycleOwner = viewLifecycleOwner
-        createNotificationSettingsDropdownMenu()
         return createEditGoalBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         createEditGoalBinding.saveGoalFab.setOnClickListener {
-            viewModel.saveGoal()
-            viewModel.isTitleEntered.observe(viewLifecycleOwner){
-                isTitleEntered -> if (!isTitleEntered){
-                val snackbar =    Snackbar.make(createEditGoalBinding.root,R.string.no_title_entered_notification,
-                    Snackbar.LENGTH_INDEFINITE)
-                snackbar.setAction(R.string.ok){snackbar.dismiss()}
-                snackbar.show()
+            viewModel.activeNotification.observe(viewLifecycleOwner) { notificationIsActive: Boolean ->
+                if (notificationIsActive) {
+                    val days =
+                        createEditGoalBinding.daysOrMonthsNumberAutocompleteText.text.toString()
+                    viewModel.saveDays(days)
+
                 }
             }
+            viewModel.saveGoal()
+            viewModel.isTitleEntered.observe(viewLifecycleOwner) { isTitleEntered ->
+                if (!isTitleEntered) {
+                    val snackbar = Snackbar.make(
+                        createEditGoalBinding.root, R.string.no_title_entered_notification,
+                        Snackbar.LENGTH_INDEFINITE
+                    )
+                    snackbar.setAction(R.string.ok) { snackbar.dismiss() }
+                    snackbar.show()
+                }
+            }
+
+
             viewModel.goalIsSaved.observe(viewLifecycleOwner) { isSaved ->
                 if (isSaved && findNavController()
                         .currentDestination?.id == R.id.createEditGoalFragment
@@ -60,28 +71,9 @@ class CreateEditGoalFragment : Fragment() {
             }
         }
     }
-
-    private fun createNotificationSettingsDropdownMenu() {
-        val dayMonthsArray = requireActivity().resources.getStringArray(R.array.days_months)
-        val dayMonthsArrayAdapter = ArrayAdapter(
-            requireActivity(),
-            R.layout.days_months_dropdown_menu_item,
-            dayMonthsArray
-        )
-        createEditGoalBinding.daysOrMonthsAutocompleteText.setAdapter(dayMonthsArrayAdapter)
-
-        val dayMonthsNumberArray = arrayOf(
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-            21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
-        )
-        val dayMonthsNumberAdapter = ArrayAdapter(
-            requireActivity(), R.layout.days_months_dropdown_menu_item,
-            dayMonthsNumberArray
-        )
-        createEditGoalBinding.daysOrMonthsNumberAutocompleteText.setAdapter(dayMonthsNumberAdapter)
-    }
 }
 
-//TODO when notifications are turned off /on show toast
+//TODO when notifications are turned off/on and saved  show toast
 //TODO optimize boilerplate above
 //TODO Persist recycler view adapter item position throughout orientations
+//TODO Persist menu adapter item position throughout orientations
