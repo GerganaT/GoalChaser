@@ -36,9 +36,11 @@ import com.airbnb.lottie.LottieCompositionFactory
 import com.airbnb.lottie.LottieDrawable
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.ui.activecompletedgoals.recyclerView.GoalsRecyclerViewAdapter
+import com.example.android.goalchaser.ui.createeditgoal.CreateEditGoalViewModel
 import com.example.android.goalchaser.ui.uistate.ImageDataUiState
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.squareup.picasso.Picasso
+import timber.log.Timber
 
 @BindingAdapter("imageUrl")
 
@@ -123,22 +125,23 @@ fun SwitchMaterial.getSwitchState(switchState: MutableLiveData<Boolean>) {
 
 }
 
-@BindingAdapter("setDefaultDaysMonthsCount")
-fun AutoCompleteTextView.setDefaultDaysMonthsCount(days:Array<Int>){
-    setText(days[0].toString(),false)
-}
+
+
 @BindingAdapter("setupDaysMonthsCount")
-fun AutoCompleteTextView.setupDaysMonthsCountAdapter(days:Array<Int>){
+fun AutoCompleteTextView.setupDaysMonthsCountAdapter(days: Array<Int>) {
     val daysNumberAdapter = ArrayAdapter(
         context, R.layout.days_months_dropdown_menu_item,
         days
     )
     setAdapter(daysNumberAdapter)
+    setText(days[0].toString(), false)
 }
 
 //Used dummy parameter as BindingAdapter cannot have no arguments
 @BindingAdapter("setupDaysMonths")
-fun AutoCompleteTextView.setupDaysMonthsAdapter(value:Boolean){
+fun AutoCompleteTextView.setupDaysMonthsAdapter(dummyParam:Nothing?
+
+) {
     val dayMonthsArray = context.resources.getStringArray(R.array.days_months)
     val daysMonthsAdapter = ArrayAdapter(
         context,
@@ -146,5 +149,6 @@ fun AutoCompleteTextView.setupDaysMonthsAdapter(value:Boolean){
         dayMonthsArray
     )
     setAdapter(daysMonthsAdapter)
+    setText(dayMonthsArray[0],false)
 }
 

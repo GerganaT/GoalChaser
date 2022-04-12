@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -38,13 +37,19 @@ class CreateEditGoalFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         createEditGoalBinding.saveGoalFab.setOnClickListener {
-            viewModel.activeNotification.observe(viewLifecycleOwner) { notificationIsActive: Boolean ->
+            viewModel.activeNotification.observe(viewLifecycleOwner)
+            { notificationIsActive: Boolean ->
                 if (notificationIsActive) {
                     val days =
                         createEditGoalBinding.daysOrMonthsNumberAutocompleteText.text.toString()
                     viewModel.saveDays(days)
-
+                    val daysOrMonths =
+                        createEditGoalBinding.daysOrMonthsAutocompleteText.text.toString()
+                    val daysOrMonthsArray =
+                        context?.resources?.getStringArray(R.array.days_months) as Array<String>
+                    viewModel.saveDaysOrMonths(daysOrMonths, daysOrMonthsArray)
                 }
+
             }
             viewModel.saveGoal()
             viewModel.isTitleEntered.observe(viewLifecycleOwner) { isTitleEntered ->

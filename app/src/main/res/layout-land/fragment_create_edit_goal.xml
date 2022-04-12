@@ -142,8 +142,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="none"
                 android:padding="@dimen/padding_small"
-                android:text="@string/days_or_months_hint"
-                app:setupDaysMonths="@{true}"/>
+                app:setupDaysMonths="@{null}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -163,7 +162,6 @@
                 android:layout_height="wrap_content"
                 android:inputType="none"
                 android:padding="@dimen/padding_small"
-                app:setDefaultDaysMonthsCount="@{viewModel.days}"
                 app:setupDaysMonthsCount="@{viewModel.days}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
