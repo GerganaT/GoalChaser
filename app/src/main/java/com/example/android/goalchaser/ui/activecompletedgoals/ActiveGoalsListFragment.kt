@@ -63,7 +63,6 @@ class ActiveGoalsListFragment : Fragment() {
         viewModel.refreshGoals()
     }
     //TODO show no list image when there're no tasks
-    //TODO dont allow saving of past periods/before today/
     //TODO add transition to view/edit/create goal details
     //TODO add logic for fab button to reuse create_edit_goal fragment with label"create goal"
 

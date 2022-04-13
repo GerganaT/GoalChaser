@@ -36,11 +36,9 @@ import com.airbnb.lottie.LottieCompositionFactory
 import com.airbnb.lottie.LottieDrawable
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.ui.activecompletedgoals.recyclerView.GoalsRecyclerViewAdapter
-import com.example.android.goalchaser.ui.createeditgoal.CreateEditGoalViewModel
 import com.example.android.goalchaser.ui.uistate.ImageDataUiState
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.squareup.picasso.Picasso
-import timber.log.Timber
 
 @BindingAdapter("imageUrl")
 
@@ -107,9 +105,13 @@ fun <T> setRecyclerViewData(recyclerView: RecyclerView, items: LiveData<List<T>>
     }
 }
 
-@BindingAdapter("insertDate")
+@BindingAdapter("setupDate")
 
-fun DatePicker.saveDate(dateToBeSaved: MutableLiveData<String>) {
+fun DatePicker.setupMinDateAndSaveGoalDueDate(dateToBeSaved: MutableLiveData<String>) {
+    // allow the user to set goal due date since tomorrow since today is already in progress
+    //idea from here:https://stackoverflow.com/questions/43134925/
+    // android-datepicker-dialog-date-should-come-from-tomorrow
+    minDate = System.currentTimeMillis() + 24 * 60 * 60 * 1000
     //month + 1 used to match the month name on the dialog to the month number we will display
     // in the goals' list once the goal is saved.
     dateToBeSaved.value = context.getString(
@@ -126,7 +128,6 @@ fun SwitchMaterial.getSwitchState(switchState: MutableLiveData<Boolean>) {
 }
 
 
-
 @BindingAdapter("setupDaysMonthsCount")
 fun AutoCompleteTextView.setupDaysMonthsCountAdapter(days: Array<Int>) {
     val daysNumberAdapter = ArrayAdapter(
@@ -139,7 +140,8 @@ fun AutoCompleteTextView.setupDaysMonthsCountAdapter(days: Array<Int>) {
 
 //Used dummy parameter as BindingAdapter cannot have no arguments
 @BindingAdapter("setupDaysMonths")
-fun AutoCompleteTextView.setupDaysMonthsAdapter(dummyParam:Nothing?
+fun AutoCompleteTextView.setupDaysMonthsAdapter(
+    dummyParam: Nothing?
 
 ) {
     val dayMonthsArray = context.resources.getStringArray(R.array.days_months)
@@ -149,6 +151,6 @@ fun AutoCompleteTextView.setupDaysMonthsAdapter(dummyParam:Nothing?
         dayMonthsArray
     )
     setAdapter(daysMonthsAdapter)
-    setText(dayMonthsArray[0],false)
+    setText(dayMonthsArray[0], false)
 }
 

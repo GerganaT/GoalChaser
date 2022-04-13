@@ -78,7 +78,7 @@ class CreateEditGoalFragment : Fragment() {
     }
 }
 
-//TODO when notifications are turned off/on and saved  show toast
-//TODO optimize boilerplate above
+//TODO when notifications are turned off/on hide/show additional options - use motion layout
 //TODO Persist recycler view adapter item position throughout orientations
 //TODO Persist menu adapter item position throughout orientations
+//TODO Persist goal details throughout orientations

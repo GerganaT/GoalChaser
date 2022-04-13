@@ -16,11 +16,11 @@ class CreateEditGoalViewModel(
 
     val goalTitle = MutableLiveData<String>()
     val goalDueDate = MutableLiveData<String>()
-    val activeNotification = MutableLiveData<Boolean>() // false
+    val activeNotification = MutableLiveData<Boolean>()
     private val timeUnitCount = MutableLiveData<Int>()
-    val timeTypeDays = MutableLiveData<Boolean>() //false
-    val timeTypeMonths = MutableLiveData<Boolean>() // false
-    val isActive = MutableLiveData<Boolean>() // false
+    private val timeTypeDays = MutableLiveData<Boolean>()
+    private val timeTypeMonths = MutableLiveData<Boolean>()
+    private val isDone = MutableLiveData<Boolean>()
 
     val days: LiveData<Array<Int>>
         get() = _days
@@ -36,6 +36,8 @@ class CreateEditGoalViewModel(
 
     init {
         _days.value = Array(31) { it + 1 }
+        isDone.value = false
+
     }
 
 
@@ -72,7 +74,7 @@ class CreateEditGoalViewModel(
                     timeUnitCount.value,
                     timeTypeDays.value,
                     timeTypeMonths.value,
-                    isActive.value
+                    isDone.value
                 ).run { saveUiState(this) }
             } else {
                 _isTitleEntered.value = false
@@ -92,7 +94,4 @@ class CreateEditGoalViewModel(
 
 }
 
-//TODO Save active inactive value
-//TODO idea animate notification settings to pop up once notifications are enabled
-//TODO finish the viewmodel
 

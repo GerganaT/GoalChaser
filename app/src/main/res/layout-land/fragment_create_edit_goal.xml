@@ -26,7 +26,7 @@
             android:soundEffectsEnabled="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/goal_due_date_label_text"
-            app:insertDate="@{viewModel.goalDueDate}"/>
+            app:setupDate="@{viewModel.goalDueDate}"/>
 
         <EditText
             android:id="@+id/goal_title_edit_text"
