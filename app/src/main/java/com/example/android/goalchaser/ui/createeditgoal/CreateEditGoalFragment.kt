@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AutoCompleteTextView
+import android.widget.DatePicker
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -16,6 +18,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class CreateEditGoalFragment : Fragment() {
 
     lateinit var createEditGoalBinding: FragmentCreateEditGoalBinding
+    lateinit var goalDatePicker: DatePicker
+    private lateinit var goalDueDaysOrMonths: AutoCompleteTextView
+    private lateinit var goalDueDaysMonthsAmount: AutoCompleteTextView
     val viewModel: CreateEditGoalViewModel by viewModel()
 
     override fun onCreateView(
@@ -31,23 +36,52 @@ class CreateEditGoalFragment : Fragment() {
             )
         createEditGoalBinding.viewModel = viewModel
         createEditGoalBinding.lifecycleOwner = viewLifecycleOwner
+        goalDatePicker = createEditGoalBinding.goalDatePicker
+        goalDueDaysOrMonths =
+            createEditGoalBinding.daysOrMonthsAutocompleteText
+        goalDueDaysMonthsAmount =
+            createEditGoalBinding.daysOrMonthsNumberAutocompleteText
         return createEditGoalBinding.root
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("YEAR", goalDatePicker.year)
+        outState.putInt("MONTH", goalDatePicker.month)
+        outState.putInt("DAY", goalDatePicker.dayOfMonth)
+        outState.putString("DAYS_NUMBER", goalDueDaysMonthsAmount.text.toString())
+        outState.putString("DAYS_MONTHS", goalDueDaysOrMonths.text.toString())
+
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        savedInstanceState?.run {
+            goalDatePicker.updateDate(
+                getInt("YEAR"),
+                getInt("MONTH"),
+                getInt("DAY")
+            )
+            goalDueDaysMonthsAmount.setText(getString("DAYS_NUMBER"), false)
+            goalDueDaysOrMonths.setText(getString("DAYS_MONTHS"), false)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         createEditGoalBinding.saveGoalFab.setOnClickListener {
             viewModel.activeNotification.observe(viewLifecycleOwner)
             { notificationIsActive: Boolean ->
                 if (notificationIsActive) {
-                    val days =
-                        createEditGoalBinding.daysOrMonthsNumberAutocompleteText.text.toString()
-                    viewModel.saveDays(days)
-                    val daysOrMonths =
-                        createEditGoalBinding.daysOrMonthsAutocompleteText.text.toString()
-                    val daysOrMonthsArray =
+                    viewModel.saveDays(goalDueDaysMonthsAmount.text.toString())
+
+                    val goalDaysOrMonthsAmount =
                         context?.resources?.getStringArray(R.array.days_months) as Array<String>
-                    viewModel.saveDaysOrMonths(daysOrMonths, daysOrMonthsArray)
+                    viewModel.saveDaysOrMonths(
+                        goalDueDaysOrMonths.text.toString(),
+                        goalDaysOrMonthsAmount
+                    )
                 }
 
             }
@@ -79,6 +113,4 @@ class CreateEditGoalFragment : Fragment() {
 }
 
 //TODO when notifications are turned off/on hide/show additional options - use motion layout
-//TODO Persist recycler view adapter item position throughout orientations
-//TODO Persist menu adapter item position throughout orientations
-//TODO Persist goal details throughout orientations
+
