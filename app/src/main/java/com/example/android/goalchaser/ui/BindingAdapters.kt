@@ -135,7 +135,9 @@ fun AutoCompleteTextView.setupDaysMonthsCountAdapter(days: Array<Int>) {
         days
     )
     setAdapter(daysNumberAdapter)
-  //  setText(days[0].toString(), false)
+    if (text.isNullOrEmpty()) {
+        setText(days[0].toString(), false)
+    }
 }
 
 //Used dummy parameter as BindingAdapter cannot have no arguments
@@ -151,7 +153,7 @@ fun AutoCompleteTextView.setupDaysMonthsAdapter(
         dayMonthsArray
     )
     setAdapter(daysMonthsAdapter)
-  //  setText(dayMonthsArray[0], false)
+    if (text.isNullOrEmpty()) {
+        setText(dayMonthsArray[0], false)
+    }
 }
-
-//TODO how to set def value and persist data
