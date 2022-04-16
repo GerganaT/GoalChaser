@@ -8,12 +8,85 @@
             type="com.example.android.goalchaser.ui.createeditgoal.CreateEditGoalViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/create_edit_goal_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/padding_mid"
+        app:layoutDescription="@xml/fragment_create_edit_goal_land_scene"
         tools:context=".ui.createeditgoal.CreateEditGoalFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/animation_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/goal_date_picker"
+            app:layout_constraintTop_toBottomOf="@id/goal_notifications_text">
+
+            <TextView
+                android:id="@+id/before_goal_due_date_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
+                android:text="@string/before_goal_due_date_label"
+                android:textSize="@dimen/medium_text_size"
+                app:layout_constraintStart_toStartOf="@+id/send_notification_text"
+                app:layout_constraintTop_toBottomOf="@+id/send_notification_text" />
+
+            <TextView
+                android:id="@+id/send_notification_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:text="@string/send_notification_label"
+                android:textSize="@dimen/medium_text_size"
+                app:layout_constraintBottom_toBottomOf="@+id/days_months_number_picker_layout"
+                app:layout_constraintEnd_toStartOf="@+id/days_months_number_picker_layout"
+                app:layout_constraintTop_toTopOf="@+id/days_months_number_picker_layout" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/days_months_number_picker_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_middle"
+                app:boxStrokeWidthFocused="1dp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/days_months_picker_layout"
+                app:layout_constraintEnd_toStartOf="@+id/days_months_picker_layout">
+
+                <AutoCompleteTextView
+                    android:id="@+id/days_or_months_number_autocomplete_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:padding="@dimen/padding_small"
+                    app:setupDaysMonthsCount="@{viewModel.days}"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/days_months_picker_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                app:boxStrokeWidthFocused="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <AutoCompleteTextView
+                    android:id="@+id/days_or_months_autocomplete_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:padding="@dimen/padding_small"
+                    app:setupDaysMonths="@{null}"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <DatePicker
             android:id="@+id/goal_date_picker"
@@ -41,31 +114,10 @@
             android:padding="@dimen/padding_mid"
             android:text="@={viewModel.goalTitle}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/send_notification_text"
+            app:layout_constraintStart_toStartOf="@+id/animation_layout"
             app:layout_constraintTop_toBottomOf="@+id/goal_title_label_text"
             tools:ignore="TextContrastCheck"
             tools:text="Goal title" />
-
-        <TextView
-            android:id="@+id/before_goal_due_date_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
-            android:text="@string/before_goal_due_date_label"
-            android:textSize="@dimen/medium_text_size"
-            app:layout_constraintStart_toStartOf="@+id/send_notification_text"
-            app:layout_constraintTop_toBottomOf="@+id/send_notification_text" />
-
-        <TextView
-            android:id="@+id/send_notification_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:text="@string/send_notification_label"
-            android:textSize="@dimen/medium_text_size"
-            app:layout_constraintBottom_toBottomOf="@+id/days_months_number_picker_layout"
-            app:layout_constraintEnd_toStartOf="@+id/days_months_number_picker_layout"
-            app:layout_constraintTop_toTopOf="@+id/days_months_number_picker_layout" />
 
         <TextView
             android:id="@+id/goal_due_date_label_text"
@@ -90,7 +142,7 @@
             android:textSize="@dimen/medium_text_size"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/goal_title_edit_text"
+            app:layout_constraintStart_toStartOf="@+id/animation_layout"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -101,9 +153,7 @@
             android:text="@string/goal_notifications_label"
             android:textSize="@dimen/medium_text_size"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/days_months_number_picker_layout"
-            app:layout_constraintEnd_toStartOf="@+id/enable_disable_notifications_switch"
-            app:layout_constraintStart_toStartOf="@+id/goal_title_edit_text"
+            app:layout_constraintStart_toStartOf="@+id/animation_layout"
             app:layout_constraintTop_toBottomOf="@+id/goal_title_edit_text" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -121,51 +171,12 @@
             android:id="@+id/enable_disable_notifications_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_middle"
             app:isSwitched="@{viewModel.activeNotification}"
             app:layout_constraintBottom_toBottomOf="@+id/goal_notifications_text"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/goal_notifications_text"
             app:layout_constraintTop_toTopOf="@+id/goal_notifications_text" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/days_months_picker_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            app:boxStrokeWidthFocused="1dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/goal_notifications_text">
-
-            <AutoCompleteTextView
-                android:id="@+id/days_or_months_autocomplete_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"
-                android:padding="@dimen/padding_small"
-                app:setupDaysMonths="@{null}" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/days_months_number_picker_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_middle"
-            app:boxStrokeWidthFocused="1dp"
-            app:layout_constraintBottom_toBottomOf="@+id/days_months_picker_layout"
-            app:layout_constraintEnd_toStartOf="@+id/days_months_picker_layout"
-            app:layout_constraintTop_toTopOf="@+id/days_months_picker_layout">
-
-            <AutoCompleteTextView
-                android:id="@+id/days_or_months_number_autocomplete_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"
-                android:padding="@dimen/padding_small"
-                app:setupDaysMonthsCount="@{viewModel.days}"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 
 </layout>

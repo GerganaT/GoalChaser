@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/animation_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+             />
+
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/animation_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:alpha="1.0"
+            app:layout_constraintTop_toBottomOf="@+id/goal_notifications_text"
+
+             />
+
+    </ConstraintSet>
+    <Transition
+        app:constraintSetEnd="@+id/end"
+        app:constraintSetStart="@+id/start"
+        app:duration="500"
+        app:motionInterpolator="overshoot">
+        <OnClick app:targetId="@id/enable_disable_notifications_switch" />
+    </Transition>
+</MotionScene>
