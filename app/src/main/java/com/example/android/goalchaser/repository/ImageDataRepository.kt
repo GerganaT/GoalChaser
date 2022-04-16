@@ -3,7 +3,7 @@ package com.example.android.goalchaser.repository
 import com.example.android.goalchaser.localdatasource.ImageDataDao
 import com.example.android.goalchaser.localdatasource.ImageData
 import com.example.android.goalchaser.remotedatasource.ImageDataApiService
-import com.example.android.goalchaser.utils.Result
+import com.example.android.goalchaser.utils.datautils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber

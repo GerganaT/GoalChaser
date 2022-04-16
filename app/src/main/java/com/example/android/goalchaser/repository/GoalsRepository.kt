@@ -2,7 +2,7 @@ package com.example.android.goalchaser.repository
 
 import com.example.android.goalchaser.localdatasource.GoalData
 import com.example.android.goalchaser.localdatasource.GoalsDao
-import com.example.android.goalchaser.utils.Result
+import com.example.android.goalchaser.utils.datautils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

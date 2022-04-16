@@ -1,4 +1,4 @@
-package com.example.android.goalchaser.utils
+package com.example.android.goalchaser.utils.datautils
 
 /**
  * A sealed class that encapsulates successful outcome with a value of type [T]

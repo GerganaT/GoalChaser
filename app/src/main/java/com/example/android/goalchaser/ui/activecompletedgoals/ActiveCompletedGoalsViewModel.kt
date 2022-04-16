@@ -9,7 +9,7 @@ import com.example.android.goalchaser.repository.GoalsRepository
 import com.example.android.goalchaser.repository.ImageDataRepository
 import com.example.android.goalchaser.ui.uistate.GoalDataUiState
 import com.example.android.goalchaser.ui.uistate.ImageDataUiState
-import com.example.android.goalchaser.utils.Result
+import com.example.android.goalchaser.utils.datautils.Result
 import kotlinx.coroutines.launch
 import timber.log.Timber
 

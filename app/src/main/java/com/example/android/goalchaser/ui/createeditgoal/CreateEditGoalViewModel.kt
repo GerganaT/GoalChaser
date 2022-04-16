@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.android.goalchaser.localdatasource.GoalData
 import com.example.android.goalchaser.repository.GoalsRepository
 import com.example.android.goalchaser.ui.uistate.GoalDataUiState
-import com.example.android.goalchaser.utils.Result
+import com.example.android.goalchaser.utils.datautils.Result
 import kotlinx.coroutines.launch
 
 class CreateEditGoalViewModel(

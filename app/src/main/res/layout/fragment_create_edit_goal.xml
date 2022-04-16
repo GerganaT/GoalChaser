@@ -8,7 +8,7 @@
             type="com.example.android.goalchaser.ui.createeditgoal.CreateEditGoalViewModel" />
     </data>
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
+    <com.example.android.goalchaser.utils.uiutils.SavingMotionLayout
         android:id="@+id/create_edit_goal_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -183,5 +183,5 @@
             app:layout_constraintTop_toTopOf="@+id/goal_notifications_text" />
 
 
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+    </com.example.android.goalchaser.utils.uiutils.SavingMotionLayout>
 </layout>
