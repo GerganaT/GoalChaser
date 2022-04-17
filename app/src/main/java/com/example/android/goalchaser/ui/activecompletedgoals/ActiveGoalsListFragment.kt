@@ -1,9 +1,7 @@
 package com.example.android.goalchaser.ui.activecompletedgoals
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -33,8 +31,8 @@ class ActiveGoalsListFragment : Fragment() {
             false
         )
         activeGoalsListBinding.lifecycleOwner = viewLifecycleOwner
-
         activeGoalsListBinding.viewModel = viewModel
+        setHasOptionsMenu(true)
         return activeGoalsListBinding.root
     }
 
@@ -47,6 +45,9 @@ class ActiveGoalsListFragment : Fragment() {
             )
         }
     }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.tasks_list_menu, menu)
+    }
 
     private fun setupAdapter() {
         val adapter = GoalsListAdapter { _: GoalDataUiState, _: View -> }
@@ -57,6 +58,7 @@ class ActiveGoalsListFragment : Fragment() {
 
 
     }
+
 
     override fun onResume() {
         super.onResume()

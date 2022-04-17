@@ -1,9 +1,7 @@
 package com.example.android.goalchaser.ui.activecompletedgoals
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.android.goalchaser.R
@@ -28,8 +26,11 @@ class CompletedGoalsListFragment : Fragment() {
         val viewModel: ActiveCompletedGoalsViewModel by inject()
         fragmentCompletedGoalsListBinding.lifecycleOwner = viewLifecycleOwner
         fragmentCompletedGoalsListBinding.viewModel = viewModel
-
+        setHasOptionsMenu(true)
         return fragmentCompletedGoalsListBinding.root
+    }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.tasks_list_menu, menu)
     }
     //TODO show no list image when there're no tasks
 

@@ -125,6 +125,15 @@ fun DatePicker.setupMinDateAndSaveGoalDueDate(dateToBeSaved: MutableLiveData<Str
 fun SwitchMaterial.getSwitchState(switchState: MutableLiveData<Boolean>) {
     switchState.value = isChecked
 
+    setOnCheckedChangeListener { _, _ ->
+        val toastMessage = when(isChecked){
+            true -> context.getString(R.string.notifications_enabled)
+            else -> context.getString(R.string.notifications_disabled)
+        }
+        Toast.makeText(context,toastMessage,Toast.LENGTH_SHORT).show()
+    }
+
+
 }
 
 

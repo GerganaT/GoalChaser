@@ -1,9 +1,7 @@
 package com.example.android.goalchaser.ui.createeditgoal
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AutoCompleteTextView
 import android.widget.DatePicker
 import androidx.databinding.DataBindingUtil
@@ -112,5 +110,4 @@ class CreateEditGoalFragment : Fragment() {
     }
 }
 
-//TODO when notifications are turned off/on hide/show additional options - use motion layout
 
