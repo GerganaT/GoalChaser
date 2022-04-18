@@ -1,9 +1,12 @@
 package com.example.android.goalchaser.ui.createeditgoal
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -15,11 +18,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateEditGoalFragment : Fragment() {
 
-    lateinit var createEditGoalBinding: FragmentCreateEditGoalBinding
-    lateinit var goalDatePicker: DatePicker
+    private lateinit var createEditGoalBinding: FragmentCreateEditGoalBinding
+    private lateinit var goalDatePicker: DatePicker
     private lateinit var goalDueDaysOrMonths: AutoCompleteTextView
     private lateinit var goalDueDaysMonthsAmount: AutoCompleteTextView
-    val viewModel: CreateEditGoalViewModel by viewModel()
+    private val viewModel: CreateEditGoalViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,13 +35,14 @@ class CreateEditGoalFragment : Fragment() {
                 container,
                 false
             )
-        createEditGoalBinding.viewModel = viewModel
         createEditGoalBinding.lifecycleOwner = viewLifecycleOwner
+        createEditGoalBinding.viewModel = viewModel
         goalDatePicker = createEditGoalBinding.goalDatePicker
         goalDueDaysOrMonths =
             createEditGoalBinding.daysOrMonthsAutocompleteText
         goalDueDaysMonthsAmount =
             createEditGoalBinding.daysOrMonthsNumberAutocompleteText
+
         return createEditGoalBinding.root
     }
 
@@ -67,6 +71,7 @@ class CreateEditGoalFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         createEditGoalBinding.saveGoalFab.setOnClickListener {
             viewModel.activeNotification.observe(viewLifecycleOwner)
@@ -100,6 +105,7 @@ class CreateEditGoalFragment : Fragment() {
                 if (isSaved && findNavController()
                         .currentDestination?.id == R.id.createEditGoalFragment
                 ) {
+                    Toast.makeText(context, R.string.goal_saved_toast, Toast.LENGTH_SHORT).show()
                     findNavController().navigate(
                         CreateEditGoalFragmentDirections
                             .actionCreateEditGoalFragmentToActiveGoalsFragment()

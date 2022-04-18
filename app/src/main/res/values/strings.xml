@@ -48,4 +48,5 @@
     <string name="days_hint">0</string>
     <string name="notifications_enabled">Notifications enabled</string>
     <string name="notifications_disabled">Notifications disabled</string>
+    <string name="goal_saved_toast">Goal saved!</string>
 </resources>
