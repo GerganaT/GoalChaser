@@ -2,6 +2,7 @@ package com.example.android.goalchaser.ui.activecompletedgoals
 
 import android.os.Bundle
 import android.view.*
+import android.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -50,7 +51,14 @@ class ActiveGoalsListFragment : Fragment() {
     }
 
     private fun setupAdapter() {
-        val adapter = GoalsListAdapter { _: GoalDataUiState, _: View -> }
+        val adapter = GoalsListAdapter { selectedGoal, adapterView ->
+         val popupMenu = PopupMenu(context,adapterView)
+         popupMenu.run {
+             inflate(R.menu.popup_menu_active_goals)
+             show()
+         }
+
+        }
 
         activeGoalsListBinding.activeGoalsListRecycler.adapter = adapter
         activeGoalsListBinding.activeGoalsListRecycler.layoutManager = LinearLayoutManager(context,

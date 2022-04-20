@@ -35,22 +35,18 @@ class CreateEditGoalFragment : Fragment() {
                 container,
                 false
             )
-        createEditGoalBinding.lifecycleOwner = viewLifecycleOwner
-        createEditGoalBinding.viewModel = viewModel
-        goalDatePicker = createEditGoalBinding.goalDatePicker
-        goalDueDaysOrMonths =
-            createEditGoalBinding.daysOrMonthsAutocompleteText
-        goalDueDaysMonthsAmount =
-            createEditGoalBinding.daysOrMonthsNumberAutocompleteText
+
 
         return createEditGoalBinding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt("YEAR", goalDatePicker.year)
-        outState.putInt("MONTH", goalDatePicker.month)
-        outState.putInt("DAY", goalDatePicker.dayOfMonth)
+        goalDatePicker.run {
+            outState.putInt("YEAR", year)
+            outState.putInt("MONTH", month)
+            outState.putInt("DAY", dayOfMonth)
+        }
         outState.putString("DAYS_NUMBER", goalDueDaysMonthsAmount.text.toString())
         outState.putString("DAYS_MONTHS", goalDueDaysOrMonths.text.toString())
 
@@ -71,7 +67,12 @@ class CreateEditGoalFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        createEditGoalBinding.lifecycleOwner = viewLifecycleOwner
+        createEditGoalBinding.viewModel = viewModel
+        goalDatePicker = createEditGoalBinding.goalDatePicker
+        goalDueDaysOrMonths = createEditGoalBinding.daysOrMonthsAutocompleteText
+        goalDueDaysMonthsAmount =
+            createEditGoalBinding.daysOrMonthsNumberAutocompleteText
 
         createEditGoalBinding.saveGoalFab.setOnClickListener {
             viewModel.activeNotification.observe(viewLifecycleOwner)
@@ -106,10 +107,7 @@ class CreateEditGoalFragment : Fragment() {
                         .currentDestination?.id == R.id.createEditGoalFragment
                 ) {
                     Toast.makeText(context, R.string.goal_saved_toast, Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(
-                        CreateEditGoalFragmentDirections
-                            .actionCreateEditGoalFragmentToActiveGoalsFragment()
-                    )
+                    findNavController().navigateUp()
                 }
             }
         }
