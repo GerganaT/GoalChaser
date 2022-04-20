@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:title="@string/details_popup_menu_text" />
-    <item android:title="@string/mark_completed_popup_menu_text" />
-    <item android:title="@string/delete_popup_menu_text" />
+    <item
+        android:id="@+id/details_popup_item"
+        android:title="@string/details_popup_menu_text" />
+    <item
+        android:id="@+id/mark_completed_popup_item"
+        android:title="@string/mark_completed_popup_menu_text" />
+    <item
+        android:id="@+id/delete_popup_item"
+        android:title="@string/delete_popup_menu_text" />
 </menu>
