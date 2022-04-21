@@ -11,55 +11,44 @@
         android:layout_marginTop="@dimen/margin_small"
         android:layout_marginEnd="@dimen/margin_middle"
         android:layout_marginBottom="@dimen/margin_small"
-        android:background="@drawable/border">
-<!-- Couldn't avoid nesting here as I'm using background attribute twice-->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/nested_layout"
-            android:layout_width="match_parent"
+        android:background="@drawable/border"
+        android:padding="@dimen/padding_mid">
+
+        <ImageView
+            android:id="@+id/completed_goal_checkmark_image"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_ripple"
-            android:padding="@dimen/margin_middle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_goal_checkmark" />
 
-            <ImageView
-                android:id="@+id/completed_goal_checkmark_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_goal_checkmark" />
+        <TextView
+            android:id="@+id/goal_title_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{goal.title}"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintEnd_toStartOf="@+id/goal_date_text"
+            app:layout_constraintStart_toEndOf="@+id/completed_goal_checkmark_image"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Goal Title" />
 
-            <TextView
-                android:id="@+id/goal_title_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_small"
-                android:layout_marginEnd="@dimen/margin_small"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@{goal.title}"
-                android:textColor="@color/primaryTextColor"
-                android:textSize="@dimen/medium_text_size"
-                app:layout_constraintEnd_toStartOf="@+id/goal_date_text"
-                app:layout_constraintStart_toEndOf="@+id/completed_goal_checkmark_image"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Goal Title" />
-
-            <TextView
-                android:id="@+id/goal_date_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{goal.dueDate}"
-                android:textColor="@color/primaryTextColor"
-                android:textSize="@dimen/medium_text_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="3/21/2022" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/goal_date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{goal.dueDate}"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="3/21/2022" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>

@@ -22,4 +22,6 @@
     <dimen name="switch_size">48dp</dimen>
     <dimen name="fragment_instructions_divider_length">310dp</dimen>
     <dimen name="image_of_the_day_height">306dp</dimen>/>
+    <dimen name="small_border">2dp</dimen>
+    <dimen name="radius">5dp</dimen>
 </resources>
