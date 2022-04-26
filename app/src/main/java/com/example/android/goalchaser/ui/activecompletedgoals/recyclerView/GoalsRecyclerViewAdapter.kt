@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 abstract class GoalsRecyclerViewAdapter<T>(private val callback: ((item: T, adapterView: View) -> Unit)? = null) :
     RecyclerView.Adapter<DataBindingViewHolder<T>>() {
 
+
     private var _items: MutableList<T> = mutableListOf()
+
 
     /**
      * Returns the _items data

@@ -52,4 +52,9 @@
     <string name="details_popup_menu_text">Details</string>
     <string name="mark_completed_popup_menu_text">Mark completed</string>
     <string name="delete_popup_menu_text">Delete</string>
+    <string name="deleted_goal_toast">%1$s deleted!</string>
+    <string name="alert_dialog_title">Delete goal?</string>
+    <string name="alert_dialog_message">This can\'t be undone.</string>
+    <string name="alert_dialog_delete">Delete</string>
+    <string name="alert_dialog_cancel">Cancel</string>
 </resources>
