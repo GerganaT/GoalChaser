@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentActiveGoalsListBinding
 import com.example.android.goalchaser.ui.activecompletedgoals.recyclerView.GoalsListAdapter
-import com.example.android.goalchaser.utils.uiutils.deleteSelectedGoal
+import com.example.android.goalchaser.utils.uiutils.setupAlertDialog
 import org.koin.android.ext.android.inject
 
 
@@ -19,6 +19,10 @@ class ActiveGoalsListFragment : Fragment() {
 
     lateinit var activeGoalsListBinding: FragmentActiveGoalsListBinding
     val viewModel: ActiveCompletedGoalsViewModel by inject()
+    private var goalId: Int = 0
+    private var goalTitle: String? = ""
+    private var goalDeletionDialogFragment: GoalDeletionDialogFragment? = null
+    private var bundle: Bundle? = null
 
 
     override fun onCreateView(
@@ -36,6 +40,7 @@ class ActiveGoalsListFragment : Fragment() {
         return activeGoalsListBinding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activeGoalsListBinding.lifecycleOwner = viewLifecycleOwner
@@ -49,13 +54,28 @@ class ActiveGoalsListFragment : Fragment() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("GOAL_ID", goalId)
+        outState.putString("GOAL_TITLE", goalTitle)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        bundle = savedInstanceState
+
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.tasks_list_menu, menu)
     }
 
     private fun setupAdapter() {
 
-        val adapter = GoalsListAdapter { selectedGoal, adapterView ->
+        val goalsListAdapter = GoalsListAdapter { selectedGoal, adapterView ->
+            goalId = selectedGoal.id
+            goalTitle = selectedGoal.title
+
             val popupTheme = ContextThemeWrapper(context, R.style.PopupMenuItemStyle)
             val popupMenu = PopupMenu(popupTheme, adapterView)
             popupMenu.run {
@@ -70,7 +90,23 @@ class ActiveGoalsListFragment : Fragment() {
                                 .show()
                         }
                         R.id.delete_popup_item -> {
-                            deleteSelectedGoal(selectedGoal.id, selectedGoal.title)
+                            goalDeletionDialogFragment = if (bundle == null) {
+                                setupAlertDialog(goalId, goalTitle)
+
+                            } else {
+                                bundle?.let {
+                                    setupAlertDialog(
+                                        it.getInt("GOAL_ID"), it.getString("GOAL_TITLE")
+                                    )
+                                }
+                            }
+
+                            goalDeletionDialogFragment?.show(
+                                childFragmentManager,
+                                GoalDeletionDialogFragment.TAG
+                            )
+
+
                         }
                     }
 
@@ -82,13 +118,13 @@ class ActiveGoalsListFragment : Fragment() {
         }
 
 
-        activeGoalsListBinding.activeGoalsListRecycler.adapter = adapter
-        activeGoalsListBinding.activeGoalsListRecycler.layoutManager = LinearLayoutManager(
-            context,
-            LinearLayoutManager.VERTICAL, false
-        )
-
-
+        activeGoalsListBinding.activeGoalsListRecycler.run {
+            adapter = goalsListAdapter
+            layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.VERTICAL, false
+            )
+        }
     }
 
 

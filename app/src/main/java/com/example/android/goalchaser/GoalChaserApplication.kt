@@ -62,4 +62,3 @@ class GoalChaserApplication : Application() {
         }
     }
 }
-//TODO try without casts later on
