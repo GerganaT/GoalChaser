@@ -16,20 +16,6 @@ class GoalDeletionDialogFragment
     val viewModel: ActiveCompletedGoalsViewModel by inject()
     var goalId: Int = 0
     var goalTitle: String? = ""
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString("GOAL_TITLE", goalTitle)
-        outState.putInt("GOAL_ID", goalId)
-
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        savedInstanceState?.let {
-            goalTitle = it.getString("GOAL_TITLE")
-            goalId = it.getInt("GOAL_ID")
-        }
-    }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.alert_dialog_title)

@@ -40,7 +40,7 @@ class ActiveGoalsListFragment : Fragment() {
         activeGoalsListBinding.lifecycleOwner = viewLifecycleOwner
         activeGoalsListBinding.viewModel = viewModel
         setHasOptionsMenu(true)
-        setupAdapter()
+        setupRecyclerViewAdapter()
         activeGoalsListBinding.addActiveGoalFab.setOnClickListener {
             findNavController().navigate(
                 ActiveGoalsListFragmentDirections.actionActiveGoalsFragmentToCreateEditGoalFragment()
@@ -54,7 +54,7 @@ class ActiveGoalsListFragment : Fragment() {
         inflater.inflate(R.menu.tasks_list_menu, menu)
     }
 
-    private fun setupAdapter() {
+    private fun setupRecyclerViewAdapter() {
 
         val goalsListAdapter = GoalsListAdapter { selectedGoal, adapterView ->
 
@@ -73,9 +73,11 @@ class ActiveGoalsListFragment : Fragment() {
                                 .show()
                         }
                         R.id.delete_popup_item -> {
+                            viewModel.persistGoalData(selectedGoal.id,selectedGoal.title)
                             GoalDeletionDialogFragment().also { dialogFragment ->
-                                dialogFragment.goalId = selectedGoal.id
-                                dialogFragment.goalTitle = selectedGoal.title
+
+                                dialogFragment.goalId = viewModel.goalId
+                                dialogFragment.goalTitle = viewModel.goalTitle
 
                             }.show(
                                 childFragmentManager,
@@ -107,7 +109,6 @@ class ActiveGoalsListFragment : Fragment() {
     }
     //TODO fix issue where delete goal doesn't work on device rotation after alertdialog is active
     //TODO add the respective functions to the popup menu functions - delete done
-    //TODO show no list image when there're no tasks
     //TODO add transition to view/edit/create goal details
     //TODO add logic for fab button to reuse create_edit_goal fragment with label"create goal"
 

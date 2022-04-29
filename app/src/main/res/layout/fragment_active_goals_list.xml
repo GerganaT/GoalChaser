@@ -14,6 +14,18 @@
     tools:context=".ui.activecompletedgoals.ActiveGoalsListFragment">
 
     <ImageView
+        android:id="@+id/no_goals_image_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/padding_mid"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/active_photo_label_text"
+        app:srcCompat="@drawable/no_goals"
+        app:isVisible="@{viewModel.goalsListIsEmpty}"/>
+
+    <ImageView
         android:id="@+id/active_image_of_the_day_image"
         android:layout_width="0dp"
         android:layout_height="@dimen/image_of_the_day_height"

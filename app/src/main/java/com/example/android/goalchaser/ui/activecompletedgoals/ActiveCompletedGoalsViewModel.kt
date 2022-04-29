@@ -1,9 +1,6 @@
 package com.example.android.goalchaser.ui.activecompletedgoals
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.android.goalchaser.localdatasource.GoalData
 import com.example.android.goalchaser.repository.GoalsRepository
 import com.example.android.goalchaser.repository.ImageDataRepository
@@ -37,7 +34,21 @@ class ActiveCompletedGoalsViewModel(
         get() = _goalIsDeleted
     private val _goalIsDeleted = MutableLiveData<Boolean>()
 
+    private var _goalId = 0
+    val goalId: Int
+        get() = _goalId
 
+    private var _goalTitle: String? = ""
+    val goalTitle: String?
+        get() = _goalTitle
+
+    fun persistGoalData(goalId: Int, goalTitle: String?) {
+        _goalId = goalId
+        _goalTitle = goalTitle
+
+    }
+
+    val goalsListIsEmpty = goals.map { goals.value.isNullOrEmpty() }
 
     init {
         getImageData()

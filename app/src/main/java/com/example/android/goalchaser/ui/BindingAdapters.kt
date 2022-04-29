@@ -26,6 +26,7 @@ package com.example.android.goalchaser.ui
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
+import android.view.View
 import android.widget.*
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
@@ -164,5 +165,15 @@ fun AutoCompleteTextView.setupDaysMonthsAdapter(
     setAdapter(daysMonthsAdapter)
     if (text.isNullOrEmpty()) {
         setText(dayMonthsArray[0], false)
+    }
+}
+
+@BindingAdapter("isVisible")
+fun View.setupVisibility(isVisible:Boolean){
+    visibility = if (isVisible){
+        View.VISIBLE
+    }
+    else{
+        View.GONE
     }
 }
