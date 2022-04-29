@@ -7,14 +7,29 @@ import androidx.fragment.app.DialogFragment
 import com.example.android.goalchaser.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.android.ext.android.inject
+
 /**This class solves the issue where AlertDialog is dismissed on device rotation as it is
  *lifecycle-aware*/
-class GoalDeletionDialogFragment
- : DialogFragment() {
-    val viewModel:ActiveCompletedGoalsViewModel by inject()
-    var goalId:Int=0
-    var goalTitle:String?=""
 
+class GoalDeletionDialogFragment
+    : DialogFragment() {
+    val viewModel: ActiveCompletedGoalsViewModel by inject()
+    var goalId: Int = 0
+    var goalTitle: String? = ""
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("GOAL_TITLE", goalTitle)
+        outState.putInt("GOAL_ID", goalId)
+
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        savedInstanceState?.let {
+            goalTitle = it.getString("GOAL_TITLE")
+            goalId = it.getInt("GOAL_ID")
+        }
+    }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.alert_dialog_title)
@@ -32,6 +47,7 @@ class GoalDeletionDialogFragment
                 dialog.dismiss()
             }
             .create()
+
 
     companion object {
         const val TAG = "GoalDeletionDialog"

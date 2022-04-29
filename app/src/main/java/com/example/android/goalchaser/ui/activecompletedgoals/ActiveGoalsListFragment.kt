@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentActiveGoalsListBinding
 import com.example.android.goalchaser.ui.activecompletedgoals.recyclerView.GoalsListAdapter
-import com.example.android.goalchaser.utils.uiutils.setupAlertDialog
 import org.koin.android.ext.android.inject
 
 
@@ -19,11 +18,6 @@ class ActiveGoalsListFragment : Fragment() {
 
     lateinit var activeGoalsListBinding: FragmentActiveGoalsListBinding
     val viewModel: ActiveCompletedGoalsViewModel by inject()
-    private var goalId: Int = 0
-    private var goalTitle: String? = ""
-    private var goalDeletionDialogFragment: GoalDeletionDialogFragment? = null
-    private var bundle: Bundle? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,17 +48,7 @@ class ActiveGoalsListFragment : Fragment() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt("GOAL_ID", goalId)
-        outState.putString("GOAL_TITLE", goalTitle)
-    }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        bundle = savedInstanceState
-
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.tasks_list_menu, menu)
@@ -73,8 +57,7 @@ class ActiveGoalsListFragment : Fragment() {
     private fun setupAdapter() {
 
         val goalsListAdapter = GoalsListAdapter { selectedGoal, adapterView ->
-            goalId = selectedGoal.id
-            goalTitle = selectedGoal.title
+
 
             val popupTheme = ContextThemeWrapper(context, R.style.PopupMenuItemStyle)
             val popupMenu = PopupMenu(popupTheme, adapterView)
@@ -90,26 +73,16 @@ class ActiveGoalsListFragment : Fragment() {
                                 .show()
                         }
                         R.id.delete_popup_item -> {
-                            goalDeletionDialogFragment = if (bundle == null) {
-                                setupAlertDialog(goalId, goalTitle)
+                            GoalDeletionDialogFragment().also { dialogFragment ->
+                                dialogFragment.goalId = selectedGoal.id
+                                dialogFragment.goalTitle = selectedGoal.title
 
-                            } else {
-                                bundle?.let {
-                                    setupAlertDialog(
-                                        it.getInt("GOAL_ID"), it.getString("GOAL_TITLE")
-                                    )
-                                }
-                            }
-
-                            goalDeletionDialogFragment?.show(
+                            }.show(
                                 childFragmentManager,
                                 GoalDeletionDialogFragment.TAG
                             )
-
-
                         }
                     }
-
                     true
                 }
                 show()
@@ -132,7 +105,7 @@ class ActiveGoalsListFragment : Fragment() {
         super.onResume()
         viewModel.refreshGoals()
     }
-    //TODO persist alert dialog throughout orientations
+    //TODO fix issue where delete goal doesn't work on device rotation after alertdialog is active
     //TODO add the respective functions to the popup menu functions - delete done
     //TODO show no list image when there're no tasks
     //TODO add transition to view/edit/create goal details
