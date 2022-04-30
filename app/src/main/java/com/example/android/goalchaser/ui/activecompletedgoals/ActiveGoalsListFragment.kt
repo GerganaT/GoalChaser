@@ -73,11 +73,10 @@ class ActiveGoalsListFragment : Fragment() {
                                 .show()
                         }
                         R.id.delete_popup_item -> {
-                            viewModel.persistGoalData(selectedGoal.id,selectedGoal.title)
                             GoalDeletionDialogFragment().also { dialogFragment ->
 
-                                dialogFragment.goalId = viewModel.goalId
-                                dialogFragment.goalTitle = viewModel.goalTitle
+                                dialogFragment.goalId = selectedGoal.id
+                                dialogFragment.goalTitle = selectedGoal.title
 
                             }.show(
                                 childFragmentManager,
@@ -107,7 +106,6 @@ class ActiveGoalsListFragment : Fragment() {
         super.onResume()
         viewModel.refreshGoals()
     }
-    //TODO fix issue where delete goal doesn't work on device rotation after alertdialog is active
     //TODO add the respective functions to the popup menu functions - delete done
     //TODO add transition to view/edit/create goal details
     //TODO add logic for fab button to reuse create_edit_goal fragment with label"create goal"

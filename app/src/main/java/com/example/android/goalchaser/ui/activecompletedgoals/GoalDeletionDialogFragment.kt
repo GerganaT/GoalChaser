@@ -16,15 +16,26 @@ class GoalDeletionDialogFragment
     val viewModel: ActiveCompletedGoalsViewModel by inject()
     var goalId: Int = 0
     var goalTitle: String? = ""
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.run {
+            putInt(GOAL_ID, goalId)
+            putString(GOAL_TITLE, goalTitle)
+        }
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.alert_dialog_title)
             .setMessage(R.string.alert_dialog_message)
             .setPositiveButton(R.string.alert_dialog_delete) { _, _ ->
-                viewModel.deleteGoal(goalId)
+                viewModel.deleteGoal(savedInstanceState?.getInt(GOAL_ID) ?: goalId)
                 Toast.makeText(
                     context,
-                    getString(R.string.deleted_goal_toast, goalTitle),
+                    getString(
+                        R.string.deleted_goal_toast,
+                        savedInstanceState?.getString(GOAL_TITLE) ?: goalTitle
+                    ),
                     Toast.LENGTH_SHORT
                 ).show()
                 viewModel.refreshGoals()
@@ -37,5 +48,7 @@ class GoalDeletionDialogFragment
 
     companion object {
         const val TAG = "GoalDeletionDialog"
+        const val GOAL_ID = "GOAL_ID"
+        const val GOAL_TITLE = "GOAL_TITLE"
     }
 }

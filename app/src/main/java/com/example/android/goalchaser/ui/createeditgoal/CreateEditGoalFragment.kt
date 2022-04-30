@@ -43,12 +43,12 @@ class CreateEditGoalFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         goalDatePicker.run {
-            outState.putInt("YEAR", year)
-            outState.putInt("MONTH", month)
-            outState.putInt("DAY", dayOfMonth)
+            outState.putInt(YEAR, year)
+            outState.putInt(MONTH, month)
+            outState.putInt(DAY, dayOfMonth)
         }
-        outState.putString("DAYS_NUMBER", goalDueDaysMonthsAmount.text.toString())
-        outState.putString("DAYS_MONTHS", goalDueDaysOrMonths.text.toString())
+        outState.putString(DAYS_NUMBER, goalDueDaysMonthsAmount.text.toString())
+        outState.putString(DAYS_MONTHS, goalDueDaysOrMonths.text.toString())
 
     }
 
@@ -56,12 +56,12 @@ class CreateEditGoalFragment : Fragment() {
         super.onViewStateRestored(savedInstanceState)
         savedInstanceState?.run {
             goalDatePicker.updateDate(
-                getInt("YEAR"),
-                getInt("MONTH"),
-                getInt("DAY")
+                getInt(YEAR),
+                getInt(MONTH),
+                getInt(DAY)
             )
-            goalDueDaysMonthsAmount.setText(getString("DAYS_NUMBER"), false)
-            goalDueDaysOrMonths.setText(getString("DAYS_MONTHS"), false)
+            goalDueDaysMonthsAmount.setText(getString(DAYS_NUMBER), false)
+            goalDueDaysOrMonths.setText(getString(DAYS_MONTHS), false)
         }
     }
 
@@ -111,6 +111,15 @@ class CreateEditGoalFragment : Fragment() {
                 }
             }
         }
+    }
+
+    companion object {
+        const val YEAR = "YEAR"
+        const val MONTH = "MONTH"
+        const val DAY = "DAY"
+        const val DAYS_NUMBER = "DAYS_NUMBER"
+        const val DAYS_MONTHS = "DAYS_MONTHS"
+
     }
 }
 

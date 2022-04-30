@@ -34,19 +34,6 @@ class ActiveCompletedGoalsViewModel(
         get() = _goalIsDeleted
     private val _goalIsDeleted = MutableLiveData<Boolean>()
 
-    private var _goalId = 0
-    val goalId: Int
-        get() = _goalId
-
-    private var _goalTitle: String? = ""
-    val goalTitle: String?
-        get() = _goalTitle
-
-    fun persistGoalData(goalId: Int, goalTitle: String?) {
-        _goalId = goalId
-        _goalTitle = goalTitle
-
-    }
 
     val goalsListIsEmpty = goals.map { goals.value.isNullOrEmpty() }
 
