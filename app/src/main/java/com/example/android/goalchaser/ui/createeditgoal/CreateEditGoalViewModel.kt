@@ -9,18 +9,20 @@ import com.example.android.goalchaser.repository.GoalsRepository
 import com.example.android.goalchaser.ui.uistate.GoalDataUiState
 import com.example.android.goalchaser.utils.datautils.Result
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class CreateEditGoalViewModel(
     private val goalsRepository: GoalsRepository
 ) : ViewModel() {
 
-    val goalTitle = MutableLiveData<String>()
-    val goalDueDate = MutableLiveData<String>()
-    val activeNotification = MutableLiveData<Boolean>()
-    private val timeUnitCount = MutableLiveData<Int>()
-    private val timeTypeDays = MutableLiveData<Boolean>()
-    private val timeTypeMonths = MutableLiveData<Boolean>()
-    private val isDone = MutableLiveData<Boolean>()
+    val goalTitle = MutableLiveData<String?>()
+    val goalDueDate = MutableLiveData<String?>()
+    val activeNotification = MutableLiveData<Boolean?>()
+    private val timeUnitCount = MutableLiveData<Int?>()
+    private val timeTypeDays = MutableLiveData<Boolean?>()
+    private val timeTypeMonths = MutableLiveData<Boolean?>()
+    private val isDone = MutableLiveData<Boolean?>()
+    val goal = MutableLiveData<GoalDataUiState>()
 
     val days: LiveData<Array<Int>>
         get() = _days
@@ -37,6 +39,47 @@ class CreateEditGoalViewModel(
     init {
         _days.value = Array(31) { it + 1 }
         isDone.value = false
+
+    }
+
+     fun getGoal(transferredGoalId:Int) {
+        viewModelScope.launch {
+            goalsRepository.getGoal(transferredGoalId).run {
+                when (this) {
+                    is Result.Success -> {
+                        goal.value =
+                            data.let{ gd: GoalData ->
+                                GoalDataUiState(
+                                    gd.title,
+                                    gd.dueDate,
+                                    gd.sendNotification,
+                                    gd.timeUnitNumber,
+                                    gd.days,
+                                    gd.months,
+                                    gd.isCompleted,
+                                    gd.goalId
+                                )
+
+                            }
+                        goal.value?.run {
+                            goalTitle.value =  title
+                                goalDueDate.value = dueDate
+                                activeNotification.value = sendNotification
+                                timeUnitCount.value = timeUnitNumber
+                                timeTypeDays.value = days
+                                timeTypeMonths.value = months
+                                isDone.value= isCompleted
+
+                        }
+                    }
+                    is Result.Error -> {
+                        Timber.e("Cant load goal")
+                    }
+                }
+            }
+
+
+        }
 
     }
 

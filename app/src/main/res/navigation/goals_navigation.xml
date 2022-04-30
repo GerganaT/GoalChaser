@@ -47,5 +47,9 @@
         <action
             android:id="@+id/action_createEditGoalFragment_to_activeGoalsFragment"
             app:destination="@id/activeGoalsFragment" />
+        <argument
+            android:name="passedGoalId"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 </navigation>

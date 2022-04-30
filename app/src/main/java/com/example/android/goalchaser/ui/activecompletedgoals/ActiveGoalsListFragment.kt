@@ -49,7 +49,6 @@ class ActiveGoalsListFragment : Fragment() {
     }
 
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.tasks_list_menu, menu)
     }
@@ -66,7 +65,12 @@ class ActiveGoalsListFragment : Fragment() {
                 setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
                         R.id.details_popup_item -> {
-                            Toast.makeText(context, "details clicked", Toast.LENGTH_SHORT).show()
+                            val passedId = selectedGoal.id
+                            val navDirections = ActiveGoalsListFragmentDirections
+                                .actionActiveGoalsFragmentToCreateEditGoalFragment(passedId)
+                            findNavController().navigate(
+                                navDirections
+                            )
                         }
                         R.id.mark_completed_popup_item -> {
                             Toast.makeText(context, "mark completed clicked", Toast.LENGTH_SHORT)
@@ -74,7 +78,6 @@ class ActiveGoalsListFragment : Fragment() {
                         }
                         R.id.delete_popup_item -> {
                             GoalDeletionDialogFragment().also { dialogFragment ->
-
                                 dialogFragment.goalId = selectedGoal.id
                                 dialogFragment.goalTitle = selectedGoal.title
 

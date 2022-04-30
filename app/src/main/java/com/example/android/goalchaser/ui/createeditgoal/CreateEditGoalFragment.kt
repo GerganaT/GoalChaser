@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentCreateEditGoalBinding
 import com.google.android.material.snackbar.Snackbar
@@ -23,6 +24,8 @@ class CreateEditGoalFragment : Fragment() {
     private lateinit var goalDueDaysOrMonths: AutoCompleteTextView
     private lateinit var goalDueDaysMonthsAmount: AutoCompleteTextView
     private val viewModel: CreateEditGoalViewModel by viewModel()
+
+    val args:CreateEditGoalFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,6 +72,9 @@ class CreateEditGoalFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         createEditGoalBinding.lifecycleOwner = viewLifecycleOwner
         createEditGoalBinding.viewModel = viewModel
+        if (args.passedGoalId !=0){
+            viewModel.getGoal(args.passedGoalId)
+        }
         goalDatePicker = createEditGoalBinding.goalDatePicker
         goalDueDaysOrMonths = createEditGoalBinding.daysOrMonthsAutocompleteText
         goalDueDaysMonthsAmount =
@@ -76,8 +82,8 @@ class CreateEditGoalFragment : Fragment() {
 
         createEditGoalBinding.saveGoalFab.setOnClickListener {
             viewModel.activeNotification.observe(viewLifecycleOwner)
-            { notificationIsActive: Boolean ->
-                if (notificationIsActive) {
+            { notificationIsActive: Boolean? ->
+                if (notificationIsActive == true) {
                     viewModel.saveDays(goalDueDaysMonthsAmount.text.toString())
 
                     val goalDaysOrMonthsAmount =
@@ -122,5 +128,6 @@ class CreateEditGoalFragment : Fragment() {
 
     }
 }
-
-
+//TODO update all ui fields properly when querying an existing goal /now only title is getting updated
+//TODO Write logic to update entry via the save button -then goal updated data has to be displayed
+// TODO in the list
