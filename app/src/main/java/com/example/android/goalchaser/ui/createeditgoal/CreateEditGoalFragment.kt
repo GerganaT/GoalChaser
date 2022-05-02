@@ -15,10 +15,10 @@ import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentCreateEditGoalBinding
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
+import java.text.DateFormatSymbols
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
+import java.util.*
 
 
 class CreateEditGoalFragment : Fragment() {
@@ -84,17 +84,39 @@ class CreateEditGoalFragment : Fragment() {
                     savedGoal.dueDate?.split("/")
                         ?.map { it.toInt() }?.run {
                             val year = get(2)
-                            // month is - 1 to be properly displayed within the date picker
-                            val month = get(0) - 1
+                            // month is - 1 to be properly displayed within the Ui dialogs
+                            val uiAdjustedMonth = get(0) - 1
+                            val month = get(0)
                             val day = get(1)
-                            val goalMinDueDate = LocalDate.now().plus(1, ChronoUnit.DAYS)
-                            val goalDueDate = LocalDate.of(year,get(0),day)
-                            if (goalMinDueDate.isAfter(goalDueDate) ){
-                                Toast.makeText(context,"Goal due date auto - adjusted",Toast.LENGTH_SHORT).show()
-                            }
                             goalDatePicker.updateDate(
-                                year, month, day
+                                year, uiAdjustedMonth, day
                             )
+                            val goalMinDueDate = LocalDate.now().plus(1, ChronoUnit.DAYS)
+                            val goalDueDate = LocalDate.of(year, month, day)
+                            if (goalMinDueDate.isAfter(goalDueDate)) {
+                                val monthName = DateFormatSymbols(Locale.getDefault())
+                                    .months[uiAdjustedMonth]
+
+                                if (savedInstanceState == null) {
+                                    Snackbar.make(
+                                        createEditGoalBinding.root, getString(
+                                            R.string.goal_adjusted_snackbar_message,
+                                            day,
+                                            monthName,
+                                            year
+                                        ),
+                                        Snackbar.LENGTH_INDEFINITE
+                                    ).run {
+                                        setAction(R.string.ok) {
+                                            dismiss()
+                                        }
+                                    }.show()
+                                }
+
+
+                            }
+
+
                         }
                 }
 
@@ -123,12 +145,10 @@ class CreateEditGoalFragment : Fragment() {
             viewModel.saveGoal()
             viewModel.isTitleEntered.observe(viewLifecycleOwner) { isTitleEntered ->
                 if (!isTitleEntered) {
-                    val snackbar = Snackbar.make(
+                    Snackbar.make(
                         createEditGoalBinding.root, R.string.no_title_entered_notification,
                         Snackbar.LENGTH_INDEFINITE
-                    )
-                    snackbar.setAction(R.string.ok) { snackbar.dismiss() }
-                    snackbar.show()
+                    ).run { setAction(R.string.ok) { dismiss() } }.show()
                 }
             }
 
@@ -144,6 +164,7 @@ class CreateEditGoalFragment : Fragment() {
         }
     }
 
+
     companion object {
         const val YEAR = "YEAR"
         const val MONTH = "MONTH"
@@ -154,7 +175,9 @@ class CreateEditGoalFragment : Fragment() {
     }
 }
 //TODO update all ui fields properly when querying an existing goal /now only title,datepicker is getting updated
-//TODO Show snackbar informing user that the goal date was adjusted,persist it through orientations
+//TODO persist date adjusted snackbar through orientations
+//TODO dismiss snackbars on navigation
+//TODO Persist data in date picker when rotated but in edit-goal mode ; create mode works fine
 //TODO persist no goal title entered snackbar throughout orientations
 //TODO Write logic to update entry via the save button -then goal updated data has to be displayed
 // TODO in the list

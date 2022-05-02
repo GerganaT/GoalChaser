@@ -23,7 +23,6 @@ class CreateEditGoalViewModel(
     private val timeTypeMonths = MutableLiveData<Boolean?>()
     private val isDone = MutableLiveData<Boolean?>()
     val goal = MutableLiveData<GoalDataUiState>()
-
     val days: LiveData<Array<Int>>
         get() = _days
     private val _days = MutableLiveData<Array<Int>>()
@@ -35,20 +34,20 @@ class CreateEditGoalViewModel(
     val isTitleEntered: LiveData<Boolean>
         get() = _isTitleEntered
     private val _isTitleEntered = MutableLiveData<Boolean>()
-
     init {
         _days.value = Array(31) { it + 1 }
         isDone.value = false
 
     }
 
-     fun getGoal(transferredGoalId:Int) {
+
+    fun getGoal(transferredGoalId: Int) {
         viewModelScope.launch {
             goalsRepository.getGoal(transferredGoalId).run {
                 when (this) {
                     is Result.Success -> {
                         goal.value =
-                            data.let{ gd: GoalData ->
+                            data.let { gd: GoalData ->
                                 GoalDataUiState(
                                     gd.title,
                                     gd.dueDate,
@@ -62,12 +61,12 @@ class CreateEditGoalViewModel(
 
                             }
                         goal.value?.run {
-                                goalTitle.value =  title
-                                activeNotification.value = sendNotification
-                                timeUnitCount.value = timeUnitNumber
-                                timeTypeDays.value = days
-                                timeTypeMonths.value = months
-                                isDone.value= isCompleted
+                            goalTitle.value = title
+                            activeNotification.value = sendNotification
+                            timeUnitCount.value = timeUnitNumber
+                            timeTypeDays.value = days
+                            timeTypeMonths.value = months
+                            isDone.value = isCompleted
 
                         }
                     }

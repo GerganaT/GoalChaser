@@ -35,10 +35,6 @@
     <string name="before_goal_due_date_label">before goal due date.</string>
     <string name="number">1</string>
     <string name="active_goals_drawer_menu_item">Active goals</string>
-    <string-array name="days_months">
-        <item>Day(s)</item>
-        <item>Month(s)</item>
-    </string-array>
     <string name="photographer_credentials">Photo by %1$s on %2$s</string>
     <string name="user_entered_date">%1$d/%2$d/%3$d</string>
     <string name="unsplash_website_title">Unsplash</string>
@@ -57,4 +53,10 @@
     <string name="alert_dialog_message">This can\'t be undone.</string>
     <string name="alert_dialog_delete">Delete</string>
     <string name="alert_dialog_cancel">Cancel</string>
+    <string name="goal_adjusted_snackbar_message">Past due date of %1$d-%2$s-%3$d
+        auto - adjusted ,you can still set any other future date .</string>
+    <string-array name="days_months">
+        <item>Day(s)</item>
+        <item>Month(s)</item>
+    </string-array>
 </resources>
