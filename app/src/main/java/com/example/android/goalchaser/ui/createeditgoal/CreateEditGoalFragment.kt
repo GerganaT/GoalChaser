@@ -15,6 +15,10 @@ import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentCreateEditGoalBinding
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 
 class CreateEditGoalFragment : Fragment() {
@@ -25,7 +29,7 @@ class CreateEditGoalFragment : Fragment() {
     private lateinit var goalDueDaysMonthsAmount: AutoCompleteTextView
     private val viewModel: CreateEditGoalViewModel by viewModel()
 
-    val args:CreateEditGoalFragmentArgs by navArgs()
+    val args: CreateEditGoalFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,8 +76,29 @@ class CreateEditGoalFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         createEditGoalBinding.lifecycleOwner = viewLifecycleOwner
         createEditGoalBinding.viewModel = viewModel
-        if (args.passedGoalId !=0){
-            viewModel.getGoal(args.passedGoalId)
+        //prepopulate data in the fragment if the user is viewing details of an existing goal
+        if (args.passedGoalId != 0) {
+            viewModel.run {
+                getGoal(args.passedGoalId)
+                goal.observe(viewLifecycleOwner) { savedGoal ->
+                    savedGoal.dueDate?.split("/")
+                        ?.map { it.toInt() }?.run {
+                            val year = get(2)
+                            // month is - 1 to be properly displayed within the date picker
+                            val month = get(0) - 1
+                            val day = get(1)
+                            val goalMinDueDate = LocalDate.now().plus(1, ChronoUnit.DAYS)
+                            val goalDueDate = LocalDate.of(year,get(0),day)
+                            if (goalMinDueDate.isAfter(goalDueDate) ){
+                                Toast.makeText(context,"Goal due date auto - adjusted",Toast.LENGTH_SHORT).show()
+                            }
+                            goalDatePicker.updateDate(
+                                year, month, day
+                            )
+                        }
+                }
+
+            }
         }
         goalDatePicker = createEditGoalBinding.goalDatePicker
         goalDueDaysOrMonths = createEditGoalBinding.daysOrMonthsAutocompleteText
@@ -128,6 +153,8 @@ class CreateEditGoalFragment : Fragment() {
 
     }
 }
-//TODO update all ui fields properly when querying an existing goal /now only title is getting updated
+//TODO update all ui fields properly when querying an existing goal /now only title,datepicker is getting updated
+//TODO Show snackbar informing user that the goal date was adjusted,persist it through orientations
+//TODO persist no goal title entered snackbar throughout orientations
 //TODO Write logic to update entry via the save button -then goal updated data has to be displayed
 // TODO in the list

@@ -62,8 +62,7 @@ class CreateEditGoalViewModel(
 
                             }
                         goal.value?.run {
-                            goalTitle.value =  title
-                                goalDueDate.value = dueDate
+                                goalTitle.value =  title
                                 activeNotification.value = sendNotification
                                 timeUnitCount.value = timeUnitNumber
                                 timeTypeDays.value = days
@@ -77,10 +76,7 @@ class CreateEditGoalViewModel(
                     }
                 }
             }
-
-
         }
-
     }
 
 

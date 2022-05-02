@@ -112,7 +112,7 @@ fun DatePicker.setupMinDateAndSaveGoalDueDate(dateToBeSaved: MutableLiveData<Str
     // allow the user to set goal due date since tomorrow since today is already in progress
     //idea from here:https://stackoverflow.com/questions/43134925/
     // android-datepicker-dialog-date-should-come-from-tomorrow
-    minDate = System.currentTimeMillis() + 24 * 60 * 60 * 1000
+     minDate = System.currentTimeMillis() + 24 * 60 * 60 * 1000
     //month + 1 used to match the month name on the dialog to the month number we will display
     // in the goals' list once the goal is saved.
     dateToBeSaved.value = context.getString(
@@ -133,8 +133,6 @@ fun SwitchMaterial.getSwitchState(switchState: MutableLiveData<Boolean>) {
         }
         Toast.makeText(context,toastMessage,Toast.LENGTH_SHORT).show()
     }
-
-
 }
 
 

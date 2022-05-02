@@ -36,6 +36,7 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled true
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -60,7 +61,6 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
 
-
     // Retrofit with Moshi Converter
     implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
     // Moshi
@@ -79,6 +79,8 @@ dependencies {
     //Okio - supplements Picasso offline cashing
     implementation"com.squareup.okio:okio:$version_okio"
 
+    //Desugaring - needed to make usage of modern Java time-and-date methods in lower min API
+    implementation coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:$version_desugaring")
 
     //MPAndroidChart
     implementation "com.github.PhilJay:MPAndroidChart:$version_MPAndroidChart"
