@@ -14,7 +14,9 @@ import androidx.navigation.fragment.navArgs
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentCreateEditGoalBinding
 import com.google.android.material.snackbar.Snackbar
+import okhttp3.internal.wait
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 import java.text.DateFormatSymbols
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
@@ -28,8 +30,8 @@ class CreateEditGoalFragment : Fragment() {
     private lateinit var goalDueDaysOrMonths: AutoCompleteTextView
     private lateinit var goalDueDaysMonthsAmount: AutoCompleteTextView
     private val viewModel: CreateEditGoalViewModel by viewModel()
+    private val args: CreateEditGoalFragmentArgs by navArgs()
 
-    val args: CreateEditGoalFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +56,8 @@ class CreateEditGoalFragment : Fragment() {
             outState.putInt(MONTH, month)
             outState.putInt(DAY, dayOfMonth)
         }
+
+
         outState.putString(DAYS_NUMBER, goalDueDaysMonthsAmount.text.toString())
         outState.putString(DAYS_MONTHS, goalDueDaysOrMonths.text.toString())
 
@@ -70,40 +74,44 @@ class CreateEditGoalFragment : Fragment() {
             goalDueDaysMonthsAmount.setText(getString(DAYS_NUMBER), false)
             goalDueDaysOrMonths.setText(getString(DAYS_MONTHS), false)
         }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         createEditGoalBinding.lifecycleOwner = viewLifecycleOwner
         createEditGoalBinding.viewModel = viewModel
+        goalDatePicker = createEditGoalBinding.goalDatePicker
+        goalDueDaysOrMonths = createEditGoalBinding.daysOrMonthsAutocompleteText
+        goalDueDaysMonthsAmount =
+            createEditGoalBinding.daysOrMonthsNumberAutocompleteText
+
         //prepopulate data in the fragment if the user is viewing details of an existing goal
-        if (args.passedGoalId != 0) {
+        if (args.passedGoalId != 0 && savedInstanceState == null) {
             viewModel.run {
                 getGoal(args.passedGoalId)
                 goal.observe(viewLifecycleOwner) { savedGoal ->
                     savedGoal.dueDate?.split("/")
                         ?.map { it.toInt() }?.run {
-                            val year = get(2)
+                            val editYear = get(2)
                             // month is - 1 to be properly displayed within the Ui dialogs
-                            val uiAdjustedMonth = get(0) - 1
-                            val month = get(0)
-                            val day = get(1)
+                            val editUiAdjustedMonth = get(0) - 1
+                            val actualMonth = get(0)
+                            val editDay = get(1)
                             goalDatePicker.updateDate(
-                                year, uiAdjustedMonth, day
+                                editYear, editUiAdjustedMonth, editDay
                             )
                             val goalMinDueDate = LocalDate.now().plus(1, ChronoUnit.DAYS)
-                            val goalDueDate = LocalDate.of(year, month, day)
+                            val goalDueDate = LocalDate.of(editYear, actualMonth, editDay)
                             if (goalMinDueDate.isAfter(goalDueDate)) {
                                 val monthName = DateFormatSymbols(Locale.getDefault())
-                                    .months[uiAdjustedMonth]
-
-                                if (savedInstanceState == null) {
+                                    .months[editUiAdjustedMonth]
                                     Snackbar.make(
                                         createEditGoalBinding.root, getString(
                                             R.string.goal_adjusted_snackbar_message,
-                                            day,
+                                            editDay,
                                             monthName,
-                                            year
+                                            editYear
                                         ),
                                         Snackbar.LENGTH_INDEFINITE
                                     ).run {
@@ -111,7 +119,7 @@ class CreateEditGoalFragment : Fragment() {
                                             dismiss()
                                         }
                                     }.show()
-                                }
+
 
 
                             }
@@ -122,10 +130,8 @@ class CreateEditGoalFragment : Fragment() {
 
             }
         }
-        goalDatePicker = createEditGoalBinding.goalDatePicker
-        goalDueDaysOrMonths = createEditGoalBinding.daysOrMonthsAutocompleteText
-        goalDueDaysMonthsAmount =
-            createEditGoalBinding.daysOrMonthsNumberAutocompleteText
+
+
 
         createEditGoalBinding.saveGoalFab.setOnClickListener {
             viewModel.activeNotification.observe(viewLifecycleOwner)
@@ -171,13 +177,11 @@ class CreateEditGoalFragment : Fragment() {
         const val DAY = "DAY"
         const val DAYS_NUMBER = "DAYS_NUMBER"
         const val DAYS_MONTHS = "DAYS_MONTHS"
-
     }
 }
 //TODO update all ui fields properly when querying an existing goal /now only title,datepicker is getting updated
 //TODO persist date adjusted snackbar through orientations
 //TODO dismiss snackbars on navigation
-//TODO Persist data in date picker when rotated but in edit-goal mode ; create mode works fine
 //TODO persist no goal title entered snackbar throughout orientations
 //TODO Write logic to update entry via the save button -then goal updated data has to be displayed
 // TODO in the list
