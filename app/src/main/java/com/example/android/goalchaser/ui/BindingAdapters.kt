@@ -112,7 +112,7 @@ fun DatePicker.setupMinDateAndSaveGoalDueDate(dateToBeSaved: MutableLiveData<Str
     // allow the user to set goal due date since tomorrow since today is already in progress
     //idea from here:https://stackoverflow.com/questions/43134925/
     // android-datepicker-dialog-date-should-come-from-tomorrow
-     minDate = System.currentTimeMillis() + 24 * 60 * 60 * 1000
+    minDate = System.currentTimeMillis() + 24 * 60 * 60 * 1000
     //month + 1 used to match the month name on the dialog to the month number we will display
     // in the goals' list once the goal is saved.
     dateToBeSaved.value = context.getString(
@@ -120,21 +120,24 @@ fun DatePicker.setupMinDateAndSaveGoalDueDate(dateToBeSaved: MutableLiveData<Str
     )
 
 }
+//TODO see if u can set the value only if date has been changed
 
 @BindingAdapter("isSwitched")
 
-fun SwitchMaterial.getSwitchState(switchState: MutableLiveData<Boolean>) {
-    switchState.value = isChecked
+fun SwitchMaterial.getSwitchState(switchState: MutableLiveData<Boolean?>) {
 
+    switchState.value?.let {
+        isChecked = it
+    }
     setOnCheckedChangeListener { _, _ ->
-        val toastMessage = when(isChecked){
+        switchState.value = isChecked
+        val toastMessage = when (isChecked) {
             true -> context.getString(R.string.notifications_enabled)
             else -> context.getString(R.string.notifications_disabled)
         }
-        Toast.makeText(context,toastMessage,Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
     }
 }
-
 
 @BindingAdapter("setupDaysMonthsCount")
 fun AutoCompleteTextView.setupDaysMonthsCountAdapter(days: Array<Int>) {
@@ -167,11 +170,10 @@ fun AutoCompleteTextView.setupDaysMonthsAdapter(
 }
 
 @BindingAdapter("isVisible")
-fun View.setupVisibility(isVisible:Boolean){
-    visibility = if (isVisible){
+fun View.setupVisibility(isVisible: Boolean) {
+    visibility = if (isVisible) {
         View.VISIBLE
-    }
-    else{
+    } else {
         View.GONE
     }
 }

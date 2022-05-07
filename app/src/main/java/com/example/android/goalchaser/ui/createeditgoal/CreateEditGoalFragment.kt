@@ -13,10 +13,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentCreateEditGoalBinding
+import com.example.android.goalchaser.utils.uiutils.SavingMotionLayout
 import com.google.android.material.snackbar.Snackbar
-import okhttp3.internal.wait
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 import java.text.DateFormatSymbols
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
@@ -31,6 +30,7 @@ class CreateEditGoalFragment : Fragment() {
     private lateinit var goalDueDaysMonthsAmount: AutoCompleteTextView
     private val viewModel: CreateEditGoalViewModel by viewModel()
     private val args: CreateEditGoalFragmentArgs by navArgs()
+    private lateinit var savingMotionLayout: SavingMotionLayout
 
 
     override fun onCreateView(
@@ -45,7 +45,7 @@ class CreateEditGoalFragment : Fragment() {
                 false
             )
 
-
+        savingMotionLayout = createEditGoalBinding.root as SavingMotionLayout
         return createEditGoalBinding.root
     }
 
@@ -91,7 +91,11 @@ class CreateEditGoalFragment : Fragment() {
             viewModel.run {
                 getGoal(args.passedGoalId)
                 goal.observe(viewLifecycleOwner) { savedGoal ->
-                    savedGoal.dueDate?.split("/")
+                    updateNotificationDetails(savedGoal)
+                    if (activeNotification.value == true){
+                        savingMotionLayout.transitionToEnd()
+                    }
+                    goalDueDate.value?.split("/")
                         ?.map { it.toInt() }?.run {
                             val editYear = get(2)
                             // month is - 1 to be properly displayed within the Ui dialogs
@@ -106,20 +110,19 @@ class CreateEditGoalFragment : Fragment() {
                             if (goalMinDueDate.isAfter(goalDueDate)) {
                                 val monthName = DateFormatSymbols(Locale.getDefault())
                                     .months[editUiAdjustedMonth]
-                                    Snackbar.make(
-                                        createEditGoalBinding.root, getString(
-                                            R.string.goal_adjusted_snackbar_message,
-                                            editDay,
-                                            monthName,
-                                            editYear
-                                        ),
-                                        Snackbar.LENGTH_INDEFINITE
-                                    ).run {
-                                        setAction(R.string.ok) {
-                                            dismiss()
-                                        }
-                                    }.show()
-
+                                Snackbar.make(
+                                    createEditGoalBinding.root, getString(
+                                        R.string.goal_adjusted_snackbar_message,
+                                        editDay,
+                                        monthName,
+                                        editYear
+                                    ),
+                                    Snackbar.LENGTH_INDEFINITE
+                                ).run {
+                                    setAction(R.string.ok) {
+                                        dismiss()
+                                    }
+                                }.show()
 
 
                             }
@@ -179,9 +182,14 @@ class CreateEditGoalFragment : Fragment() {
         const val DAYS_MONTHS = "DAYS_MONTHS"
     }
 }
-//TODO update all ui fields properly when querying an existing goal /now only title,datepicker is getting updated
+//TODO update all ui fields properly when querying an existing goal /now only title
+// ,datepicker,
+// checked state is getting updated
+//TODO send notification 0 saves days /months number - has to be fixed
+//TODO send notification is NULL instead of 0 in create goal mode
 //TODO persist date adjusted snackbar through orientations
 //TODO dismiss snackbars on navigation
 //TODO persist no goal title entered snackbar throughout orientations
 //TODO Write logic to update entry via the save button -then goal updated data has to be displayed
 // TODO in the list
+//TODO try fixing desugaring error?/optional/

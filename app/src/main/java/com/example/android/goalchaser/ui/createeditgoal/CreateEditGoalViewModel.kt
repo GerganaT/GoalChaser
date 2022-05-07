@@ -60,15 +60,6 @@ class CreateEditGoalViewModel(
                                 )
 
                             }
-                        goal.value?.run {
-                            goalTitle.value = title
-                            activeNotification.value = sendNotification
-                            timeUnitCount.value = timeUnitNumber
-                            timeTypeDays.value = days
-                            timeTypeMonths.value = months
-                            isDone.value = isCompleted
-
-                        }
                     }
                     is Result.Error -> {
                         Timber.e("Cant load goal")
@@ -77,6 +68,19 @@ class CreateEditGoalViewModel(
             }
         }
     }
+    fun updateNotificationDetails(goal:GoalDataUiState)=
+        goal.run {
+            goalTitle.value = title
+            goalDueDate.value = dueDate
+            activeNotification.value = sendNotification
+            timeUnitCount.value = timeUnitNumber
+            timeTypeDays.value = days
+            timeTypeMonths.value = months
+            isDone.value = isCompleted
+        }
+
+
+
 
 
     private fun saveUiState(goalDataUiState: GoalDataUiState) {
