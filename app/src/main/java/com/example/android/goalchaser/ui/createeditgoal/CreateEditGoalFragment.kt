@@ -92,7 +92,7 @@ class CreateEditGoalFragment : Fragment() {
                 getGoal(args.passedGoalId)
                 goal.observe(viewLifecycleOwner) { savedGoal ->
                     updateNotificationDetails(savedGoal)
-                    if (activeNotification.value == true){
+                    if (activeNotification.value == true) {
                         savingMotionLayout.transitionToEnd()
                     }
                     goalDueDate.value?.split("/")
@@ -137,6 +137,10 @@ class CreateEditGoalFragment : Fragment() {
 
 
         createEditGoalBinding.saveGoalFab.setOnClickListener {
+            if (viewModel.activeNotification.value == null) {
+                viewModel.resetActiveNotification()
+            }
+
             viewModel.activeNotification.observe(viewLifecycleOwner)
             { notificationIsActive: Boolean? ->
                 if (notificationIsActive == true) {
@@ -148,6 +152,8 @@ class CreateEditGoalFragment : Fragment() {
                         goalDueDaysOrMonths.text.toString(),
                         goalDaysOrMonthsAmount
                     )
+                } else {
+                    viewModel.clearDaysMonths()
                 }
 
             }
@@ -185,8 +191,6 @@ class CreateEditGoalFragment : Fragment() {
 //TODO update all ui fields properly when querying an existing goal /now only title
 // ,datepicker,
 // checked state is getting updated
-//TODO send notification 0 saves days /months number - has to be fixed
-//TODO send notification is NULL instead of 0 in create goal mode
 //TODO persist date adjusted snackbar through orientations
 //TODO dismiss snackbars on navigation
 //TODO persist no goal title entered snackbar throughout orientations

@@ -79,8 +79,14 @@ class CreateEditGoalViewModel(
             isDone.value = isCompleted
         }
 
-
-
+     fun clearDaysMonths(){
+         timeUnitCount.value = null
+         timeTypeDays.value = null
+         timeTypeMonths.value = null
+     }
+     fun resetActiveNotification(){
+         activeNotification.value = false
+     }
 
 
     private fun saveUiState(goalDataUiState: GoalDataUiState) {

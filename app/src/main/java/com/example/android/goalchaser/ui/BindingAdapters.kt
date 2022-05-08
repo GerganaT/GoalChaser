@@ -23,11 +23,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 package com.example.android.goalchaser.ui
 
+import android.app.DatePickerDialog
+import android.os.Build
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
@@ -40,6 +43,7 @@ import com.example.android.goalchaser.ui.activecompletedgoals.recyclerView.Goals
 import com.example.android.goalchaser.ui.uistate.ImageDataUiState
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.squareup.picasso.Picasso
+import timber.log.Timber
 
 @BindingAdapter("imageUrl")
 
@@ -106,6 +110,7 @@ fun <T> setRecyclerViewData(recyclerView: RecyclerView, items: LiveData<List<T>>
     }
 }
 
+
 @BindingAdapter("setupDate")
 
 fun DatePicker.setupMinDateAndSaveGoalDueDate(dateToBeSaved: MutableLiveData<String>) {
@@ -115,10 +120,10 @@ fun DatePicker.setupMinDateAndSaveGoalDueDate(dateToBeSaved: MutableLiveData<Str
     minDate = System.currentTimeMillis() + 24 * 60 * 60 * 1000
     //month + 1 used to match the month name on the dialog to the month number we will display
     // in the goals' list once the goal is saved.
-    dateToBeSaved.value = context.getString(
-        R.string.user_entered_date, month + 1, dayOfMonth, year
-    )
-
+        dateToBeSaved.value = context.getString(
+            R.string.user_entered_date,  month + 1, dayOfMonth, year
+        )
+    Timber.i("datetobesaved is ${dateToBeSaved.value}")
 }
 //TODO see if u can set the value only if date has been changed
 
