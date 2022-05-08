@@ -95,6 +95,7 @@ class CreateEditGoalFragment : Fragment() {
                     if (activeNotification.value == true) {
                         savingMotionLayout.transitionToEnd()
                     }
+                    savedGoal.timeUnitNumber?.let { setupDays(it) }
                     goalDueDate.value?.split("/")
                         ?.map { it.toInt() }?.run {
                             val editYear = get(2)

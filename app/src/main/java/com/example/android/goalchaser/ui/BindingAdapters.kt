@@ -23,14 +23,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 package com.example.android.goalchaser.ui
 
-import android.app.DatePickerDialog
-import android.os.Build
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
 import android.view.View
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
@@ -112,7 +109,6 @@ fun <T> setRecyclerViewData(recyclerView: RecyclerView, items: LiveData<List<T>>
 
 
 @BindingAdapter("setupDate")
-
 fun DatePicker.setupMinDateAndSaveGoalDueDate(dateToBeSaved: MutableLiveData<String>) {
     // allow the user to set goal due date since tomorrow since today is already in progress
     //idea from here:https://stackoverflow.com/questions/43134925/
@@ -120,10 +116,9 @@ fun DatePicker.setupMinDateAndSaveGoalDueDate(dateToBeSaved: MutableLiveData<Str
     minDate = System.currentTimeMillis() + 24 * 60 * 60 * 1000
     //month + 1 used to match the month name on the dialog to the month number we will display
     // in the goals' list once the goal is saved.
-        dateToBeSaved.value = context.getString(
-            R.string.user_entered_date,  month + 1, dayOfMonth, year
-        )
-    Timber.i("datetobesaved is ${dateToBeSaved.value}")
+    dateToBeSaved.value = context.getString(
+        R.string.user_entered_date, month + 1, dayOfMonth, year
+    )
 }
 //TODO see if u can set the value only if date has been changed
 
@@ -146,14 +141,28 @@ fun SwitchMaterial.getSwitchState(switchState: MutableLiveData<Boolean?>) {
 
 @BindingAdapter("setupDaysMonthsCount")
 fun AutoCompleteTextView.setupDaysMonthsCountAdapter(days: Array<Int>) {
-    val daysNumberAdapter = ArrayAdapter(
-        context, R.layout.days_months_dropdown_menu_item,
-        days
-    )
-    setAdapter(daysNumberAdapter)
-    if (text.isNullOrEmpty()) {
-        setText(days[0].toString(), false)
+
+
+    when(days.size){
+        1 -> {val adjustedArray = Array(31){it+1}
+            val daysNumberAdapter = ArrayAdapter(
+                context, R.layout.days_months_dropdown_menu_item,
+                adjustedArray
+            )
+            setAdapter(daysNumberAdapter)
+            setText(adjustedArray[days[0]-1].toString(), false)
+        }
+        else ->{
+            val daysNumberAdapter = ArrayAdapter(
+                context, R.layout.days_months_dropdown_menu_item,
+                days
+            )
+            setAdapter(daysNumberAdapter)
+            setText(days[0].toString(), false)
+        }
     }
+    //TODO fix above solution to improve readability
+
 }
 
 //Used dummy parameter as BindingAdapter cannot have no arguments

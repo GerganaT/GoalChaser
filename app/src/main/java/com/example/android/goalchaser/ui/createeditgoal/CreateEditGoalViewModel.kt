@@ -34,112 +34,120 @@ class CreateEditGoalViewModel(
     val isTitleEntered: LiveData<Boolean>
         get() = _isTitleEntered
     private val _isTitleEntered = MutableLiveData<Boolean>()
+
     init {
-        _days.value = Array(31) { it + 1 }
         isDone.value = false
+        _days.value = Array(31) { it + 1 }
+    }
+
+
+    fun setupDays(days:Int) {
+        _days.value = Array(1) { days }
 
     }
 
 
-    fun getGoal(transferredGoalId: Int) {
-        viewModelScope.launch {
-            goalsRepository.getGoal(transferredGoalId).run {
-                when (this) {
-                    is Result.Success -> {
-                        goal.value =
-                            data.let { gd: GoalData ->
-                                GoalDataUiState(
-                                    gd.title,
-                                    gd.dueDate,
-                                    gd.sendNotification,
-                                    gd.timeUnitNumber,
-                                    gd.days,
-                                    gd.months,
-                                    gd.isCompleted,
-                                    gd.goalId
-                                )
+        fun getGoal(transferredGoalId: Int) {
+            viewModelScope.launch {
+                goalsRepository.getGoal(transferredGoalId).run {
+                    when (this) {
+                        is Result.Success -> {
+                            goal.value =
+                                data.let { gd: GoalData ->
+                                    GoalDataUiState(
+                                        gd.title,
+                                        gd.dueDate,
+                                        gd.sendNotification,
+                                        gd.timeUnitNumber,
+                                        gd.days,
+                                        gd.months,
+                                        gd.isCompleted,
+                                        gd.goalId
+                                    )
 
-                            }
-                    }
-                    is Result.Error -> {
-                        Timber.e("Cant load goal")
+                                }
+                        }
+                        is Result.Error -> {
+                            Timber.e("Cant load goal")
+                        }
                     }
                 }
             }
         }
-    }
-    fun updateNotificationDetails(goal:GoalDataUiState)=
-        goal.run {
-            goalTitle.value = title
-            goalDueDate.value = dueDate
-            activeNotification.value = sendNotification
-            timeUnitCount.value = timeUnitNumber
-            timeTypeDays.value = days
-            timeTypeMonths.value = months
-            isDone.value = isCompleted
+
+        fun updateNotificationDetails(goal: GoalDataUiState) =
+            goal.run {
+                goalTitle.value = title
+                goalDueDate.value = dueDate
+                activeNotification.value = sendNotification
+                timeUnitCount.value = timeUnitNumber
+                timeTypeDays.value = days
+                timeTypeMonths.value = months
+                isDone.value = isCompleted
+            }
+
+        fun clearDaysMonths() {
+            timeUnitCount.value = null
+            timeTypeDays.value = null
+            timeTypeMonths.value = null
         }
 
-     fun clearDaysMonths(){
-         timeUnitCount.value = null
-         timeTypeDays.value = null
-         timeTypeMonths.value = null
-     }
-     fun resetActiveNotification(){
-         activeNotification.value = false
-     }
+        fun resetActiveNotification() {
+            activeNotification.value = false
+        }
 
 
-    private fun saveUiState(goalDataUiState: GoalDataUiState) {
-        viewModelScope.launch {
-            val goalData = goalDataUiState.run {
-                GoalData(
-                    title,
-                    dueDate,
-                    sendNotification,
-                    timeUnitNumber,
-                    days,
-                    months,
-                    isCompleted
-                )
-            }
-            goalsRepository.saveGoal(goalData).run {
-                _goalIsSaved.value = when (this) {
-                    is Result.Success -> data
-                    is Result.Error -> false
+        private fun saveUiState(goalDataUiState: GoalDataUiState) {
+            viewModelScope.launch {
+                val goalData = goalDataUiState.run {
+                    GoalData(
+                        title,
+                        dueDate,
+                        sendNotification,
+                        timeUnitNumber,
+                        days,
+                        months,
+                        isCompleted
+                    )
+                }
+                goalsRepository.saveGoal(goalData).run {
+                    _goalIsSaved.value = when (this) {
+                        is Result.Success -> data
+                        is Result.Error -> false
+                    }
                 }
             }
         }
-    }
 
-    fun saveGoal() {
-        viewModelScope.launch {
-            if (!goalTitle.value.isNullOrEmpty()) {
-                _isTitleEntered.value = true
-                GoalDataUiState(
-                    goalTitle.value,
-                    goalDueDate.value,
-                    activeNotification.value,
-                    timeUnitCount.value,
-                    timeTypeDays.value,
-                    timeTypeMonths.value,
-                    isDone.value
-                ).run { saveUiState(this) }
-            } else {
-                _isTitleEntered.value = false
+        fun saveGoal() {
+            viewModelScope.launch {
+                if (!goalTitle.value.isNullOrEmpty()) {
+                    _isTitleEntered.value = true
+                    GoalDataUiState(
+                        goalTitle.value,
+                        goalDueDate.value,
+                        activeNotification.value,
+                        timeUnitCount.value,
+                        timeTypeDays.value,
+                        timeTypeMonths.value,
+                        isDone.value
+                    ).run { saveUiState(this) }
+                } else {
+                    _isTitleEntered.value = false
+                }
+
             }
-
         }
-    }
 
-    fun saveDays(days: String) {
-        timeUnitCount.value = days.toInt()
-    }
+        fun saveDays(days: String) {
+            timeUnitCount.value = days.toInt()
+        }
 
-    fun saveDaysOrMonths(daysOrMonths: String, daysMonths: Array<String>) {
-        timeTypeDays.value = daysOrMonths == daysMonths[0]
-        timeTypeMonths.value = daysOrMonths == daysMonths[1]
-    }
+        fun saveDaysOrMonths(daysOrMonths: String, daysMonths: Array<String>) {
+            timeTypeDays.value = daysOrMonths == daysMonths[0]
+            timeTypeMonths.value = daysOrMonths == daysMonths[1]
+        }
 
-}
+    }
 
 
