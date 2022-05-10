@@ -139,32 +139,6 @@ fun SwitchMaterial.getSwitchState(switchState: MutableLiveData<Boolean?>) {
     }
 }
 
-@BindingAdapter("setupDaysMonthsCount")
-fun AutoCompleteTextView.setupDaysMonthsCountAdapter(days: Array<Int>) {
-
-
-    when(days.size){
-        1 -> {val adjustedArray = Array(31){it+1}
-            val daysNumberAdapter = ArrayAdapter(
-                context, R.layout.days_months_dropdown_menu_item,
-                adjustedArray
-            )
-            setAdapter(daysNumberAdapter)
-            setText(adjustedArray[days[0]-1].toString(), false)
-        }
-        else ->{
-            val daysNumberAdapter = ArrayAdapter(
-                context, R.layout.days_months_dropdown_menu_item,
-                days
-            )
-            setAdapter(daysNumberAdapter)
-            setText(days[0].toString(), false)
-        }
-    }
-    //TODO fix above solution to improve readability
-
-}
-
 //Used dummy parameter as BindingAdapter cannot have no arguments
 @BindingAdapter("setupDaysMonths")
 fun AutoCompleteTextView.setupDaysMonthsAdapter(

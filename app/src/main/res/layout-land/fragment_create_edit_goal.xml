@@ -62,7 +62,6 @@
                     android:layout_height="wrap_content"
                     android:inputType="none"
                     android:padding="@dimen/padding_small"
-                    app:setupDaysMonthsCount="@{viewModel.days}"
                     tools:ignore="SpeakableTextPresentCheck" />
 
             </com.google.android.material.textfield.TextInputLayout>

@@ -14,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentCreateEditGoalBinding
 import com.example.android.goalchaser.utils.uiutils.SavingMotionLayout
+import com.example.android.goalchaser.utils.uiutils.setupDaysMonthsCountAdapter
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DateFormatSymbols
@@ -86,6 +87,7 @@ class CreateEditGoalFragment : Fragment() {
         goalDueDaysMonthsAmount =
             createEditGoalBinding.daysOrMonthsNumberAutocompleteText
 
+
         //prepopulate data in the fragment if the user is viewing details of an existing goal
         if (args.passedGoalId != 0 && savedInstanceState == null) {
             viewModel.run {
@@ -134,13 +136,18 @@ class CreateEditGoalFragment : Fragment() {
 
             }
         }
-
+        viewModel.days.observe(viewLifecycleOwner) {
+            it?.let { goalDueDaysMonthsAmount.setupDaysMonthsCountAdapter(it, savedInstanceState) }
+        }
 
 
         createEditGoalBinding.saveGoalFab.setOnClickListener {
             if (viewModel.activeNotification.value == null) {
                 viewModel.resetActiveNotification()
             }
+
+
+
 
             viewModel.activeNotification.observe(viewLifecycleOwner)
             { notificationIsActive: Boolean? ->
@@ -191,7 +198,7 @@ class CreateEditGoalFragment : Fragment() {
 }
 //TODO update all ui fields properly when querying an existing goal /now only title
 // ,datepicker,
-// checked state is getting updated
+// checked state,days  are getting updated
 //TODO persist date adjusted snackbar through orientations
 //TODO dismiss snackbars on navigation
 //TODO persist no goal title entered snackbar throughout orientations
