@@ -5,7 +5,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import com.example.android.goalchaser.R
 
-fun AutoCompleteTextView.setupDaysMonthsCountAdapter(days: Array<Int>,savedState: Bundle?) {
+fun AutoCompleteTextView.setupDaysMonthsCountAdapter(days: Array<Int>, savedState: Bundle?) {
 
     val adjustedArray = when (days.size) {
         1 -> Array(31) { it + 1 }
@@ -20,8 +20,30 @@ fun AutoCompleteTextView.setupDaysMonthsCountAdapter(days: Array<Int>,savedState
         adjustedArray
     )
     setAdapter(daysNumberAdapter)
-    if (savedState == null){
+    if (savedState == null) {
         setText(initialDaysValue.toString(), false)
     }
 
+}
+
+fun AutoCompleteTextView.setupSavedDaysMonthsValues(daysOrMonths: Boolean?, savedState: Bundle?) {
+    val arrayPosition = when (daysOrMonths) {
+        null, true -> 0
+        false -> 1
+    }
+    if (savedState == null) {
+        setText(setupDaysMonthsAdapter()[arrayPosition], false)
+    }
+}
+
+fun AutoCompleteTextView.setupDaysMonthsAdapter(): Array<String> {
+    val dayMonthsArray = context.resources.getStringArray(R.array.days_months)
+    val daysMonthsAdapter = ArrayAdapter(
+        context,
+        R.layout.days_months_dropdown_menu_item,
+        dayMonthsArray
+    )
+    setAdapter(daysMonthsAdapter)
+
+    return dayMonthsArray
 }

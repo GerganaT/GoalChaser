@@ -38,9 +38,9 @@ import com.airbnb.lottie.LottieDrawable
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.ui.activecompletedgoals.recyclerView.GoalsRecyclerViewAdapter
 import com.example.android.goalchaser.ui.uistate.ImageDataUiState
+import com.example.android.goalchaser.utils.uiutils.setupDaysMonthsAdapter
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.squareup.picasso.Picasso
-import timber.log.Timber
 
 @BindingAdapter("imageUrl")
 
@@ -139,21 +139,15 @@ fun SwitchMaterial.getSwitchState(switchState: MutableLiveData<Boolean?>) {
     }
 }
 
+//Adapter used only for create goal mode
 //Used dummy parameter as BindingAdapter cannot have no arguments
 @BindingAdapter("setupDaysMonths")
-fun AutoCompleteTextView.setupDaysMonthsAdapter(
+fun AutoCompleteTextView.setupDaysMonthsInitialValue(
     dummyParam: Nothing?
-
 ) {
-    val dayMonthsArray = context.resources.getStringArray(R.array.days_months)
-    val daysMonthsAdapter = ArrayAdapter(
-        context,
-        R.layout.days_months_dropdown_menu_item,
-        dayMonthsArray
-    )
-    setAdapter(daysMonthsAdapter)
+    val daysMonthsArray = setupDaysMonthsAdapter()
     if (text.isNullOrEmpty()) {
-        setText(dayMonthsArray[0], false)
+        setText(daysMonthsArray[0], false)
     }
 }
 

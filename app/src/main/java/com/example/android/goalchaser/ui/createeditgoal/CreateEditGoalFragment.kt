@@ -15,6 +15,7 @@ import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentCreateEditGoalBinding
 import com.example.android.goalchaser.utils.uiutils.SavingMotionLayout
 import com.example.android.goalchaser.utils.uiutils.setupDaysMonthsCountAdapter
+import com.example.android.goalchaser.utils.uiutils.setupSavedDaysMonthsValues
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DateFormatSymbols
@@ -136,18 +137,17 @@ class CreateEditGoalFragment : Fragment() {
 
             }
         }
-        viewModel.days.observe(viewLifecycleOwner) {
-            it?.let { goalDueDaysMonthsAmount.setupDaysMonthsCountAdapter(it, savedInstanceState) }
+        viewModel.days.observe(viewLifecycleOwner) { daysAmount ->
+            daysAmount?.let { goalDueDaysMonthsAmount.setupDaysMonthsCountAdapter(daysAmount, savedInstanceState) }
         }
-
+        viewModel.daysMonthsMediatorLiveData.observe(viewLifecycleOwner){ daysOrMonths ->
+            goalDueDaysOrMonths.setupSavedDaysMonthsValues(daysOrMonths,savedInstanceState)
+        }
 
         createEditGoalBinding.saveGoalFab.setOnClickListener {
             if (viewModel.activeNotification.value == null) {
                 viewModel.resetActiveNotification()
             }
-
-
-
 
             viewModel.activeNotification.observe(viewLifecycleOwner)
             { notificationIsActive: Boolean? ->
@@ -196,9 +196,7 @@ class CreateEditGoalFragment : Fragment() {
         const val DAYS_MONTHS = "DAYS_MONTHS"
     }
 }
-//TODO update all ui fields properly when querying an existing goal /now only title
-// ,datepicker,
-// checked state,days  are getting updated
+//TODO change fragment title if in edit mode
 //TODO persist date adjusted snackbar through orientations
 //TODO dismiss snackbars on navigation
 //TODO persist no goal title entered snackbar throughout orientations
