@@ -41,6 +41,8 @@ import com.example.android.goalchaser.ui.uistate.ImageDataUiState
 import com.example.android.goalchaser.utils.uiutils.setupDaysMonthsAdapter
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.squareup.picasso.Picasso
+import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 
 @BindingAdapter("imageUrl")
 
@@ -109,18 +111,26 @@ fun <T> setRecyclerViewData(recyclerView: RecyclerView, items: LiveData<List<T>>
 
 
 @BindingAdapter("setupDate")
-fun DatePicker.setupMinDateAndSaveGoalDueDate(dateToBeSaved: MutableLiveData<String>) {
+fun DatePicker.setupMinDateAndSaveGoalDueDate(dateToBeSaved: MutableLiveData<String?>) {
+    val dateChangedListener =
+        DatePicker.OnDateChangedListener { _: DatePicker, _: Int, _: Int, _: Int ->
+            dateToBeSaved.value = context.getString(
+                R.string.user_entered_date, month + 1, dayOfMonth, year
+            )
+        }
+    init(year, month, dayOfMonth, dateChangedListener)
     // allow the user to set goal due date since tomorrow since today is already in progress
     //idea from here:https://stackoverflow.com/questions/43134925/
     // android-datepicker-dialog-date-should-come-from-tomorrow
     minDate = System.currentTimeMillis() + 24 * 60 * 60 * 1000
-    //month + 1 used to match the month name on the dialog to the month number we will display
-    // in the goals' list once the goal is saved.
-    dateToBeSaved.value = context.getString(
-        R.string.user_entered_date, month + 1, dayOfMonth, year
-    )
+    val tomorrow = LocalDate.now().plus(1, ChronoUnit.DAYS)
+    if (dateToBeSaved.value == null) {
+        dateToBeSaved.value = context.getString(
+            R.string.user_entered_date, tomorrow.monthValue, tomorrow.dayOfMonth, tomorrow.year
+        )
+
+    }
 }
-//TODO see if u can set the value only if date has been changed
 
 @BindingAdapter("isSwitched")
 

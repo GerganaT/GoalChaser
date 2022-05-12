@@ -111,7 +111,7 @@ class ActiveGoalsListFragment : Fragment() {
     }
     //TODO add the respective functions to the popup menu functions - delete done
     //TODO add transition to view/edit/create goal details
-    //TODO add logic for fab button to reuse create_edit_goal fragment with label"create goal"
+    //TODO add logic to the delete all menu
 
 
 }

@@ -18,6 +18,7 @@ import com.example.android.goalchaser.utils.uiutils.setupDaysMonthsCountAdapter
 import com.example.android.goalchaser.utils.uiutils.setupSavedDaysMonthsValues
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 import java.text.DateFormatSymbols
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
@@ -87,8 +88,6 @@ class CreateEditGoalFragment : Fragment() {
         goalDueDaysOrMonths = createEditGoalBinding.daysOrMonthsAutocompleteText
         goalDueDaysMonthsAmount =
             createEditGoalBinding.daysOrMonthsNumberAutocompleteText
-
-
         //prepopulate data in the fragment if the user is viewing details of an existing goal
         if (args.passedGoalId != 0 && savedInstanceState == null) {
             viewModel.run {
@@ -196,10 +195,10 @@ class CreateEditGoalFragment : Fragment() {
         const val DAYS_MONTHS = "DAYS_MONTHS"
     }
 }
+//TODO Write logic to update entry via the save button -then goal updated data has to be displayed
+// TODO in the list
 //TODO change fragment title if in edit mode
 //TODO persist date adjusted snackbar through orientations
 //TODO dismiss snackbars on navigation
 //TODO persist no goal title entered snackbar throughout orientations
-//TODO Write logic to update entry via the save button -then goal updated data has to be displayed
-// TODO in the list
 //TODO try fixing desugaring error?/optional/
