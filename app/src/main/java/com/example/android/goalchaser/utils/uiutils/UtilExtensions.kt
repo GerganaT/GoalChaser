@@ -59,7 +59,6 @@ fun ActiveGoalsListFragment.navigateToCreateEditGoalFragment(selectedGoalId:Int=
     val navDirections = ActiveGoalsListFragmentDirections
         .actionActiveGoalsFragmentToCreateEditGoalFragment(selectedGoalId,createEditGoalLabel)
     findNavController().run {
-        graph.findNode(R.id.createEditGoalFragment)?.label = createEditGoalLabel
         navigate(
             navDirections
         )

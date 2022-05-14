@@ -61,7 +61,6 @@ class CreateEditGoalFragment : Fragment() {
             outState.putInt(DAY, dayOfMonth)
         }
 
-        outState.putString(LABEL,args.passedLabel)
         outState.putString(DAYS_NUMBER, goalDueDaysMonthsAmount.text.toString())
         outState.putString(DAYS_MONTHS, goalDueDaysOrMonths.text.toString())
 
@@ -83,8 +82,7 @@ class CreateEditGoalFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as AppCompatActivity).supportActionBar?.title = savedInstanceState?.getString(
-            LABEL) ?: args.passedLabel
+        (activity as AppCompatActivity).supportActionBar?.title = args.passedLabel
         createEditGoalBinding.lifecycleOwner = viewLifecycleOwner
         createEditGoalBinding.viewModel = viewModel
         goalDatePicker = createEditGoalBinding.goalDatePicker
@@ -201,7 +199,6 @@ class CreateEditGoalFragment : Fragment() {
         const val DAY = "DAY"
         const val DAYS_NUMBER = "DAYS_NUMBER"
         const val DAYS_MONTHS = "DAYS_MONTHS"
-        const val LABEL = "LABEL"
     }
 }
 //TODO Write logic to update entry via the save button -then goal updated data has to be displayed
@@ -209,4 +206,4 @@ class CreateEditGoalFragment : Fragment() {
 //TODO persist no goal title entered snackbar throughout orientations
 //TODO persist date adjusted snackbar through orientations
 //TODO dismiss snackbars on navigation
-//TODO try fixing desugaring error?/optional/
+// TODO try fixing desugaring error?/optional/
