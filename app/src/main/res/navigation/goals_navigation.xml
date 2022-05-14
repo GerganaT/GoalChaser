@@ -39,7 +39,6 @@
     <fragment
         android:id="@+id/createEditGoalFragment"
         android:name="com.example.android.goalchaser.ui.createeditgoal.CreateEditGoalFragment"
-        android:label="@string/create_goal_fragment_label"
         tools:layout="@layout/fragment_create_edit_goal">
         <action
             android:id="@+id/action_createEditGoalFragment_to_completedgoalsListFragment"
@@ -49,7 +48,11 @@
             app:destination="@id/activeGoalsFragment" />
         <argument
             android:name="passedGoalId"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="passedLabel"
+            android:defaultValue='""'
+            app:argType="string" />
     </fragment>
 </navigation>

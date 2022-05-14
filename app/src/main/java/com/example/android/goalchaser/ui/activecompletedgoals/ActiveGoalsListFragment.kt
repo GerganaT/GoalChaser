@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentActiveGoalsListBinding
 import com.example.android.goalchaser.ui.activecompletedgoals.recyclerView.GoalsListAdapter
+import com.example.android.goalchaser.utils.uiutils.navigateToCreateEditGoalFragment
 import org.koin.android.ext.android.inject
 
 
@@ -42,9 +43,7 @@ class ActiveGoalsListFragment : Fragment() {
         setHasOptionsMenu(true)
         setupRecyclerViewAdapter()
         activeGoalsListBinding.addActiveGoalFab.setOnClickListener {
-            findNavController().navigate(
-                ActiveGoalsListFragmentDirections.actionActiveGoalsFragmentToCreateEditGoalFragment()
-            )
+            navigateToCreateEditGoalFragment()
         }
     }
 
@@ -66,11 +65,9 @@ class ActiveGoalsListFragment : Fragment() {
                     when (menuItem.itemId) {
                         R.id.details_popup_item -> {
                             val passedId = selectedGoal.id
-                            val navDirections = ActiveGoalsListFragmentDirections
-                                .actionActiveGoalsFragmentToCreateEditGoalFragment(passedId)
-                            findNavController().navigate(
-                                navDirections
-                            )
+                            navigateToCreateEditGoalFragment(passedId)
+
+
                         }
                         R.id.mark_completed_popup_item -> {
                             Toast.makeText(context, "mark completed clicked", Toast.LENGTH_SHORT)
@@ -110,7 +107,6 @@ class ActiveGoalsListFragment : Fragment() {
         viewModel.refreshGoals()
     }
     //TODO add the respective functions to the popup menu functions - delete done
-    //TODO add transition to view/edit/create goal details
     //TODO add logic to the delete all menu
 
 

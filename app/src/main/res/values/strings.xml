@@ -28,6 +28,7 @@
     <string name="goal_description_label">Goal description (optional)</string>
     <string name="goal_due_date_label">Goal due date</string>
     <string name="create_goal_fragment_label">Create goal</string>
+    <string name="edit_goal_fragment_label">Goal details</string>
     <string name="notification_settings_menu_item_text">Notification settings</string>
     <string name="enable_notifications_label">Enable</string>
     <string name="goal_notifications_label">Enable goal notifications</string>

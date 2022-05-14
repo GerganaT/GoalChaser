@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -36,6 +37,7 @@ class CreateEditGoalFragment : Fragment() {
     private lateinit var savingMotionLayout: SavingMotionLayout
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,7 +49,6 @@ class CreateEditGoalFragment : Fragment() {
                 container,
                 false
             )
-
         savingMotionLayout = createEditGoalBinding.root as SavingMotionLayout
         return createEditGoalBinding.root
     }
@@ -60,7 +61,7 @@ class CreateEditGoalFragment : Fragment() {
             outState.putInt(DAY, dayOfMonth)
         }
 
-
+        outState.putString(LABEL,args.passedLabel)
         outState.putString(DAYS_NUMBER, goalDueDaysMonthsAmount.text.toString())
         outState.putString(DAYS_MONTHS, goalDueDaysOrMonths.text.toString())
 
@@ -82,6 +83,8 @@ class CreateEditGoalFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar?.title = savedInstanceState?.getString(
+            LABEL) ?: args.passedLabel
         createEditGoalBinding.lifecycleOwner = viewLifecycleOwner
         createEditGoalBinding.viewModel = viewModel
         goalDatePicker = createEditGoalBinding.goalDatePicker
@@ -137,10 +140,15 @@ class CreateEditGoalFragment : Fragment() {
             }
         }
         viewModel.days.observe(viewLifecycleOwner) { daysAmount ->
-            daysAmount?.let { goalDueDaysMonthsAmount.setupDaysMonthsCountAdapter(daysAmount, savedInstanceState) }
+            daysAmount?.let {
+                goalDueDaysMonthsAmount.setupDaysMonthsCountAdapter(
+                    daysAmount,
+                    savedInstanceState
+                )
+            }
         }
-        viewModel.daysMonthsMediatorLiveData.observe(viewLifecycleOwner){ daysOrMonths ->
-            goalDueDaysOrMonths.setupSavedDaysMonthsValues(daysOrMonths,savedInstanceState)
+        viewModel.daysMonthsMediatorLiveData.observe(viewLifecycleOwner) { daysOrMonths ->
+            goalDueDaysOrMonths.setupSavedDaysMonthsValues(daysOrMonths, savedInstanceState)
         }
 
         createEditGoalBinding.saveGoalFab.setOnClickListener {
@@ -193,12 +201,12 @@ class CreateEditGoalFragment : Fragment() {
         const val DAY = "DAY"
         const val DAYS_NUMBER = "DAYS_NUMBER"
         const val DAYS_MONTHS = "DAYS_MONTHS"
+        const val LABEL = "LABEL"
     }
 }
 //TODO Write logic to update entry via the save button -then goal updated data has to be displayed
 // TODO in the list
-//TODO change fragment title if in edit mode
+//TODO persist no goal title entered snackbar throughout orientations
 //TODO persist date adjusted snackbar through orientations
 //TODO dismiss snackbars on navigation
-//TODO persist no goal title entered snackbar throughout orientations
 //TODO try fixing desugaring error?/optional/
