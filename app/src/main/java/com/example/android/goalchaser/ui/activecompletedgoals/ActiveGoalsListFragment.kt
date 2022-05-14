@@ -6,7 +6,6 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentActiveGoalsListBinding
@@ -66,8 +65,6 @@ class ActiveGoalsListFragment : Fragment() {
                         R.id.details_popup_item -> {
                             val passedId = selectedGoal.id
                             navigateToCreateEditGoalFragment(passedId)
-
-
                         }
                         R.id.mark_completed_popup_item -> {
                             Toast.makeText(context, "mark completed clicked", Toast.LENGTH_SHORT)

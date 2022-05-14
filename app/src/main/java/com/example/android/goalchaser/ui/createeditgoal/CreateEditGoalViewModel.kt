@@ -28,6 +28,10 @@ class CreateEditGoalViewModel(
         get() = _goalIsSaved
     private val _goalIsSaved = MutableLiveData<Boolean>()
 
+    val goalIsUpdated: LiveData<Boolean>
+        get() = _goalIsUpdated
+    private val _goalIsUpdated = MutableLiveData<Boolean>()
+
     val isTitleEntered: LiveData<Boolean>
         get() = _isTitleEntered
     private val _isTitleEntered = MutableLiveData<Boolean>()
@@ -40,7 +44,7 @@ class CreateEditGoalViewModel(
         initDaysMonthsMediatorLiveData()
     }
 
-    private fun initDaysMonthsMediatorLiveData(){
+    private fun initDaysMonthsMediatorLiveData() {
         // MediatorLiveData returns true if user selected days option in notifications options
         daysMonthsMediatorLiveData.addSource(timeTypeDays) {
             it?.let {
@@ -48,18 +52,18 @@ class CreateEditGoalViewModel(
                     daysMonthsMediatorLiveData.value = it
                 }
             }
-            if (it == null){
+            if (it == null) {
                 daysMonthsMediatorLiveData.value = null
             }
         }
         // MediatorLiveData returns false if user selected months option in notifications options
-        daysMonthsMediatorLiveData.addSource(timeTypeMonths){
+        daysMonthsMediatorLiveData.addSource(timeTypeMonths) {
             it?.let {
                 if (it) {
                     daysMonthsMediatorLiveData.value = false
                 }
             }
-            if (it == null){
+            if (it == null) {
                 daysMonthsMediatorLiveData.value = null
             }
         }
@@ -99,6 +103,7 @@ class CreateEditGoalViewModel(
         }
     }
 
+
     fun updateNotificationDetails(goal: GoalDataUiState) =
         goal.run {
             goalTitle.value = title
@@ -121,7 +126,7 @@ class CreateEditGoalViewModel(
     }
 
 
-    private fun saveUiState(goalDataUiState: GoalDataUiState) {
+    private fun saveOrUpdateUiState(goalDataUiState: GoalDataUiState) {
         viewModelScope.launch {
             val goalData = goalDataUiState.run {
                 GoalData(
@@ -131,19 +136,33 @@ class CreateEditGoalViewModel(
                     timeUnitNumber,
                     days,
                     months,
-                    isCompleted
+                    isCompleted,
+                    id
                 )
             }
-            goalsRepository.saveGoal(goalData).run {
-                _goalIsSaved.value = when (this) {
-                    is Result.Success -> data
-                    is Result.Error -> false
+            when(goalData.goalId){
+                0 ->{
+                    goalsRepository.saveGoal(goalData).run {
+                        _goalIsSaved.value = when (this) {
+                            is Result.Success -> data
+                            is Result.Error -> false
+                        }
+                    }
+                }
+                else ->{
+                    goalsRepository.updateGoal(goalData).run {
+                        _goalIsUpdated.value = when (this) {
+                            is Result.Success -> data
+                            is Result.Error -> false
+                        }
+                    }
                 }
             }
+
         }
     }
 
-    fun saveGoal() {
+    fun saveOrUpdateGoal(goalId:Int) {
         viewModelScope.launch {
             if (!goalTitle.value.isNullOrEmpty()) {
                 _isTitleEntered.value = true
@@ -154,8 +173,9 @@ class CreateEditGoalViewModel(
                     timeUnitCount.value,
                     timeTypeDays.value,
                     timeTypeMonths.value,
-                    isDone.value
-                ).run { saveUiState(this) }
+                    isDone.value,
+                    id = if (goalId !=0) goalId else 0
+                ).run { saveOrUpdateUiState(this) }
             } else {
                 _isTitleEntered.value = false
             }

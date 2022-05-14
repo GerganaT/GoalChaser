@@ -56,6 +56,7 @@
     <string name="alert_dialog_cancel">Cancel</string>
     <string name="goal_adjusted_snackbar_message">Past due date of %1$d-%2$s-%3$d
         auto - adjusted ,you can still set any other future date .</string>
+    <string name="goal_updated_toast">Goal Updated !</string>
     <string-array name="days_months">
         <item>Day(s)</item>
         <item>Month(s)</item>

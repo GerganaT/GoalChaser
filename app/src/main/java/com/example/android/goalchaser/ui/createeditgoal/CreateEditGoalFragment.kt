@@ -19,7 +19,6 @@ import com.example.android.goalchaser.utils.uiutils.setupDaysMonthsCountAdapter
 import com.example.android.goalchaser.utils.uiutils.setupSavedDaysMonthsValues
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 import java.text.DateFormatSymbols
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
@@ -170,7 +169,7 @@ class CreateEditGoalFragment : Fragment() {
                 }
 
             }
-            viewModel.saveGoal()
+            viewModel.saveOrUpdateGoal(args.passedGoalId)
             viewModel.isTitleEntered.observe(viewLifecycleOwner) { isTitleEntered ->
                 if (!isTitleEntered) {
                     Snackbar.make(
@@ -186,6 +185,15 @@ class CreateEditGoalFragment : Fragment() {
                         .currentDestination?.id == R.id.createEditGoalFragment
                 ) {
                     Toast.makeText(context, R.string.goal_saved_toast, Toast.LENGTH_SHORT).show()
+                    findNavController().navigateUp()
+                }
+            }
+
+            viewModel.goalIsUpdated.observe(viewLifecycleOwner) { isUpdated ->
+                if (isUpdated && findNavController()
+                        .currentDestination?.id == R.id.createEditGoalFragment
+                ) {
+                    Toast.makeText(context, R.string.goal_updated_toast, Toast.LENGTH_SHORT).show()
                     findNavController().navigateUp()
                 }
             }

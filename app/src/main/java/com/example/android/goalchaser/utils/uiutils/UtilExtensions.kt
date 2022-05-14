@@ -51,13 +51,13 @@ fun AutoCompleteTextView.setupDaysMonthsAdapter(): Array<String> {
     return dayMonthsArray
 }
 
-fun ActiveGoalsListFragment.navigateToCreateEditGoalFragment(selectedGoalId:Int=0){
-    val createEditGoalLabel = when(selectedGoalId){
+fun ActiveGoalsListFragment.navigateToCreateEditGoalFragment(selectedGoalId: Int = 0) {
+    val createEditGoalLabel = when (selectedGoalId) {
         0 -> getString(R.string.create_goal_fragment_label)
         else -> getString(R.string.edit_goal_fragment_label)
     }
     val navDirections = ActiveGoalsListFragmentDirections
-        .actionActiveGoalsFragmentToCreateEditGoalFragment(selectedGoalId,createEditGoalLabel)
+        .actionActiveGoalsFragmentToCreateEditGoalFragment(selectedGoalId, createEditGoalLabel)
     findNavController().run {
         navigate(
             navDirections
