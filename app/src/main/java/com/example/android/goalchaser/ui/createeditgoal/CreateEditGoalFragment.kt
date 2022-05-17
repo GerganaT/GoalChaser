@@ -14,10 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentCreateEditGoalBinding
-import com.example.android.goalchaser.utils.uiutils.SavingMotionLayout
-import com.example.android.goalchaser.utils.uiutils.SavingSnackbar
-import com.example.android.goalchaser.utils.uiutils.setupDaysMonthsCountAdapter
-import com.example.android.goalchaser.utils.uiutils.setupSavedDaysMonthsValues
+import com.example.android.goalchaser.utils.uiutils.*
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DateFormatSymbols
@@ -36,7 +33,10 @@ class CreateEditGoalFragment : Fragment() {
     private val args: CreateEditGoalFragmentArgs by navArgs()
     private lateinit var savingMotionLayout: SavingMotionLayout
     private var noTitleSnackbar: Snackbar? = null
-    private var savingSnackbar: SavingSnackbar? = null
+    private var noTitleSavingSnackbar: SavingSnackbar? = null
+    private var dateAdjustedSnackbar: Snackbar? = null
+    private var dateAdjustedSavingSnackbar: SavingSnackbar? = null
+    private var adjustedDate: AdjustedDate? = null
 
 
     override fun onCreateView(
@@ -66,8 +66,11 @@ class CreateEditGoalFragment : Fragment() {
             putString(DAYS_NUMBER, goalDueDaysMonthsAmount.text.toString())
             putString(DAYS_MONTHS, goalDueDaysOrMonths.text.toString())
 
-            savingSnackbar = SavingSnackbar(noTitleSnackbar)
-            putSerializable(SNACKBAR, savingSnackbar)
+            noTitleSavingSnackbar = SavingSnackbar(noTitleSnackbar)
+            putSerializable(NO_TITLE_SNACKBAR, noTitleSavingSnackbar)
+            dateAdjustedSavingSnackbar = SavingSnackbar(dateAdjustedSnackbar)
+            putSerializable(DATE_ADJUSTED_SNACKBAR, dateAdjustedSavingSnackbar)
+            putSerializable(ADJUSTED_DATE, adjustedDate)
         }
 
 
@@ -84,8 +87,11 @@ class CreateEditGoalFragment : Fragment() {
             goalDueDaysMonthsAmount.setText(getString(DAYS_NUMBER), false)
             goalDueDaysOrMonths.setText(getString(DAYS_MONTHS), false)
 
-            savingSnackbar = getSerializable(SNACKBAR) as SavingSnackbar?
-            noTitleSnackbar = savingSnackbar?.savedSnackbar
+            noTitleSavingSnackbar = getSerializable(NO_TITLE_SNACKBAR) as SavingSnackbar?
+            noTitleSnackbar = noTitleSavingSnackbar?.savedSnackbar
+            dateAdjustedSavingSnackbar = getSerializable(DATE_ADJUSTED_SNACKBAR) as SavingSnackbar?
+            dateAdjustedSnackbar = dateAdjustedSavingSnackbar?.savedSnackbar
+            adjustedDate = getSerializable(ADJUSTED_DATE) as AdjustedDate?
         }
 
     }
@@ -99,6 +105,7 @@ class CreateEditGoalFragment : Fragment() {
         goalDueDaysOrMonths = createEditGoalBinding.daysOrMonthsAutocompleteText
         goalDueDaysMonthsAmount =
             createEditGoalBinding.daysOrMonthsNumberAutocompleteText
+
 
         //prepopulate data in the fragment if the user is viewing details of an existing goal
         if (args.passedGoalId != 0 && savedInstanceState == null) {
@@ -125,20 +132,8 @@ class CreateEditGoalFragment : Fragment() {
                             if (goalMinDueDate.isAfter(goalDueDate)) {
                                 val monthName = DateFormatSymbols(Locale.getDefault())
                                     .months[editUiAdjustedMonth]
-                                Snackbar.make(
-                                    createEditGoalBinding.root, getString(
-                                        R.string.goal_adjusted_snackbar_message,
-                                        editDay,
-                                        monthName,
-                                        editYear
-                                    ),
-                                    Snackbar.LENGTH_INDEFINITE
-                                ).run {
-                                    setAction(R.string.ok) {
-                                        dismiss()
-                                    }
-                                }.show()
-
+                                adjustedDate = AdjustedDate(editDay, monthName, editYear)
+                                viewModel.confirmDateAdjusted(true)
 
                             }
 
@@ -148,6 +143,9 @@ class CreateEditGoalFragment : Fragment() {
 
             }
         }
+
+
+
         viewModel.days.observe(viewLifecycleOwner) { daysAmount ->
             daysAmount?.let {
                 goalDueDaysMonthsAmount.setupDaysMonthsCountAdapter(
@@ -207,14 +205,35 @@ class CreateEditGoalFragment : Fragment() {
                 noTitleSnackbar = Snackbar.make(
                     createEditGoalBinding.root, R.string.no_title_entered_notification,
                     Snackbar.LENGTH_INDEFINITE
-                ).run { setAction(R.string.ok) {
-                    viewModel.confirmWarningClicked()
-                    dismiss() } }
+                ).run {
+                    setAction(R.string.ok) {
+                        viewModel.confirmWarningClicked()
+                        dismiss()
+                    }
+                }
                 noTitleSnackbar?.show()
             }
         }
+        viewModel.isDateAdjusted.observe(viewLifecycleOwner) { isAdjusted ->
+            if (isAdjusted) {
+                adjustedDate?.run {
+                    dateAdjustedSnackbar = Snackbar.make(
+                        createEditGoalBinding.root, getString(
+                            R.string.goal_adjusted_snackbar_message,
+                            adjDate, adjName, adjYear
+                        ),
+                        Snackbar.LENGTH_INDEFINITE
+                    ).run {
+                        setAction(R.string.ok) {
+                            viewModel.confirmDateAdjusted(false)
+                            dismiss()
+                        }
+                    }
+                    dateAdjustedSnackbar?.show()
+                }
 
-
+            }
+        }
     }
 
 
@@ -224,7 +243,9 @@ class CreateEditGoalFragment : Fragment() {
         const val DAY = "DAY"
         const val DAYS_NUMBER = "DAYS_NUMBER"
         const val DAYS_MONTHS = "DAYS_MONTHS"
-        const val SNACKBAR = "SNACKBAR"
+        const val NO_TITLE_SNACKBAR = "SNACKBAR"
+        const val DATE_ADJUSTED_SNACKBAR = "DATE_ADJUSTED_SNACKBAR"
+        const val ADJUSTED_DATE = "ADJUSTED_DATE"
     }
 }
 //TODO show custom titles of the updated or created goal

@@ -36,6 +36,10 @@ class CreateEditGoalViewModel(
         get() = _isTitleEntered
     private val _isTitleEntered = MutableLiveData<Boolean>()
 
+    val isDateAdjusted: LiveData<Boolean>
+        get() = _isDateAdjusted
+    private val _isDateAdjusted = MutableLiveData<Boolean>()
+
     val daysMonthsMediatorLiveData = MediatorLiveData<Boolean?>()
 
     init {
@@ -43,6 +47,10 @@ class CreateEditGoalViewModel(
         _days.value = Array(31) { it + 1 }
         initDaysMonthsMediatorLiveData()
     }
+    fun confirmDateAdjusted(dateAdjusted:Boolean){
+        _isDateAdjusted.value = dateAdjusted
+    }
+
     fun confirmWarningClicked(){
         _isTitleEntered.value = true
     }
