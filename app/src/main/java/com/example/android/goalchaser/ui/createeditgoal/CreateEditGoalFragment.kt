@@ -36,7 +36,7 @@ class CreateEditGoalFragment : Fragment() {
     private var noTitleSavingSnackbar: SavingSnackbar? = null
     private var dateAdjustedSnackbar: Snackbar? = null
     private var dateAdjustedSavingSnackbar: SavingSnackbar? = null
-    private var adjustedDate: AdjustedDate? = null
+    private var adjustedDate: SavingAdjustedDate? = null
 
 
     override fun onCreateView(
@@ -91,7 +91,7 @@ class CreateEditGoalFragment : Fragment() {
             noTitleSnackbar = noTitleSavingSnackbar?.savedSnackbar
             dateAdjustedSavingSnackbar = getSerializable(DATE_ADJUSTED_SNACKBAR) as SavingSnackbar?
             dateAdjustedSnackbar = dateAdjustedSavingSnackbar?.savedSnackbar
-            adjustedDate = getSerializable(ADJUSTED_DATE) as AdjustedDate?
+            adjustedDate = getSerializable(ADJUSTED_DATE) as SavingAdjustedDate?
         }
 
     }
@@ -132,7 +132,7 @@ class CreateEditGoalFragment : Fragment() {
                             if (goalMinDueDate.isAfter(goalDueDate)) {
                                 val monthName = DateFormatSymbols(Locale.getDefault())
                                     .months[editUiAdjustedMonth]
-                                adjustedDate = AdjustedDate(editDay, monthName, editYear)
+                                adjustedDate = SavingAdjustedDate(editDay, monthName, editYear)
                                 viewModel.confirmDateAdjusted(true)
 
                             }
@@ -143,11 +143,6 @@ class CreateEditGoalFragment : Fragment() {
 
             }
         }
-
-
-
-
-
         createEditGoalBinding.saveGoalFab.setOnClickListener {
             if (viewModel.activeNotification.value == null) {
                 viewModel.resetActiveNotification()
@@ -175,7 +170,11 @@ class CreateEditGoalFragment : Fragment() {
                 if (isSaved && findNavController()
                         .currentDestination?.id == R.id.createEditGoalFragment
                 ) {
-                    Toast.makeText(context, R.string.goal_saved_toast, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        getString(R.string.goal_saved_toast, viewModel.goalTitle.value),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     findNavController().navigateUp()
                 }
             }
@@ -184,7 +183,11 @@ class CreateEditGoalFragment : Fragment() {
                 if (isUpdated && findNavController()
                         .currentDestination?.id == R.id.createEditGoalFragment
                 ) {
-                    Toast.makeText(context, R.string.goal_updated_toast, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        getString(R.string.goal_updated_toast, viewModel.goalTitle.value),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     findNavController().navigateUp()
                 }
             }
@@ -237,7 +240,6 @@ class CreateEditGoalFragment : Fragment() {
         }
     }
 
-
     companion object {
         const val YEAR = "YEAR"
         const val MONTH = "MONTH"
@@ -249,7 +251,6 @@ class CreateEditGoalFragment : Fragment() {
         const val ADJUSTED_DATE = "ADJUSTED_DATE"
     }
 }
-//TODO show custom titles of the updated or created goal
 //TODO no update toast should show up when goal hasn't been updated
 //TODO dismiss snackbars on navigation
 // TODO try fixing desugaring error?/optional/
