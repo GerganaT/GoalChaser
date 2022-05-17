@@ -146,17 +146,7 @@ class CreateEditGoalFragment : Fragment() {
 
 
 
-        viewModel.days.observe(viewLifecycleOwner) { daysAmount ->
-            daysAmount?.let {
-                goalDueDaysMonthsAmount.setupDaysMonthsCountAdapter(
-                    daysAmount,
-                    savedInstanceState
-                )
-            }
-        }
-        viewModel.daysMonthsMediatorLiveData.observe(viewLifecycleOwner) { daysOrMonths ->
-            goalDueDaysOrMonths.setupSavedDaysMonthsValues(daysOrMonths, savedInstanceState)
-        }
+
 
         createEditGoalBinding.saveGoalFab.setOnClickListener {
             if (viewModel.activeNotification.value == null) {
@@ -199,6 +189,17 @@ class CreateEditGoalFragment : Fragment() {
                 }
             }
 
+        }
+        viewModel.days.observe(viewLifecycleOwner) { daysAmount ->
+            daysAmount?.let {
+                goalDueDaysMonthsAmount.setupDaysMonthsCountAdapter(
+                    daysAmount,
+                    savedInstanceState
+                )
+            }
+        }
+        viewModel.daysMonthsMediatorLiveData.observe(viewLifecycleOwner) { daysOrMonths ->
+            goalDueDaysOrMonths.setupSavedDaysMonthsValues(daysOrMonths, savedInstanceState)
         }
         viewModel.isTitleEntered.observe(viewLifecycleOwner) { isTitleEntered ->
             if (!isTitleEntered) {
@@ -250,6 +251,5 @@ class CreateEditGoalFragment : Fragment() {
 }
 //TODO show custom titles of the updated or created goal
 //TODO no update toast should show up when goal hasn't been updated
-//TODO persist date adjusted snackbar through orientations
 //TODO dismiss snackbars on navigation
 // TODO try fixing desugaring error?/optional/
