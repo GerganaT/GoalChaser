@@ -19,9 +19,7 @@ import com.example.android.goalchaser.utils.uiutils.SavingSnackbar
 import com.example.android.goalchaser.utils.uiutils.setupDaysMonthsCountAdapter
 import com.example.android.goalchaser.utils.uiutils.setupSavedDaysMonthsValues
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.parcel.Parcelize
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 import java.text.DateFormatSymbols
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
@@ -37,9 +35,8 @@ class CreateEditGoalFragment : Fragment() {
     private val viewModel: CreateEditGoalViewModel by viewModel()
     private val args: CreateEditGoalFragmentArgs by navArgs()
     private lateinit var savingMotionLayout: SavingMotionLayout
-    private var noTitleSnackbar:Snackbar?=null
-    private var savingSnackbar:SavingSnackbar?=null
-
+    private var noTitleSnackbar: Snackbar? = null
+    private var savingSnackbar: SavingSnackbar? = null
 
 
     override fun onCreateView(
@@ -70,7 +67,7 @@ class CreateEditGoalFragment : Fragment() {
             putString(DAYS_MONTHS, goalDueDaysOrMonths.text.toString())
 
             savingSnackbar = SavingSnackbar(noTitleSnackbar)
-            putSerializable(SNACKBAR,savingSnackbar)
+            putSerializable(SNACKBAR, savingSnackbar)
         }
 
 
@@ -87,11 +84,9 @@ class CreateEditGoalFragment : Fragment() {
             goalDueDaysMonthsAmount.setText(getString(DAYS_NUMBER), false)
             goalDueDaysOrMonths.setText(getString(DAYS_MONTHS), false)
 
+            savingSnackbar = getSerializable(SNACKBAR) as SavingSnackbar?
+            noTitleSnackbar = savingSnackbar?.savedSnackbar
         }
-        savingSnackbar =savedInstanceState?.getSerializable(SNACKBAR) as SavingSnackbar?
-        noTitleSnackbar = savingSnackbar?.savedSnackbar
-        Timber.i("snackbar is $noTitleSnackbar")
-        noTitleSnackbar?.show()
 
     }
 
@@ -104,6 +99,7 @@ class CreateEditGoalFragment : Fragment() {
         goalDueDaysOrMonths = createEditGoalBinding.daysOrMonthsAutocompleteText
         goalDueDaysMonthsAmount =
             createEditGoalBinding.daysOrMonthsNumberAutocompleteText
+
         //prepopulate data in the fragment if the user is viewing details of an existing goal
         if (args.passedGoalId != 0 && savedInstanceState == null) {
             viewModel.run {
@@ -168,7 +164,6 @@ class CreateEditGoalFragment : Fragment() {
             if (viewModel.activeNotification.value == null) {
                 viewModel.resetActiveNotification()
             }
-
             viewModel.activeNotification.observe(viewLifecycleOwner)
             { notificationIsActive: Boolean? ->
                 if (notificationIsActive == true) {
@@ -186,15 +181,6 @@ class CreateEditGoalFragment : Fragment() {
 
             }
             viewModel.saveOrUpdateGoal(args.passedGoalId)
-            viewModel.isTitleEntered.observe(viewLifecycleOwner) { isTitleEntered ->
-                if (!isTitleEntered) {
-                        noTitleSnackbar =  Snackbar.make(
-                            createEditGoalBinding.root, R.string.no_title_entered_notification,
-                            Snackbar.LENGTH_INDEFINITE
-                        ).run { setAction(R.string.ok) { dismiss() } }
-                        noTitleSnackbar?.show()
-                }
-            }
 
 
             viewModel.goalIsSaved.observe(viewLifecycleOwner) { isSaved ->
@@ -214,7 +200,21 @@ class CreateEditGoalFragment : Fragment() {
                     findNavController().navigateUp()
                 }
             }
+
         }
+        viewModel.isTitleEntered.observe(viewLifecycleOwner) { isTitleEntered ->
+            if (!isTitleEntered) {
+                noTitleSnackbar = Snackbar.make(
+                    createEditGoalBinding.root, R.string.no_title_entered_notification,
+                    Snackbar.LENGTH_INDEFINITE
+                ).run { setAction(R.string.ok) {
+                    viewModel.confirmWarningClicked()
+                    dismiss() } }
+                noTitleSnackbar?.show()
+            }
+        }
+
+
     }
 
 
@@ -227,8 +227,8 @@ class CreateEditGoalFragment : Fragment() {
         const val SNACKBAR = "SNACKBAR"
     }
 }
-
-//TODO persist no goal title entered snackbar throughout orientations
+//TODO show custom titles of the updated or created goal
+//TODO no update toast should show up when goal hasn't been updated
 //TODO persist date adjusted snackbar through orientations
 //TODO dismiss snackbars on navigation
 // TODO try fixing desugaring error?/optional/
