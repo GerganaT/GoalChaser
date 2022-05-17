@@ -15,10 +15,13 @@ import androidx.navigation.fragment.navArgs
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentCreateEditGoalBinding
 import com.example.android.goalchaser.utils.uiutils.SavingMotionLayout
+import com.example.android.goalchaser.utils.uiutils.SavingSnackbar
 import com.example.android.goalchaser.utils.uiutils.setupDaysMonthsCountAdapter
 import com.example.android.goalchaser.utils.uiutils.setupSavedDaysMonthsValues
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.parcel.Parcelize
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 import java.text.DateFormatSymbols
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
@@ -34,6 +37,8 @@ class CreateEditGoalFragment : Fragment() {
     private val viewModel: CreateEditGoalViewModel by viewModel()
     private val args: CreateEditGoalFragmentArgs by navArgs()
     private lateinit var savingMotionLayout: SavingMotionLayout
+    private var noTitleSnackbar:Snackbar?=null
+    private var savingSnackbar:SavingSnackbar?=null
 
 
 
@@ -54,14 +59,20 @@ class CreateEditGoalFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        goalDatePicker.run {
-            outState.putInt(YEAR, year)
-            outState.putInt(MONTH, month)
-            outState.putInt(DAY, dayOfMonth)
+        outState.run {
+            goalDatePicker.run {
+                putInt(YEAR, year)
+                putInt(MONTH, month)
+                putInt(DAY, dayOfMonth)
+            }
+
+            putString(DAYS_NUMBER, goalDueDaysMonthsAmount.text.toString())
+            putString(DAYS_MONTHS, goalDueDaysOrMonths.text.toString())
+
+            savingSnackbar = SavingSnackbar(noTitleSnackbar)
+            putSerializable(SNACKBAR,savingSnackbar)
         }
 
-        outState.putString(DAYS_NUMBER, goalDueDaysMonthsAmount.text.toString())
-        outState.putString(DAYS_MONTHS, goalDueDaysOrMonths.text.toString())
 
     }
 
@@ -75,7 +86,12 @@ class CreateEditGoalFragment : Fragment() {
             )
             goalDueDaysMonthsAmount.setText(getString(DAYS_NUMBER), false)
             goalDueDaysOrMonths.setText(getString(DAYS_MONTHS), false)
+
         }
+        savingSnackbar =savedInstanceState?.getSerializable(SNACKBAR) as SavingSnackbar?
+        noTitleSnackbar = savingSnackbar?.savedSnackbar
+        Timber.i("snackbar is $noTitleSnackbar")
+        noTitleSnackbar?.show()
 
     }
 
@@ -172,10 +188,11 @@ class CreateEditGoalFragment : Fragment() {
             viewModel.saveOrUpdateGoal(args.passedGoalId)
             viewModel.isTitleEntered.observe(viewLifecycleOwner) { isTitleEntered ->
                 if (!isTitleEntered) {
-                    Snackbar.make(
-                        createEditGoalBinding.root, R.string.no_title_entered_notification,
-                        Snackbar.LENGTH_INDEFINITE
-                    ).run { setAction(R.string.ok) { dismiss() } }.show()
+                        noTitleSnackbar =  Snackbar.make(
+                            createEditGoalBinding.root, R.string.no_title_entered_notification,
+                            Snackbar.LENGTH_INDEFINITE
+                        ).run { setAction(R.string.ok) { dismiss() } }
+                        noTitleSnackbar?.show()
                 }
             }
 
@@ -207,10 +224,10 @@ class CreateEditGoalFragment : Fragment() {
         const val DAY = "DAY"
         const val DAYS_NUMBER = "DAYS_NUMBER"
         const val DAYS_MONTHS = "DAYS_MONTHS"
+        const val SNACKBAR = "SNACKBAR"
     }
 }
-//TODO Write logic to update entry via the save button -then goal updated data has to be displayed
-// TODO in the list
+
 //TODO persist no goal title entered snackbar throughout orientations
 //TODO persist date adjusted snackbar through orientations
 //TODO dismiss snackbars on navigation
