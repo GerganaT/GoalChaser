@@ -1,5 +1,6 @@
 package com.example.android.goalchaser.ui.createeditgoal
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -51,8 +53,10 @@ class CreateEditGoalFragment : Fragment() {
                 false
             )
         savingMotionLayout = createEditGoalBinding.root as SavingMotionLayout
+
         return createEditGoalBinding.root
     }
+
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -106,7 +110,16 @@ class CreateEditGoalFragment : Fragment() {
         goalDueDaysMonthsAmount =
             createEditGoalBinding.daysOrMonthsNumberAutocompleteText
 
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                dateAdjustedSnackbar?.dismiss()
+                noTitleSnackbar?.dismiss()
+                findNavController().navigateUp()
 
+            }
+        })
+        //TODO works with bk button but not with up arrow -also snackbar-related
+        //TODO vars have to be nullified before navigation
         //prepopulate data in the fragment if the user is viewing details of an existing goal
         if (args.passedGoalId != 0 && savedInstanceState == null) {
             viewModel.run {
@@ -238,7 +251,11 @@ class CreateEditGoalFragment : Fragment() {
 
             }
         }
+
+
     }
+
+
 
     companion object {
         const val YEAR = "YEAR"
