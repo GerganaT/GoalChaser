@@ -47,13 +47,15 @@ class CreateEditGoalViewModel(
         _days.value = Array(31) { it + 1 }
         initDaysMonthsMediatorLiveData()
     }
-    fun confirmDateAdjusted(dateAdjusted:Boolean){
+
+    fun confirmDateAdjusted(dateAdjusted: Boolean) {
         _isDateAdjusted.value = dateAdjusted
     }
 
-    fun confirmWarningClicked(){
+    fun confirmWarningClicked() {
         _isTitleEntered.value = true
     }
+
     private fun initDaysMonthsMediatorLiveData() {
         // MediatorLiveData returns true if user selected days option in notifications options
         daysMonthsMediatorLiveData.addSource(timeTypeDays) {
@@ -150,8 +152,8 @@ class CreateEditGoalViewModel(
                     id
                 )
             }
-            when(goalData.goalId){
-                0 ->{
+            when (goalData.goalId) {
+                0 -> {
                     goalsRepository.saveGoal(goalData).run {
                         _goalIsSaved.value = when (this) {
                             is Result.Success -> data
@@ -159,12 +161,10 @@ class CreateEditGoalViewModel(
                         }
                     }
                 }
-                else ->{
+                else -> {
                     goalsRepository.updateGoal(goalData).run {
-                        _goalIsUpdated.value = when (this) {
-                            is Result.Success -> data
-                            is Result.Error -> false
-                        }
+                        _goalIsUpdated.value =
+                            goal.value != goalDataUiState && this is Result.Success
                     }
                 }
             }
@@ -172,7 +172,7 @@ class CreateEditGoalViewModel(
         }
     }
 
-    fun saveOrUpdateGoal(goalId:Int) {
+    fun saveOrUpdateGoal(goalId: Int) {
         viewModelScope.launch {
             if (!goalTitle.value.isNullOrEmpty()) {
                 _isTitleEntered.value = true
@@ -184,7 +184,7 @@ class CreateEditGoalViewModel(
                     timeTypeDays.value,
                     timeTypeMonths.value,
                     isDone.value,
-                    id = if (goalId !=0) goalId else 0
+                    id = if (goalId != 0) goalId else 0
                 ).run { saveOrUpdateUiState(this) }
             } else {
                 _isTitleEntered.value = false
