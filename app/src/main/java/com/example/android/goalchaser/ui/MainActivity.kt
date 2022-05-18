@@ -50,7 +50,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.main_nav_host_fragment)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+        return if (onBackPressedDispatcher.hasEnabledCallbacks()) {
+            onBackPressedDispatcher.onBackPressed()
+            true
+        } else {
+            navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+        }
     }
 }
 

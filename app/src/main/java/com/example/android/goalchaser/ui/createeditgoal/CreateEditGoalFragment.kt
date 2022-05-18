@@ -1,6 +1,5 @@
 package com.example.android.goalchaser.ui.createeditgoal
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -53,7 +52,6 @@ class CreateEditGoalFragment : Fragment() {
                 false
             )
         savingMotionLayout = createEditGoalBinding.root as SavingMotionLayout
-
         return createEditGoalBinding.root
     }
 
@@ -110,16 +108,19 @@ class CreateEditGoalFragment : Fragment() {
         goalDueDaysMonthsAmount =
             createEditGoalBinding.daysOrMonthsNumberAutocompleteText
 
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                dateAdjustedSnackbar?.dismiss()
-                noTitleSnackbar?.dismiss()
-                findNavController().navigateUp()
-
-            }
-        })
-        //TODO works with bk button but not with up arrow -also snackbar-related
-        //TODO vars have to be nullified before navigation
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    dateAdjustedSnackbar?.dismiss()
+                    noTitleSnackbar?.dismiss()
+                    noTitleSnackbar = null
+                    noTitleSavingSnackbar = null
+                    dateAdjustedSnackbar = null
+                    dateAdjustedSavingSnackbar = null
+                    adjustedDate = null
+                    findNavController().navigateUp()
+                }
+            })
         //prepopulate data in the fragment if the user is viewing details of an existing goal
         if (args.passedGoalId != 0 && savedInstanceState == null) {
             viewModel.run {
@@ -255,8 +256,6 @@ class CreateEditGoalFragment : Fragment() {
 
     }
 
-
-
     companion object {
         const val YEAR = "YEAR"
         const val MONTH = "MONTH"
@@ -269,5 +268,4 @@ class CreateEditGoalFragment : Fragment() {
     }
 }
 //TODO no update toast should show up when goal hasn't been updated
-//TODO dismiss snackbars on navigation
 // TODO try fixing desugaring error?/optional/
