@@ -77,3 +77,4 @@ class StatisticsFragment : Fragment() {
     }
 
 }
+//TODO write logic for when the db is empty

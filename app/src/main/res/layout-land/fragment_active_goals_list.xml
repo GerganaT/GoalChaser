@@ -85,6 +85,6 @@
 
         <variable
             name="viewModel"
-            type="com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalsViewModel" />
+            type="com.example.android.goalchaser.ui.activecompletedgoals.ActiveGoalsViewModel" />
     </data>
 </layout>

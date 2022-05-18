@@ -12,10 +12,6 @@
             android:icon="@drawable/ic_active_goals"
             android:title="@string/active_goals_drawer_menu_item" />
         <item
-            android:id="@+id/completedgoalsListFragment"
-            android:icon="@drawable/ic_completed_goals"
-            android:title="@string/completed_goals_drawer_menu_item" />
-        <item
             android:id="@+id/statisticsFragment"
             android:icon="@drawable/ic_statistics"
             android:title="@string/statistics_drawer_menu_item" />

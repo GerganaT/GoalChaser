@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.instructionsFragment, R.id.splashFragment,
-                R.id.activeGoalsFragment, R.id.completedgoalsListFragment, R.id.statisticsFragment
+                R.id.activeGoalsFragment, R.id.statisticsFragment
             ), drawerLayout
         )
         navView.setupWithNavController(navController)

@@ -13,7 +13,7 @@ import org.koin.android.ext.android.inject
 
 class GoalDeletionDialogFragment
     : DialogFragment() {
-    val viewModel: ActiveCompletedGoalsViewModel by inject()
+    val viewModel: ActiveGoalsViewModel by inject()
     var goalId: Int = 0
     var goalTitle: String? = ""
     override fun onSaveInstanceState(outState: Bundle) {

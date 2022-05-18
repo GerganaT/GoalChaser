@@ -10,7 +10,7 @@ import com.example.android.goalchaser.utils.datautils.Result
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class ActiveCompletedGoalsViewModel(
+class ActiveGoalsViewModel(
     private val imageDataRepository: ImageDataRepository,
     private val goalsRepository: GoalsRepository
 ) : ViewModel() {

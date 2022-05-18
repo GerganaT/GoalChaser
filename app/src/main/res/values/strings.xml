@@ -20,7 +20,6 @@
         nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
         officia deserunt mollit anim id est laborum.</string>
     <string name="instructions_fragment_label">Instructions</string>
-    <string name="completed_goals_fragment_label">Completed Goals</string>
     <string name="active_goals_fragment_label">Active Goals</string>
     <string name="statistcs_fragment_label">Statistics</string>
     <string name="statistics_header">Goals by completion status</string>

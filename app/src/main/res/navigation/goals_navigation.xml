@@ -27,11 +27,6 @@
         android:label="@string/instructions_fragment_label"
         tools:layout="@layout/fragment_instructions" />
     <fragment
-        android:id="@+id/completedgoalsListFragment"
-        android:name="com.example.android.goalchaser.ui.activecompletedgoals.CompletedGoalsListFragment"
-        android:label="@string/completed_goals_fragment_label"
-        tools:layout="@layout/fragment_completed_goals_list" />
-    <fragment
         android:id="@+id/statisticsFragment"
         android:name="com.example.android.goalchaser.ui.statistics.StatisticsFragment"
         android:label="@string/statistcs_fragment_label"
@@ -40,9 +35,6 @@
         android:id="@+id/createEditGoalFragment"
         android:name="com.example.android.goalchaser.ui.createeditgoal.CreateEditGoalFragment"
         tools:layout="@layout/fragment_create_edit_goal">
-        <action
-            android:id="@+id/action_createEditGoalFragment_to_completedgoalsListFragment"
-            app:destination="@id/completedgoalsListFragment" />
         <action
             android:id="@+id/action_createEditGoalFragment_to_activeGoalsFragment"
             app:destination="@id/activeGoalsFragment" />

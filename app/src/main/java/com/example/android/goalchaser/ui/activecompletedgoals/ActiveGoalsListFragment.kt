@@ -17,7 +17,7 @@ import org.koin.android.ext.android.inject
 class ActiveGoalsListFragment : Fragment() {
 
     lateinit var activeGoalsListBinding: FragmentActiveGoalsListBinding
-    val viewModel: ActiveCompletedGoalsViewModel by inject()
+    val viewModel: ActiveGoalsViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
