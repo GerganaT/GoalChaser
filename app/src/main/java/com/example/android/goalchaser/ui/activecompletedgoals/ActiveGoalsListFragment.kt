@@ -67,8 +67,10 @@ class ActiveGoalsListFragment : Fragment() {
                             navigateToCreateEditGoalFragment(passedId)
                         }
                         R.id.mark_completed_popup_item -> {
-                            Toast.makeText(context, "mark completed clicked", Toast.LENGTH_SHORT)
-                                .show()
+                            viewModel.markGoalCompleted(selectedGoal.id)
+                            //TODO figure out what to do with the completed goal
+//                            Toast.makeText(context, "mark completed clicked", Toast.LENGTH_SHORT)
+//                                .show()
                         }
                         R.id.delete_popup_item -> {
                             GoalDeletionDialogFragment().also { dialogFragment ->
@@ -103,7 +105,7 @@ class ActiveGoalsListFragment : Fragment() {
         super.onResume()
         viewModel.refreshGoals()
     }
-    //TODO add the respective functions to the popup menu functions - delete done
+    //TODO add the respective functions to the popup menu functions - delete,update done
     //TODO add logic to the delete all menu
 
 

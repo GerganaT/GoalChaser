@@ -272,5 +272,4 @@ class CreateEditGoalFragment : Fragment() {
         const val ADJUSTED_DATE = "ADJUSTED_DATE"
     }
 }
-//TODO decide how to act when goal data has not been updated
 // TODO try fixing desugaring error?/optional/

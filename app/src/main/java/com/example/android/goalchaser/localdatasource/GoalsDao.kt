@@ -11,6 +11,9 @@ interface GoalsDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateGoal(goal: GoalData)
 
+    @Query("UPDATE goals SET isCompleted = 1 WHERE goalId = :goalId ")
+    suspend fun markGoalCompleted(goalId: Int)
+
     @Query("DELETE FROM goals WHERE goalId = :goalId ")
     suspend fun deleteGoal(goalId: Int)
 

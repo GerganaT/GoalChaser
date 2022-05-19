@@ -16,7 +16,7 @@ class GoalsRepository(
                 goalsDao.insertGoal(goalData)
                 Result.Success(true)
             } catch (e: Exception) {
-                Result.Error(e.localizedMessage)
+                Result.Error(e.message)
             }
         }
 
@@ -30,16 +30,27 @@ class GoalsRepository(
                     Result.Error("")
                 }
             } catch (e: Exception) {
-                Result.Error(e.localizedMessage)
+                Result.Error(e.message)
             }
         }
+
+    suspend fun markGoalCompleted(goalId: Int): Result<Boolean> =
+        withContext(Dispatchers.IO) {
+            try {
+                goalsDao.markGoalCompleted(goalId)
+                Result.Success(true)
+            } catch (e: Exception) {
+                Result.Error(e.message)
+            }
+        }
+
 
     suspend fun getGoal(goalId: Int): Result<GoalData> =
         withContext(Dispatchers.IO) {
             try {
                 Result.Success(goalsDao.getGoal(goalId))
             } catch (e: Exception) {
-                Result.Error(e.localizedMessage)
+                Result.Error(e.message)
             }
         }
 
@@ -48,7 +59,7 @@ class GoalsRepository(
             try {
                 Result.Success(goalsDao.getAllGoals())
             } catch (e: Exception) {
-                Result.Error(e.localizedMessage)
+                Result.Error(e.message)
             }
         }
 
@@ -58,7 +69,7 @@ class GoalsRepository(
                 goalsDao.deleteGoal(goalId)
                 Result.Success(true)
             } catch (e: Exception) {
-                Result.Error(e.localizedMessage)
+                Result.Error(e.message)
             }
 
         }
@@ -69,7 +80,7 @@ class GoalsRepository(
                 goalsDao.deleteAllGoals()
                 Result.Success(true)
             } catch (e: Exception) {
-                Result.Error(e.localizedMessage)
+                Result.Error(e.message)
             }
 
         }

@@ -55,7 +55,6 @@ class CreateEditGoalViewModel(
     fun confirmWarningClicked() {
         _isTitleEntered.value = true
     }
-
     private fun initDaysMonthsMediatorLiveData() {
         // MediatorLiveData returns true if user selected days option in notifications options
         daysMonthsMediatorLiveData.addSource(timeTypeDays) {

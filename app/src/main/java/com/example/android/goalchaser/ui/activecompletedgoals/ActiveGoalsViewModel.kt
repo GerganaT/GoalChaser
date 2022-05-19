@@ -30,6 +30,10 @@ class ActiveGoalsViewModel(
         get() = _goalsAreDeleted
     private val _goalsAreDeleted = MutableLiveData<Boolean>()
 
+    val goalIsCompleted: LiveData<Boolean>
+        get() = _goalIsCompleted
+    private val _goalIsCompleted = MutableLiveData<Boolean>()
+
     val goalsListIsEmpty = goals.map { goals.value.isNullOrEmpty() }
 
     init {
@@ -102,14 +106,17 @@ class ActiveGoalsViewModel(
     fun deleteGoals() {
         viewModelScope.launch {
             goalsRepository.deleteGoals().run {
-                _goalsAreDeleted.value = when (this) {
-                    is Result.Success -> data
-                    is Result.Error -> false
-                }
+                _goalsAreDeleted.value = this is Result.Success
             }
         }
     }
-
+    fun markGoalCompleted(goalId: Int){
+        viewModelScope.launch {
+            goalsRepository.markGoalCompleted(goalId).run {
+                _goalIsCompleted.value = this is Result.Success
+            }
+        }
+    }
 
     fun deleteGoal(goalId: Int) {
         viewModelScope.launch {
