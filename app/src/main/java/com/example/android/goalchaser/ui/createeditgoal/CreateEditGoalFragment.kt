@@ -177,16 +177,16 @@ class CreateEditGoalFragment : Fragment() {
                 }
 
             }
-            viewModel.saveOrUpdateGoal(args.passedGoalId)
+            viewModel.createOrUpdateGoal(args.passedGoalId)
 
 
-            viewModel.goalIsSaved.observe(viewLifecycleOwner) { isSaved ->
-                if (isSaved && findNavController()
+            viewModel.goalIsCreated.observe(viewLifecycleOwner) { isCreated ->
+                if (isCreated && findNavController()
                         .currentDestination?.id == R.id.createEditGoalFragment
                 ) {
                     Toast.makeText(
                         context,
-                        getString(R.string.goal_saved_toast, viewModel.goalTitle.value),
+                        getString(R.string.goal_created_toast, viewModel.goalTitle.value),
                         Toast.LENGTH_SHORT
                     ).show()
                     findNavController().navigateUp()
@@ -194,12 +194,16 @@ class CreateEditGoalFragment : Fragment() {
             }
 
             viewModel.goalIsUpdated.observe(viewLifecycleOwner) { isUpdated ->
-                if (isUpdated && findNavController()
+                val updateMessage = when(isUpdated){
+                    true -> getString(R.string.goal_updated_toast, viewModel.goalTitle.value)
+                    else -> getString(R.string.nothing_to_update_toast )
+                }
+                if (findNavController()
                         .currentDestination?.id == R.id.createEditGoalFragment
                 ) {
                     Toast.makeText(
                         context,
-                        getString(R.string.goal_updated_toast, viewModel.goalTitle.value),
+                        updateMessage,
                         Toast.LENGTH_SHORT
                     ).show()
                     findNavController().navigateUp()
@@ -236,7 +240,8 @@ class CreateEditGoalFragment : Fragment() {
             if (isAdjusted) {
                 adjustedDate?.run {
                     dateAdjustedSnackbar = Snackbar.make(
-                        createEditGoalBinding.root, getString(
+                        createEditGoalBinding.root,
+                        getString(
                             R.string.goal_adjusted_snackbar_message,
                             adjDate, adjName, adjYear
                         ),

@@ -24,9 +24,9 @@ class CreateEditGoalViewModel(
         get() = _days
     private val _days = MutableLiveData<Array<Int>>()
 
-    val goalIsSaved: LiveData<Boolean>
-        get() = _goalIsSaved
-    private val _goalIsSaved = MutableLiveData<Boolean>()
+    val goalIsCreated: LiveData<Boolean>
+        get() = _goalIsCreated
+    private val _goalIsCreated = MutableLiveData<Boolean>()
 
     val goalIsUpdated: LiveData<Boolean>
         get() = _goalIsUpdated
@@ -154,25 +154,22 @@ class CreateEditGoalViewModel(
             }
             when (goalData.goalId) {
                 0 -> {
-                    goalsRepository.saveGoal(goalData).run {
-                        _goalIsSaved.value = when (this) {
-                            is Result.Success -> data
-                            is Result.Error -> false
-                        }
+                    goalsRepository.createGoal(goalData).run {
+                        _goalIsCreated.value = this is Result.Success
                     }
                 }
                 else -> {
-                    goalsRepository.updateGoal(goalData).run {
-                        _goalIsUpdated.value =
-                            goal.value != goalDataUiState && this is Result.Success
-                    }
+                    goalsRepository.updateGoal(goal.value != goalDataUiState, goalData)
+                        .run {
+                            _goalIsUpdated.value = this is Result.Success
+                        }
                 }
             }
 
         }
     }
 
-    fun saveOrUpdateGoal(goalId: Int) {
+    fun createOrUpdateGoal(goalId: Int) {
         viewModelScope.launch {
             if (!goalTitle.value.isNullOrEmpty()) {
                 _isTitleEntered.value = true

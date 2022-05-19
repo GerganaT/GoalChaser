@@ -10,7 +10,7 @@ class GoalsRepository(
     private val goalsDao: GoalsDao
 ) {
 
-    suspend fun saveGoal(goalData: GoalData): Result<Boolean> =
+    suspend fun createGoal(goalData: GoalData): Result<Boolean> =
         withContext(Dispatchers.IO) {
             try {
                 goalsDao.insertGoal(goalData)
@@ -19,11 +19,16 @@ class GoalsRepository(
                 Result.Error(e.localizedMessage)
             }
         }
-    suspend fun updateGoal(goalData: GoalData): Result<Boolean> =
+
+    suspend fun updateGoal(isGoalAdjusted: Boolean, goalData: GoalData): Result<Boolean> =
         withContext(Dispatchers.IO) {
             try {
-                goalsDao.updateGoal(goalData)
-                Result.Success(true)
+                if (isGoalAdjusted) {
+                    goalsDao.updateGoal(goalData)
+                    Result.Success(true)
+                } else {
+                    Result.Error("")
+                }
             } catch (e: Exception) {
                 Result.Error(e.localizedMessage)
             }
@@ -68,8 +73,6 @@ class GoalsRepository(
             }
 
         }
-
-
 
 
 }
