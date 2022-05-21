@@ -20,6 +20,7 @@
     <style name="Theme.GoalChaser.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.GoalChaser.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="ThemeOverlay.AppCompat.navTheme">
 
         <!-- Color of text and icon when SELECTED -->
@@ -29,6 +30,7 @@
         <item name="colorControlHighlight">@color/colorAccentSemiTransparent</item>
 
     </style>
+
     <style name="PopupMenuItemStyle" parent="Widget.AppCompat.PopupMenu">
         <item name="android:background">@drawable/popup_ripple</item>
     </style>

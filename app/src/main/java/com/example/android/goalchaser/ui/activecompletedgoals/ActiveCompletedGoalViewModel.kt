@@ -10,7 +10,7 @@ import com.example.android.goalchaser.utils.datautils.Result
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class ActiveGoalsViewModel(
+class ActiveCompletedGoalViewModel(
     private val imageDataRepository: ImageDataRepository,
     private val goalsRepository: GoalsRepository
 ) : ViewModel() {
@@ -18,6 +18,9 @@ class ActiveGoalsViewModel(
     val pictureUrlString: LiveData<String>
         get() = _pictureUrl
     private val _pictureUrl = MutableLiveData<String>()
+    val completedGoalTitle: LiveData<String?>
+        get() = _completedGoalTitle
+    private val _completedGoalTitle = MutableLiveData<String?>()
 
     val photographerCredentials: LiveData<ImageDataUiState>
         get() = _photographerCredentials
@@ -34,13 +37,22 @@ class ActiveGoalsViewModel(
         get() = _goalIsCompleted
     private val _goalIsCompleted = MutableLiveData<Boolean>()
 
+    val goalCompletedAnimationDisplayed: LiveData<Boolean>
+        get() = _goalCompletedAnimationDisplayed
+    private val _goalCompletedAnimationDisplayed = MutableLiveData<Boolean>()
+
     val goalsListIsEmpty = goals.map { goals.value.isNullOrEmpty() }
 
     init {
         getImageData()
-        getGoals()
+        getActiveGoals()
     }
-
+    fun setCompletedGoalTitle(completedGoalTitle:String?){
+        _completedGoalTitle.value = completedGoalTitle
+    }
+    fun setGoalCompletedAnimationDisplayed(isAlreadyAnimated:Boolean){
+        _goalCompletedAnimationDisplayed.value = isAlreadyAnimated
+    }
 
     private fun getImageData() {
 
@@ -68,9 +80,9 @@ class ActiveGoalsViewModel(
 
     }
 
-    private fun getGoals() {
+    private fun getActiveGoals() {
         viewModelScope.launch {
-            goalsRepository.getGoals().run {
+            goalsRepository.getActiveGoals().run {
                 when (this) {
                     is Result.Success -> {
                         goals.value =
@@ -101,7 +113,7 @@ class ActiveGoalsViewModel(
 
     // resolve data binding library issue , which doesn't allow me to call getGoals directly
     //in the fragment
-    fun refreshGoals() = getGoals()
+    fun refreshGoals() = getActiveGoals()
 
     fun deleteGoals() {
         viewModelScope.launch {

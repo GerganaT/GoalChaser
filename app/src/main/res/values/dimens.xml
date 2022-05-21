@@ -24,4 +24,5 @@
     <dimen name="image_of_the_day_height">306dp</dimen>/>
     <dimen name="small_border">2dp</dimen>
     <dimen name="radius">5dp</dimen>
+    <dimen name="completed_goal_title_size">20sp</dimen>
 </resources>

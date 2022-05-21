@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_activeGoalsFragment_to_createEditGoalFragment"
             app:destination="@id/createEditGoalFragment" />
+        <action
+            android:id="@+id/action_activeGoalsFragment_to_goalCompletedFragment"
+            app:destination="@id/goalCompletedFragment" />
     </fragment>
     <fragment
         android:id="@+id/instructionsFragment"
@@ -47,4 +50,8 @@
             android:defaultValue='""'
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/goalCompletedFragment"
+        android:name="com.example.android.goalchaser.ui.activecompletedgoals.GoalCompletedFragment"
+        tools:layout="@layout/fragment_goal_completed" />
 </navigation>

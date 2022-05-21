@@ -3,13 +3,15 @@ package com.example.android.goalchaser.ui.activecompletedgoals
 import android.os.Bundle
 import android.view.*
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentActiveGoalsListBinding
 import com.example.android.goalchaser.ui.activecompletedgoals.recyclerView.GoalsListAdapter
+import com.example.android.goalchaser.utils.uiutils.GoalCompletionDialogFragment
+import com.example.android.goalchaser.utils.uiutils.GoalDeletionDialogFragment
 import com.example.android.goalchaser.utils.uiutils.navigateToCreateEditGoalFragment
 import org.koin.android.ext.android.inject
 
@@ -17,7 +19,7 @@ import org.koin.android.ext.android.inject
 class ActiveGoalsListFragment : Fragment() {
 
     lateinit var activeGoalsListBinding: FragmentActiveGoalsListBinding
-    val viewModel: ActiveGoalsViewModel by inject()
+    val viewModel: ActiveCompletedGoalViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,20 +69,19 @@ class ActiveGoalsListFragment : Fragment() {
                             navigateToCreateEditGoalFragment(passedId)
                         }
                         R.id.mark_completed_popup_item -> {
-                            viewModel.markGoalCompleted(selectedGoal.id)
-                            //TODO figure out what to do with the completed goal
-//                            Toast.makeText(context, "mark completed clicked", Toast.LENGTH_SHORT)
-//                                .show()
+                                GoalCompletionDialogFragment().
+                                setupGoalCompletionDialog(selectedGoal.id,selectedGoal.title).show(
+                                    childFragmentManager,
+                                    GoalCompletionDialogFragment.TAG
+                                )
                         }
                         R.id.delete_popup_item -> {
-                            GoalDeletionDialogFragment().also { dialogFragment ->
-                                dialogFragment.goalId = selectedGoal.id
-                                dialogFragment.goalTitle = selectedGoal.title
-
-                            }.show(
-                                childFragmentManager,
-                                GoalDeletionDialogFragment.TAG
-                            )
+                            GoalDeletionDialogFragment().setupGoalDeleteDialog(
+                                selectedGoal.id, selectedGoal.title
+                            ).show(
+                                    childFragmentManager,
+                                    GoalDeletionDialogFragment.TAG
+                                )
                         }
                     }
                     true
@@ -107,6 +108,6 @@ class ActiveGoalsListFragment : Fragment() {
     }
     //TODO add the respective functions to the popup menu functions - delete,update done
     //TODO add logic to the delete all menu
-
+    //TODO persist popup menu throughout orientations when opened
 
 }

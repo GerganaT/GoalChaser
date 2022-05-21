@@ -33,6 +33,7 @@ import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieCompositionFactory
 import com.airbnb.lottie.LottieDrawable
 import com.example.android.goalchaser.R
@@ -168,4 +169,13 @@ fun View.setupVisibility(isVisible: Boolean) {
     } else {
         View.GONE
     }
+}
+@BindingAdapter("isAnimated")
+fun LottieAnimationView.setAnimationStatus(animationPlayed:LiveData<Boolean>){
+    if (animationPlayed.value == true){
+        playAnimation()
+    }else{
+        setImageResource(R.drawable.goal_completed)
+    }
+
 }

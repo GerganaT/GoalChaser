@@ -54,10 +54,10 @@ class GoalsRepository(
             }
         }
 
-    suspend fun getGoals(): Result<List<GoalData>> =
+    suspend fun getActiveGoals(): Result<List<GoalData>> =
         withContext(Dispatchers.IO) {
             try {
-                Result.Success(goalsDao.getAllGoals())
+                Result.Success(goalsDao.getActiveGoals())
             } catch (e: Exception) {
                 Result.Error(e.message)
             }

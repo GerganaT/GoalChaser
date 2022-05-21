@@ -1,10 +1,11 @@
-package com.example.android.goalchaser.ui.activecompletedgoals
+package com.example.android.goalchaser.utils.uiutils
 
 import android.app.Dialog
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.android.goalchaser.R
+import com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.android.ext.android.inject
 
@@ -13,9 +14,9 @@ import org.koin.android.ext.android.inject
 
 class GoalDeletionDialogFragment
     : DialogFragment() {
-    val viewModel: ActiveGoalsViewModel by inject()
-    var goalId: Int = 0
-    var goalTitle: String? = ""
+    private val viewModel: ActiveCompletedGoalViewModel by inject()
+    private var goalId: Int = 0
+    private var goalTitle: String? = ""
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.run {
@@ -26,7 +27,12 @@ class GoalDeletionDialogFragment
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.alert_dialog_title)
+            .setTitle(
+                getString(
+                    R.string.alert_dialog_title,
+                    savedInstanceState?.getString(GOAL_TITLE) ?: goalTitle
+                )
+            )
             .setMessage(R.string.alert_dialog_message)
             .setPositiveButton(R.string.alert_dialog_delete) { _, _ ->
                 viewModel.deleteGoal(savedInstanceState?.getInt(GOAL_ID) ?: goalId)
@@ -51,4 +57,16 @@ class GoalDeletionDialogFragment
         const val GOAL_ID = "GOAL_ID"
         const val GOAL_TITLE = "GOAL_TITLE"
     }
+
+    fun setupGoalDeleteDialog(
+        deletedGoalId: Int,
+        deletedGoalTitle: String?
+    ): GoalDeletionDialogFragment {
+        goalId = deletedGoalId
+        goalTitle = deletedGoalTitle
+        return this
+
+    }
 }
+//TODO fix issue when dialog is shown after goal is marked completed
+//TODO fix issue with both alerts delete and complete reset data after 2 rotations
