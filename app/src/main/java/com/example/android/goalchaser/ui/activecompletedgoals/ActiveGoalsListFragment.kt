@@ -5,7 +5,6 @@ import android.view.*
 import android.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentActiveGoalsListBinding
@@ -21,6 +20,7 @@ class ActiveGoalsListFragment : Fragment() {
 
     lateinit var activeGoalsListBinding: FragmentActiveGoalsListBinding
     val viewModel: ActiveCompletedGoalViewModel by inject()
+    lateinit var popupMenu:PopupMenu
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +36,6 @@ class ActiveGoalsListFragment : Fragment() {
 
         return activeGoalsListBinding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,7 +59,7 @@ class ActiveGoalsListFragment : Fragment() {
 
 
             val popupTheme = ContextThemeWrapper(context, R.style.PopupMenuItemStyle)
-            val popupMenu = PopupMenu(popupTheme, adapterView)
+            popupMenu = PopupMenu(popupTheme, adapterView)
             popupMenu.run {
                 inflate(R.menu.popup_menu_active_goals)
                 setOnMenuItemClickListener { menuItem ->
@@ -70,20 +69,22 @@ class ActiveGoalsListFragment : Fragment() {
                             navigateToCreateEditGoalFragment(passedId)
                         }
                         R.id.mark_completed_popup_item -> {
-                                GoalCompletionDialogFragment().
-                                setupGoalCompletionDialog(selectedGoal.id,selectedGoal.title)
-                                    .show(
-                                        childFragmentManager,
-                                        GoalCompletionDialogFragment.TAG
-                                    )
+                            GoalCompletionDialogFragment().setupGoalCompletionDialog(
+                                selectedGoal.id,
+                                selectedGoal.title
+                            )
+                                .show(
+                                    childFragmentManager,
+                                    GoalCompletionDialogFragment.TAG
+                                )
                         }
                         R.id.delete_popup_item -> {
                             GoalDeletionDialogFragment().setupGoalDeleteDialog(
                                 selectedGoal.id, selectedGoal.title
                             ).show(
-                                    childFragmentManager,
-                                    GoalDeletionDialogFragment.TAG
-                                )
+                                childFragmentManager,
+                                GoalDeletionDialogFragment.TAG
+                            )
                         }
                     }
                     true
@@ -91,7 +92,6 @@ class ActiveGoalsListFragment : Fragment() {
                 show()
 
             }
-
         }
 
 
@@ -103,15 +103,19 @@ class ActiveGoalsListFragment : Fragment() {
             )
         }
     }
-
-
     override fun onResume() {
         super.onResume()
         viewModel.refreshGoals()
     }
-    //TODO add the respective functions to the popup menu functions - delete,update done
+
+    override fun onPause() {
+        super.onPause()
+        popupMenu.dismiss()
+    }
+
     //TODO add logic to the delete all menu
     //TODO persist popup menu throughout orientations when opened
     //TODO rename the screen to goals and filter them by active or completed
+
 
 }
