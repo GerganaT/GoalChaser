@@ -14,6 +14,7 @@ import com.example.android.goalchaser.utils.uiutils.GoalCompletionDialogFragment
 import com.example.android.goalchaser.utils.uiutils.GoalDeletionDialogFragment
 import com.example.android.goalchaser.utils.uiutils.navigateToCreateEditGoalFragment
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 
 
 class ActiveGoalsListFragment : Fragment() {
@@ -70,10 +71,11 @@ class ActiveGoalsListFragment : Fragment() {
                         }
                         R.id.mark_completed_popup_item -> {
                                 GoalCompletionDialogFragment().
-                                setupGoalCompletionDialog(selectedGoal.id,selectedGoal.title).show(
-                                    childFragmentManager,
-                                    GoalCompletionDialogFragment.TAG
-                                )
+                                setupGoalCompletionDialog(selectedGoal.id,selectedGoal.title)
+                                    .show(
+                                        childFragmentManager,
+                                        GoalCompletionDialogFragment.TAG
+                                    )
                         }
                         R.id.delete_popup_item -> {
                             GoalDeletionDialogFragment().setupGoalDeleteDialog(
@@ -87,6 +89,7 @@ class ActiveGoalsListFragment : Fragment() {
                     true
                 }
                 show()
+
             }
 
         }
@@ -109,5 +112,6 @@ class ActiveGoalsListFragment : Fragment() {
     //TODO add the respective functions to the popup menu functions - delete,update done
     //TODO add logic to the delete all menu
     //TODO persist popup menu throughout orientations when opened
+    //TODO rename the screen to goals and filter them by active or completed
 
 }

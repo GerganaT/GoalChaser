@@ -1,6 +1,7 @@
 package com.example.android.goalchaser.utils.uiutils
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
@@ -9,7 +10,8 @@ import com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoa
 import com.example.android.goalchaser.ui.activecompletedgoals.ActiveGoalsListFragmentDirections
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.android.ext.android.inject
-
+/**This class solves the issue where AlertDialog is dismissed on device rotation as it is
+ *lifecycle-aware*/
 class GoalCompletionDialogFragment : DialogFragment() {
     private val viewModel: ActiveCompletedGoalViewModel by inject()
     private var goalId: Int = 0
@@ -22,26 +24,35 @@ class GoalCompletionDialogFragment : DialogFragment() {
         }
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(getString(R.string.alert_dialog_mark_completed,
-                savedInstanceState?.getString(GOAL_TITLE) ?: goalTitle))
-            .setMessage(R.string.alert_dialog_message)
-            .setPositiveButton(R.string.alert_dialog_confirm_completed) { _, _ ->
-                viewModel.markGoalCompleted(savedInstanceState?.getInt(GOAL_ID) ?: goalId)
-                viewModel.setCompletedGoalTitle(
-                    savedInstanceState?.getString(GOAL_TITLE) ?: goalTitle
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        savedInstanceState?.run {
+            goalId = getInt(GOAL_ID)
+            goalTitle = getString(GOAL_TITLE)
+        }
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(
+                getString(
+                    R.string.alert_dialog_mark_completed,
+                    goalTitle
                 )
+            )
+            .setMessage(R.string.alert_dialog_message)
+            .setPositiveButton(R.string.alert_dialog_confirm_completed) { dialog: DialogInterface, _ ->
+                viewModel.markGoalCompleted(goalId)
+                viewModel.setCompletedGoalTitle(goalTitle)
+                dialog.dismiss()
                 findNavController().navigate(
                     ActiveGoalsListFragmentDirections
                         .actionActiveGoalsFragmentToGoalCompletedFragment()
                 )
-                viewModel.refreshGoals()
             }
             .setNegativeButton(R.string.alert_dialog_cancel) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()
+
+        return dialog
+    }
 
 
     companion object {
@@ -57,6 +68,5 @@ class GoalCompletionDialogFragment : DialogFragment() {
         goalId = completedGoalId
         goalTitle = completedGoalTitle
         return this
-
     }
 }

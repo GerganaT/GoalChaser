@@ -58,4 +58,3 @@ class GoalCompletedFragment : Fragment() {
     }
 }
 
-//TODO in Active goals show alert dialog

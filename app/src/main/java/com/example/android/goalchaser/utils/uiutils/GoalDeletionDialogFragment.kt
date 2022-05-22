@@ -25,23 +25,21 @@ class GoalDeletionDialogFragment
         }
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        MaterialAlertDialogBuilder(requireContext())
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        savedInstanceState?.run {
+            goalId = getInt(GOAL_ID)
+            goalTitle = getString(GOAL_TITLE)
+        }
+        val dialog = MaterialAlertDialogBuilder(requireContext())
             .setTitle(
-                getString(
-                    R.string.alert_dialog_title,
-                    savedInstanceState?.getString(GOAL_TITLE) ?: goalTitle
-                )
+                getString(R.string.alert_dialog_title, goalTitle)
             )
             .setMessage(R.string.alert_dialog_message)
             .setPositiveButton(R.string.alert_dialog_delete) { _, _ ->
-                viewModel.deleteGoal(savedInstanceState?.getInt(GOAL_ID) ?: goalId)
+                viewModel.deleteGoal(goalId)
                 Toast.makeText(
                     context,
-                    getString(
-                        R.string.deleted_goal_toast,
-                        savedInstanceState?.getString(GOAL_TITLE) ?: goalTitle
-                    ),
+                    getString(R.string.deleted_goal_toast, goalTitle),
                     Toast.LENGTH_SHORT
                 ).show()
                 viewModel.refreshGoals()
@@ -50,6 +48,8 @@ class GoalDeletionDialogFragment
                 dialog.dismiss()
             }
             .create()
+        return dialog
+    }
 
 
     companion object {
@@ -68,5 +68,3 @@ class GoalDeletionDialogFragment
 
     }
 }
-//TODO fix issue when dialog is shown after goal is marked completed
-//TODO fix issue with both alerts delete and complete reset data after 2 rotations
