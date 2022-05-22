@@ -20,7 +20,7 @@ class ActiveGoalsListFragment : Fragment() {
 
     lateinit var activeGoalsListBinding: FragmentActiveGoalsListBinding
     val viewModel: ActiveCompletedGoalViewModel by inject()
-    lateinit var popupMenu:PopupMenu
+    var popupMenu:PopupMenu?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,7 +60,7 @@ class ActiveGoalsListFragment : Fragment() {
 
             val popupTheme = ContextThemeWrapper(context, R.style.PopupMenuItemStyle)
             popupMenu = PopupMenu(popupTheme, adapterView)
-            popupMenu.run {
+            popupMenu?.run {
                 inflate(R.menu.popup_menu_active_goals)
                 setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
@@ -110,7 +110,7 @@ class ActiveGoalsListFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        popupMenu.dismiss()
+        popupMenu?.dismiss()
     }
 
     //TODO add logic to the delete all menu
