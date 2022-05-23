@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalViewModel" />
+            type="com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalsViewModel" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/completed_goal_root"

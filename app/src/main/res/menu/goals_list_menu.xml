@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/delete_all_menu_root">
+
+    <item
+        android:id="@+id/show_active_menu_item"
+        android:title="@string/show_active_goals_menu_item" />
+    <item
+        android:id="@+id/show_completed_menu_item"
+        android:title="@string/show_completed_goals_menu_item" />
+    <item
+        android:id="@+id/delete_active_menu_item"
+        android:title="@string/delete_active_goals_menu_item" />
+    <item
+        android:id="@+id/delete_completed_menu_item"
+        android:title="@string/delete_completed_goals_menu_item" />
+    <item
+        android:id="@+id/delete_all_menu_item"
+        android:title="@string/menu_delete_all" />
+</menu>

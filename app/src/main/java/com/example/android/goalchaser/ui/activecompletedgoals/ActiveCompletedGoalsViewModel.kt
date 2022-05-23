@@ -7,10 +7,11 @@ import com.example.android.goalchaser.repository.ImageDataRepository
 import com.example.android.goalchaser.ui.uistate.GoalDataUiState
 import com.example.android.goalchaser.ui.uistate.ImageDataUiState
 import com.example.android.goalchaser.utils.datautils.Result
+import com.example.android.goalchaser.utils.uiutils.MenuSelection
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class ActiveCompletedGoalViewModel(
+class ActiveCompletedGoalsViewModel(
     private val imageDataRepository: ImageDataRepository,
     private val goalsRepository: GoalsRepository
 ) : ViewModel() {
@@ -45,12 +46,14 @@ class ActiveCompletedGoalViewModel(
 
     init {
         getImageData()
-        getActiveGoals()
+        getActiveOrCompletedGoals()
     }
-    fun setCompletedGoalTitle(completedGoalTitle:String?){
+
+    fun setCompletedGoalTitle(completedGoalTitle: String?) {
         _completedGoalTitle.value = completedGoalTitle
     }
-    fun setGoalCompletedAnimationDisplayed(isAlreadyAnimated:Boolean){
+
+    fun setGoalCompletedAnimationDisplayed(isAlreadyAnimated: Boolean) {
         _goalCompletedAnimationDisplayed.value = isAlreadyAnimated
     }
 
@@ -80,9 +83,14 @@ class ActiveCompletedGoalViewModel(
 
     }
 
-    private fun getActiveGoals() {
+    private fun getActiveOrCompletedGoals(selection: MenuSelection = MenuSelection.ACTIVE_GOALS) {
         viewModelScope.launch {
-            goalsRepository.getActiveGoals().run {
+            val repositoryOperation = when (selection) {
+                MenuSelection.ACTIVE_GOALS -> goalsRepository.getActiveGoals()
+                MenuSelection.COMPLETED_GOALS -> goalsRepository.getCompletedGoals()
+                else -> return@launch
+            }
+            repositoryOperation.run {
                 when (this) {
                     is Result.Success -> {
                         goals.value =
@@ -111,9 +119,11 @@ class ActiveCompletedGoalViewModel(
 
     }
 
-    // resolve data binding library issue , which doesn't allow me to call getGoals directly
-    //in the fragment
-    fun refreshGoals() = getActiveGoals()
+    // resolve data binding library issue , which doesn't allow me to call
+    // getActiveOrCompletedGoals() directly in the Fragment
+
+    fun refreshGoals(selection: MenuSelection = MenuSelection.ACTIVE_GOALS) =
+        getActiveOrCompletedGoals(selection)
 
     fun deleteGoals() {
         viewModelScope.launch {
@@ -122,7 +132,8 @@ class ActiveCompletedGoalViewModel(
             }
         }
     }
-    fun markGoalCompleted(goalId: Int){
+
+    fun markGoalCompleted(goalId: Int) {
         viewModelScope.launch {
             goalsRepository.markGoalCompleted(goalId).run {
                 _goalIsCompleted.value = this is Result.Success

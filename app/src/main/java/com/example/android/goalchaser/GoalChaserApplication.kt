@@ -8,7 +8,7 @@ import com.example.android.goalchaser.remotedatasource.ImageDataApiService
 import com.example.android.goalchaser.remotedatasource.ImageOfTheDayDataApiService
 import com.example.android.goalchaser.repository.GoalsRepository
 import com.example.android.goalchaser.repository.ImageDataRepository
-import com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalViewModel
+import com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalsViewModel
 import com.example.android.goalchaser.ui.createeditgoal.CreateEditGoalViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -34,7 +34,7 @@ class GoalChaserApplication : Application() {
               }
 
             single {
-                ActiveCompletedGoalViewModel(
+                ActiveCompletedGoalsViewModel(
                     get() as ImageDataRepository,
                     get() as GoalsRepository
                 )

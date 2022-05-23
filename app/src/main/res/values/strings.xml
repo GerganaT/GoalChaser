@@ -63,6 +63,12 @@
     <string name="return_to_goals_overview_button_label">return to goals overview</string>
     <string name="alert_dialog_mark_completed">Mark %1$s completed?</string>
     <string name="alert_dialog_confirm_completed">mark completed</string>
+    <string name="show_active_goals_menu_item">Active goals</string>
+    <string name="show_completed_goals_menu_item">Completed goals</string>
+    <string name="delete_active_goals_menu_item">Delete active goals</string>
+    <string name="delete_completed_goals_menu_item">Delete completed goals</string>
+    <string name="active_goals_toast">Viewing active goals</string>
+    <string name="completed_goals_toast">Viewing completed goals</string>
     <string-array name="days_months">
         <item>Day(s)</item>
         <item>Month(s)</item>

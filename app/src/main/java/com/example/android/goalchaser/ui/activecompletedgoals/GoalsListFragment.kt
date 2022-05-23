@@ -9,18 +9,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentActiveGoalsListBinding
 import com.example.android.goalchaser.ui.activecompletedgoals.recyclerView.GoalsListAdapter
-import com.example.android.goalchaser.utils.uiutils.GoalCompletionDialogFragment
-import com.example.android.goalchaser.utils.uiutils.GoalDeletionDialogFragment
-import com.example.android.goalchaser.utils.uiutils.navigateToCreateEditGoalFragment
+import com.example.android.goalchaser.utils.uiutils.*
 import org.koin.android.ext.android.inject
-import timber.log.Timber
 
 
 class GoalsListFragment : Fragment() {
 
     lateinit var activeGoalsListBinding: FragmentActiveGoalsListBinding
-    val viewModel: ActiveCompletedGoalViewModel by inject()
-    var popupMenu:PopupMenu?=null
+    val viewModel: ActiveCompletedGoalsViewModel by inject()
+    var popupMenu: PopupMenu? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,14 +47,29 @@ class GoalsListFragment : Fragment() {
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.tasks_list_menu, menu)
+        inflater.inflate(R.menu.goals_list_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.show_active_menu_item -> {
+                viewModel.refreshGoals()
+                createToast(R.string.active_goals_toast)
+                return true
+            }
+            R.id.show_completed_menu_item -> {
+                viewModel.refreshGoals(MenuSelection.COMPLETED_GOALS)
+                createToast(R.string.completed_goals_toast)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setupRecyclerViewAdapter() {
 
         val goalsListAdapter = GoalsListAdapter { selectedGoal, adapterView ->
-
-
+            
             val popupTheme = ContextThemeWrapper(context, R.style.PopupMenuItemStyle)
             popupMenu = PopupMenu(popupTheme, adapterView)
             popupMenu?.run {
@@ -103,15 +115,23 @@ class GoalsListFragment : Fragment() {
             )
         }
     }
+
     override fun onResume() {
         super.onResume()
         viewModel.refreshGoals()
     }
 
 
-    //TODO add logic to the delete all menu
-    //TODO persist popup menu throughout orientations when opened-is it worth it?
-    //TODO rename the screen to goals and filter them by active or completed
+    //TODO add an enum or constants with menu options to trigger the different database operations so code in
+    //TODO view model can be reused
+    //TODO add logic to the menu
+    //TODO persist goals active or completed throughout device orientation
+    //TODO decide how to act with popup menu in active/deleted cases
+    //TODO when operation on goal is performed user has to return to his current selection
+    //TODO show loading indicator or goal lottie logo maybe?
+    //TODO persist popup menu throughout orientations when opened-is it worth it?-if mentor
+    //TODO doesn't reply implement normal menu on each list item in adapter
+
 
 
 }

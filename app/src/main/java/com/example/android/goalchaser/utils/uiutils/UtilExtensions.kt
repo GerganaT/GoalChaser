@@ -1,12 +1,16 @@
 package com.example.android.goalchaser.utils.uiutils
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.ui.activecompletedgoals.GoalsListFragment
 import com.example.android.goalchaser.ui.activecompletedgoals.GoalsListFragmentDirections
+import java.time.Duration
 
 fun AutoCompleteTextView.setupDaysMonthsCountAdapter(days: Array<Int>, savedState: Bundle?) {
 
@@ -64,3 +68,7 @@ fun GoalsListFragment.navigateToCreateEditGoalFragment(selectedGoalId: Int = 0) 
         )
     }
 }
+fun Fragment.createToast(message:Int){
+    Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
+}
+//TODO replace toast creation throughout the project with this helper-method

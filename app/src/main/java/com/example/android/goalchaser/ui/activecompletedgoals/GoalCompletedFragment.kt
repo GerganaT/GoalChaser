@@ -19,7 +19,7 @@ class GoalCompletedFragment : Fragment() {
     lateinit var goalCompletedBinding: FragmentGoalCompletedBinding
     private var actionBar:ActionBar?=null
 
-    val viewModel: ActiveCompletedGoalViewModel by inject()
+    val viewModel: ActiveCompletedGoalsViewModel by inject()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

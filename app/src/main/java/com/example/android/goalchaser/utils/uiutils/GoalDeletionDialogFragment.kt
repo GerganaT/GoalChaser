@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.android.goalchaser.R
-import com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalViewModel
+import com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalsViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.android.ext.android.inject
 
@@ -14,7 +14,7 @@ import org.koin.android.ext.android.inject
 
 class GoalDeletionDialogFragment
     : DialogFragment() {
-    private val viewModel: ActiveCompletedGoalViewModel by inject()
+    private val viewModel: ActiveCompletedGoalsViewModel by inject()
     private var goalId: Int = 0
     private var goalTitle: String? = ""
     override fun onSaveInstanceState(outState: Bundle) {
