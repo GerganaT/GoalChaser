@@ -54,10 +54,28 @@ class GoalsRepository(
             }
         }
 
+    suspend fun getAllGoals(): Result<List<GoalData>> =
+        withContext(Dispatchers.IO) {
+            try {
+                Result.Success(goalsDao.getAllGoals())
+            } catch (e: Exception) {
+                Result.Error(e.message)
+            }
+        }
+
+
     suspend fun getActiveGoals(): Result<List<GoalData>> =
         withContext(Dispatchers.IO) {
             try {
                 Result.Success(goalsDao.getActiveGoals())
+            } catch (e: Exception) {
+                Result.Error(e.message)
+            }
+        }
+    suspend fun getCompletedGoals(): Result<List<GoalData>> =
+        withContext(Dispatchers.IO) {
+            try {
+                Result.Success(goalsDao.getCompletedGoals())
             } catch (e: Exception) {
                 Result.Error(e.message)
             }
@@ -78,6 +96,26 @@ class GoalsRepository(
         withContext(Dispatchers.IO) {
             try {
                 goalsDao.deleteAllGoals()
+                Result.Success(true)
+            } catch (e: Exception) {
+                Result.Error(e.message)
+            }
+
+        }
+    suspend fun deleteAllActiveGoals(): Result<Boolean> =
+        withContext(Dispatchers.IO) {
+            try {
+                goalsDao.deleteAllActiveGoals()
+                Result.Success(true)
+            } catch (e: Exception) {
+                Result.Error(e.message)
+            }
+
+        }
+    suspend fun deleteAllCompletedGoals(): Result<Boolean> =
+        withContext(Dispatchers.IO) {
+            try {
+                goalsDao.deleteAllCompletedGoals()
                 Result.Success(true)
             } catch (e: Exception) {
                 Result.Error(e.message)

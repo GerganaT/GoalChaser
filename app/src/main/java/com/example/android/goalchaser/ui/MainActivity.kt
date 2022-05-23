@@ -1,7 +1,6 @@
 package com.example.android.goalchaser.ui
 
 import android.os.Bundle
-import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.instructionsFragment, R.id.splashFragment,
-                R.id.activeGoalsFragment, R.id.statisticsFragment
+                R.id.goalsListFragment, R.id.statisticsFragment
             ), drawerLayout
         )
         navView.setupWithNavController(navController)

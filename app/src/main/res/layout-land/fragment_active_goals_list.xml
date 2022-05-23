@@ -12,7 +12,7 @@
         android:paddingBottom="@dimen/padding_small"
         app:layout_constraintEnd_toEndOf="@+id/active_image_of_the_day_image"
         app:layout_constraintStart_toEndOf="@+id/active_image_of_the_day_image"
-        tools:context=".ui.activecompletedgoals.ActiveGoalsListFragment">
+        tools:context=".ui.activecompletedgoals.GoalsListFragment">
 
         <ImageView
             android:id="@+id/no_goals_image_view"

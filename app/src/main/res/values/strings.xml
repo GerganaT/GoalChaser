@@ -6,7 +6,6 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="instructions_drawer_menu_item">Instructions</string>
     <string name="statistics_drawer_menu_item">Statistics</string>
-    <string name="completed_goals_drawer_menu_item">Completed goals</string>
     <string name="instructions_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
         quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -20,7 +19,7 @@
         nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
         officia deserunt mollit anim id est laborum.</string>
     <string name="instructions_fragment_label">Instructions</string>
-    <string name="active_goals_fragment_label">Active Goals</string>
+    <string name="active_goals_fragment_label">Goals</string>
     <string name="statistcs_fragment_label">Statistics</string>
     <string name="statistics_header">Goals by completion status</string>
     <string name="title_label_save_edit_fragment">Goal title</string>
@@ -34,7 +33,7 @@
     <string name="send_notification_label">Notify me</string>
     <string name="before_goal_due_date_label">before goal due date.</string>
     <string name="number">1</string>
-    <string name="active_goals_drawer_menu_item">Active goals</string>
+    <string name="active_goals_drawer_menu_item">Goals</string>
     <string name="photographer_credentials">Photo by %1$s on %2$s</string>
     <string name="user_entered_date">%1$d/%2$d/%3$d</string>
     <string name="unsplash_website_title">Unsplash</string>
@@ -61,7 +60,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="completed_goal_label">completed!</string>
-    <string name="return_to_active_goals_button_label">return to active goals</string>
+    <string name="return_to_goals_overview_button_label">return to goals overview</string>
     <string name="alert_dialog_mark_completed">Mark %1$s completed?</string>
     <string name="alert_dialog_confirm_completed">mark completed</string>
     <string-array name="days_months">

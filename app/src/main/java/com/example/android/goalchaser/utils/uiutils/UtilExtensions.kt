@@ -5,8 +5,8 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.navigation.fragment.findNavController
 import com.example.android.goalchaser.R
-import com.example.android.goalchaser.ui.activecompletedgoals.ActiveGoalsListFragment
-import com.example.android.goalchaser.ui.activecompletedgoals.ActiveGoalsListFragmentDirections
+import com.example.android.goalchaser.ui.activecompletedgoals.GoalsListFragment
+import com.example.android.goalchaser.ui.activecompletedgoals.GoalsListFragmentDirections
 
 fun AutoCompleteTextView.setupDaysMonthsCountAdapter(days: Array<Int>, savedState: Bundle?) {
 
@@ -51,13 +51,13 @@ fun AutoCompleteTextView.setupDaysMonthsAdapter(): Array<String> {
     return dayMonthsArray
 }
 
-fun ActiveGoalsListFragment.navigateToCreateEditGoalFragment(selectedGoalId: Int = 0) {
+fun GoalsListFragment.navigateToCreateEditGoalFragment(selectedGoalId: Int = 0) {
     val createEditGoalLabel = when (selectedGoalId) {
         0 -> getString(R.string.create_goal_fragment_label)
         else -> getString(R.string.edit_goal_fragment_label)
     }
-    val navDirections = ActiveGoalsListFragmentDirections
-        .actionActiveGoalsFragmentToCreateEditGoalFragment(selectedGoalId, createEditGoalLabel)
+    val navDirections = GoalsListFragmentDirections
+        .actionGoalsFragmentToCreateEditGoalFragment(selectedGoalId, createEditGoalLabel)
     findNavController().run {
         navigate(
             navDirections

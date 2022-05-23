@@ -8,8 +8,8 @@
         android:id="@+id/drawer_menu_group"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/activeGoalsFragment"
-            android:icon="@drawable/ic_active_goals"
+            android:id="@+id/goalsListFragment"
+            android:icon="@drawable/ic_baseline_grading_24"
             android:title="@string/active_goals_drawer_menu_item" />
         <item
             android:id="@+id/statisticsFragment"

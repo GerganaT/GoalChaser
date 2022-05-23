@@ -7,7 +7,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalViewModel
-import com.example.android.goalchaser.ui.activecompletedgoals.ActiveGoalsListFragmentDirections
+import com.example.android.goalchaser.ui.activecompletedgoals.GoalsListFragmentDirections
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.android.ext.android.inject
 /**This class solves the issue where AlertDialog is dismissed on device rotation as it is
@@ -42,8 +42,8 @@ class GoalCompletionDialogFragment : DialogFragment() {
                 viewModel.setCompletedGoalTitle(goalTitle)
                 dialog.dismiss()
                 findNavController().navigate(
-                    ActiveGoalsListFragmentDirections
-                        .actionActiveGoalsFragmentToGoalCompletedFragment()
+                    GoalsListFragmentDirections
+                        .actionGoalsFragmentToGoalCompletedFragment()
                 )
             }
             .setNegativeButton(R.string.alert_dialog_cancel) { dialog, _ ->

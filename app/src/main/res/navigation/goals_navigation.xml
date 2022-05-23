@@ -9,19 +9,19 @@
         android:name="com.example.android.goalchaser.ui.splash.SplashFragment"
         tools:layout="@layout/fragment_splash" >
         <action
-            android:id="@+id/action_splashFragment_to_activeGoalsFragment"
-            app:destination="@id/activeGoalsFragment" />
+            android:id="@+id/action_splashFragment_to_goalsFragment"
+            app:destination="@id/goalsListFragment" />
     </fragment>
     <fragment
-        android:id="@+id/activeGoalsFragment"
-        android:name="com.example.android.goalchaser.ui.activecompletedgoals.ActiveGoalsListFragment"
+        android:id="@+id/goalsListFragment"
+        android:name="com.example.android.goalchaser.ui.activecompletedgoals.GoalsListFragment"
         android:label="@string/active_goals_fragment_label"
         tools:layout="@layout/fragment_active_goals_list" >
         <action
-            android:id="@+id/action_activeGoalsFragment_to_createEditGoalFragment"
+            android:id="@+id/action_goalsFragment_to_createEditGoalFragment"
             app:destination="@id/createEditGoalFragment" />
         <action
-            android:id="@+id/action_activeGoalsFragment_to_goalCompletedFragment"
+            android:id="@+id/action_goalsFragment_to_goalCompletedFragment"
             app:destination="@id/goalCompletedFragment" />
     </fragment>
     <fragment
@@ -39,8 +39,8 @@
         android:name="com.example.android.goalchaser.ui.createeditgoal.CreateEditGoalFragment"
         tools:layout="@layout/fragment_create_edit_goal">
         <action
-            android:id="@+id/action_createEditGoalFragment_to_activeGoalsFragment"
-            app:destination="@id/activeGoalsFragment" />
+            android:id="@+id/action_createEditGoalFragment_to_goalsFragment"
+            app:destination="@id/goalsListFragment" />
         <argument
             android:name="passedGoalId"
             android:defaultValue="0"

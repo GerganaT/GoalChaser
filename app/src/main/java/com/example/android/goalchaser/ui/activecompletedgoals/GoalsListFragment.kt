@@ -16,7 +16,7 @@ import org.koin.android.ext.android.inject
 import timber.log.Timber
 
 
-class ActiveGoalsListFragment : Fragment() {
+class GoalsListFragment : Fragment() {
 
     lateinit var activeGoalsListBinding: FragmentActiveGoalsListBinding
     val viewModel: ActiveCompletedGoalViewModel by inject()
@@ -108,13 +108,9 @@ class ActiveGoalsListFragment : Fragment() {
         viewModel.refreshGoals()
     }
 
-    override fun onPause() {
-        super.onPause()
-        popupMenu?.dismiss()
-    }
 
     //TODO add logic to the delete all menu
-    //TODO persist popup menu throughout orientations when opened
+    //TODO persist popup menu throughout orientations when opened-is it worth it?
     //TODO rename the screen to goals and filter them by active or completed
 
 
