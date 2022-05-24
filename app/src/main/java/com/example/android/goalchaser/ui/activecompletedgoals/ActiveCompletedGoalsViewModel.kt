@@ -19,9 +19,14 @@ class ActiveCompletedGoalsViewModel(
     val pictureUrlString: LiveData<String>
         get() = _pictureUrl
     private val _pictureUrl = MutableLiveData<String>()
+
     val completedGoalTitle: LiveData<String?>
         get() = _completedGoalTitle
     private val _completedGoalTitle = MutableLiveData<String?>()
+
+    val completedGoalDate: LiveData<String?>
+        get() = _completedGoalDate
+    private val _completedGoalDate = MutableLiveData<String?>()
 
     val photographerCredentials: LiveData<ImageDataUiState>
         get() = _photographerCredentials
@@ -29,6 +34,10 @@ class ActiveCompletedGoalsViewModel(
 
 
     val goals = MutableLiveData<List<GoalDataUiState>>()
+
+    val showLoading: LiveData<Boolean>
+        get() = _showLoading
+    private val _showLoading = MutableLiveData<Boolean>()
 
     val goalsAreDeleted: LiveData<Boolean>
         get() = _goalsAreDeleted
@@ -42,6 +51,10 @@ class ActiveCompletedGoalsViewModel(
         get() = _goalCompletedAnimationDisplayed
     private val _goalCompletedAnimationDisplayed = MutableLiveData<Boolean>()
 
+    val activeCompletedGoalSelection: LiveData<MenuSelection?>
+        get() = _activeCompletedGoalSelection
+    private val _activeCompletedGoalSelection = MutableLiveData<MenuSelection?>()
+
     val goalsListIsEmpty = goals.map { goals.value.isNullOrEmpty() }
 
     init {
@@ -49,8 +62,16 @@ class ActiveCompletedGoalsViewModel(
         getActiveOrCompletedGoals()
     }
 
+    fun setActiveCompletedGoalSelection(menuSelection: MenuSelection?){
+        _activeCompletedGoalSelection.value = menuSelection
+    }
+
     fun setCompletedGoalTitle(completedGoalTitle: String?) {
         _completedGoalTitle.value = completedGoalTitle
+    }
+
+    fun setCompletedGoalDate(completedGoalDate: String?){
+        _completedGoalDate.value = completedGoalDate
     }
 
     fun setGoalCompletedAnimationDisplayed(isAlreadyAnimated: Boolean) {
@@ -85,6 +106,7 @@ class ActiveCompletedGoalsViewModel(
 
     private fun getActiveOrCompletedGoals(selection: MenuSelection = MenuSelection.ACTIVE_GOALS) {
         viewModelScope.launch {
+            _showLoading.value = true
             val repositoryOperation = when (selection) {
                 MenuSelection.ACTIVE_GOALS -> goalsRepository.getActiveGoals()
                 MenuSelection.COMPLETED_GOALS -> goalsRepository.getCompletedGoals()
@@ -93,6 +115,7 @@ class ActiveCompletedGoalsViewModel(
             repositoryOperation.run {
                 when (this) {
                     is Result.Success -> {
+                        _showLoading.value = false
                         goals.value =
                             data.map { gd: GoalData ->
                                 GoalDataUiState(
@@ -109,6 +132,7 @@ class ActiveCompletedGoalsViewModel(
                             }
                     }
                     is Result.Error -> {
+                        _showLoading.value = false
                         Timber.e("Cant load goals")
                     }
                 }

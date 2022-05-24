@@ -39,7 +39,9 @@ import com.airbnb.lottie.LottieDrawable
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.ui.activecompletedgoals.recyclerView.GoalsRecyclerViewAdapter
 import com.example.android.goalchaser.ui.uistate.ImageDataUiState
+import com.example.android.goalchaser.utils.uiutils.MenuSelection
 import com.example.android.goalchaser.utils.uiutils.setupDaysMonthsAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.squareup.picasso.Picasso
 import java.time.LocalDate
@@ -170,12 +172,32 @@ fun View.setupVisibility(isVisible: Boolean) {
         View.GONE
     }
 }
+
 @BindingAdapter("isAnimated")
-fun LottieAnimationView.setAnimationStatus(animationPlayed:LiveData<Boolean>){
-    if (animationPlayed.value == true){
+fun LottieAnimationView.setAnimationStatus(animationPlayed: LiveData<Boolean>) {
+    if (animationPlayed.value == true) {
         playAnimation()
-    }else{
+    } else {
         setImageResource(R.drawable.goal_completed)
     }
 
 }
+
+@BindingAdapter("setVisibility")
+fun FloatingActionButton.setupVisibility(activeCompletedGoalsMenuSelection: MenuSelection?) {
+    visibility = when (activeCompletedGoalsMenuSelection) {
+        MenuSelection.COMPLETED_GOALS -> View.GONE
+        else -> View.VISIBLE
+    }
+}
+
+@BindingAdapter("setGoalLabel")
+fun TextView.setCompletedOrDueLabel(isGoalCompleted: Boolean) {
+    text = context.getString(
+        when (isGoalCompleted) {
+            true -> R.string.completed_goal_label_list_item
+            false -> R.string.due_goal_label_list_item
+        }
+    )
+}
+

@@ -16,13 +16,16 @@
         android:id="@+id/goalsListFragment"
         android:name="com.example.android.goalchaser.ui.activecompletedgoals.GoalsListFragment"
         android:label="@string/active_goals_fragment_label"
-        tools:layout="@layout/fragment_active_goals_list" >
+        tools:layout="@layout/fragment_goals_list" >
         <action
             android:id="@+id/action_goalsFragment_to_createEditGoalFragment"
             app:destination="@id/createEditGoalFragment" />
         <action
             android:id="@+id/action_goalsFragment_to_goalCompletedFragment"
             app:destination="@id/goalCompletedFragment" />
+        <action
+            android:id="@+id/action_goalsListFragment_to_completedGoalDetailsFragment"
+            app:destination="@id/completedGoalDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/instructionsFragment"
@@ -54,4 +57,9 @@
         android:id="@+id/goalCompletedFragment"
         android:name="com.example.android.goalchaser.ui.activecompletedgoals.GoalCompletedFragment"
         tools:layout="@layout/fragment_goal_completed" />
+    <fragment
+        android:id="@+id/completedGoalDetailsFragment"
+        android:name="com.example.android.goalchaser.CompletedGoalDetailsFragment"
+        android:label="CompletedGoalDetailsFragment"
+        tools:layout="@layout/fragment_completed_goal_details"/>
 </navigation>

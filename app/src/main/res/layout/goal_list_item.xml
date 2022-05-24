@@ -14,28 +14,32 @@
         android:background="@drawable/border"
         android:padding="@dimen/padding_mid">
 
-        <ImageView
-            android:id="@+id/completed_goal_checkmark_image"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/goal_due_completion_date_label_text"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="@dimen/text_size_small"
+            tools:text="Completed"
+            app:layout_constraintBottom_toTopOf="@+id/goal_date_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/goal_date_text"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_goal_checkmark" />
+            app:layout_constraintVertical_bias="1.0"
+            app:setGoalLabel="@{goal.isCompleted}" />
 
         <TextView
             android:id="@+id/goal_title_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_small"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{goal.title}"
             android:textColor="@color/primaryTextColor"
             android:textSize="@dimen/medium_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/goal_date_text"
-            app:layout_constraintStart_toEndOf="@+id/completed_goal_checkmark_image"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Goal Title" />
 
@@ -46,9 +50,10 @@
             android:text="@{goal.dueDate}"
             android:textColor="@color/primaryTextColor"
             android:textSize="@dimen/medium_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             tools:text="3/21/2022" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>

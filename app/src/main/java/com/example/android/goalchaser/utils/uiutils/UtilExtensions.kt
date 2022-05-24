@@ -10,6 +10,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.ui.activecompletedgoals.GoalsListFragment
 import com.example.android.goalchaser.ui.activecompletedgoals.GoalsListFragmentDirections
+import com.example.android.goalchaser.ui.uistate.GoalDataUiState
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.time.Duration
 
 fun AutoCompleteTextView.setupDaysMonthsCountAdapter(days: Array<Int>, savedState: Bundle?) {
@@ -68,7 +70,20 @@ fun GoalsListFragment.navigateToCreateEditGoalFragment(selectedGoalId: Int = 0) 
         )
     }
 }
+fun GoalsListFragment.navigateToCompletedGoalDetailsFragment(selectedGoal:GoalDataUiState) {
+    viewModel.setCompletedGoalDate(selectedGoal.dueDate)
+    viewModel.setCompletedGoalTitle(selectedGoal.title)
+
+    val navDirections =
+        GoalsListFragmentDirections.actionGoalsListFragmentToCompletedGoalDetailsFragment()
+    findNavController().run {
+        navigate(
+            navDirections
+        )
+    }
+}
 fun Fragment.createToast(message:Int){
     Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
 }
+
 //TODO replace toast creation throughout the project with this helper-method

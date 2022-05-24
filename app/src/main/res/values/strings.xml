@@ -69,6 +69,10 @@
     <string name="delete_completed_goals_menu_item">Delete completed goals</string>
     <string name="active_goals_toast">Viewing active goals</string>
     <string name="completed_goals_toast">Viewing completed goals</string>
+    <string name="completed_goal_title_label">Completed goal title</string>
+    <string name="completed_goal_details_completion_date_label">Goal completion date</string>
+    <string name="completed_goal_label_list_item">Completed</string>
+    <string name="due_goal_label_list_item">Due until</string>
     <string-array name="days_months">
         <item>Day(s)</item>
         <item>Month(s)</item>

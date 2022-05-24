@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/completed_goal_details_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_large"
+        tools:context=".CompletedGoalDetailsFragment">
+
+        <Button
+            android:id="@+id/gompleted_goal_details_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/return_to_goals_overview_button_label"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/completed_goal_details_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/margin_large"
+            android:src="@drawable/ic_baseline_check_circle_outline_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/gompleted_goal_details_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/completed_goal_details_title_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:maxLines="@integer/max_lines_completed_goal_title"
+            android:text="@{viewModel.completedGoalTitle}"
+            android:textSize="@dimen/normal_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/completed_goal_details_complete_date_label_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/gompleted_goal_details_btn"
+            tools:text="Some text here" />
+
+        <TextView
+            android:id="@+id/completed_goal_details_complete_date_label_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:text="@string/completed_goal_details_completion_date_label"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/completed_goal_details_date_text"
+            app:layout_constraintStart_toStartOf="@+id/gompleted_goal_details_btn" />
+
+        <TextView
+            android:id="@+id/completed_goal_details_date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:text="@{viewModel.completedGoalDate}"
+            android:textSize="@dimen/normal_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/gompleted_goal_details_btn"
+            app:layout_constraintStart_toStartOf="@+id/gompleted_goal_details_btn"
+            tools:text="1/1/2022" />
+
+        <TextView
+            android:id="@+id/completed_goal_details_title_label_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:text="@string/completed_goal_title_label"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/completed_goal_details_title_text"
+            app:layout_constraintStart_toStartOf="@+id/gompleted_goal_details_btn" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

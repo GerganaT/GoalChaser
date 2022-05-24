@@ -1,6 +1,8 @@
 package com.example.android.goalchaser.utils.uiutils
 
-enum class MenuSelection {
+import java.io.Serializable
+
+enum class MenuSelection:Serializable {
     ACTIVE_GOALS,
     COMPLETED_GOALS,
     DELETE_ACTIVE_GOALS,

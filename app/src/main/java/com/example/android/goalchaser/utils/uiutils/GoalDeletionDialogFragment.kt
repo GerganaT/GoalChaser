@@ -17,11 +17,13 @@ class GoalDeletionDialogFragment
     private val viewModel: ActiveCompletedGoalsViewModel by inject()
     private var goalId: Int = 0
     private var goalTitle: String? = ""
+    private var menuSelection:MenuSelection?=null
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.run {
             putInt(GOAL_ID, goalId)
             putString(GOAL_TITLE, goalTitle)
+            putSerializable(MENU_SELECTION,menuSelection)
         }
     }
 
@@ -29,6 +31,7 @@ class GoalDeletionDialogFragment
         savedInstanceState?.run {
             goalId = getInt(GOAL_ID)
             goalTitle = getString(GOAL_TITLE)
+            menuSelection = getSerializable(MENU_SELECTION) as MenuSelection?
         }
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setTitle(
@@ -42,7 +45,7 @@ class GoalDeletionDialogFragment
                     getString(R.string.deleted_goal_toast, goalTitle),
                     Toast.LENGTH_SHORT
                 ).show()
-                viewModel.refreshGoals()
+                viewModel.refreshGoals(menuSelection ?: MenuSelection.ACTIVE_GOALS)
             }
             .setNegativeButton(R.string.alert_dialog_cancel) { dialog, _ ->
                 dialog.dismiss()
@@ -56,14 +59,17 @@ class GoalDeletionDialogFragment
         const val TAG = "GoalDeletionDialog"
         const val GOAL_ID = "GOAL_ID"
         const val GOAL_TITLE = "GOAL_TITLE"
+        const val MENU_SELECTION="MENU_SELECTION"
     }
 
     fun setupGoalDeleteDialog(
         deletedGoalId: Int,
-        deletedGoalTitle: String?
+        deletedGoalTitle: String?,
+        deletedGoalMenuSelection: MenuSelection?
     ): GoalDeletionDialogFragment {
         goalId = deletedGoalId
         goalTitle = deletedGoalTitle
+        menuSelection = deletedGoalMenuSelection
         return this
 
     }

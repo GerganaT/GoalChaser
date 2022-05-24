@@ -28,9 +28,6 @@ class GoalCompletedFragment : Fragment() {
             DataBindingUtil.inflate(
                 inflater, R.layout.fragment_goal_completed, container, false
             )
-
-
-
         return goalCompletedBinding.root
     }
 
