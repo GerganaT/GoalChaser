@@ -7,5 +7,5 @@ enum class MenuSelection:Serializable {
     COMPLETED_GOALS,
     DELETE_ACTIVE_GOALS,
     DELETE_COMPLETED_GOALS,
-    DELETE_ALL
+    DELETE_ALL_GOALS
 }

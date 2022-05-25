@@ -92,7 +92,7 @@ class GoalsRepository(
 
         }
 
-    suspend fun deleteGoals(): Result<Boolean> =
+    suspend fun deleteAllGoals(): Result<Boolean> =
         withContext(Dispatchers.IO) {
             try {
                 goalsDao.deleteAllGoals()

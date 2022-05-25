@@ -35,6 +35,8 @@ class ActiveCompletedGoalsViewModel(
 
     val goals = MutableLiveData<List<GoalDataUiState>>()
 
+   val goalsEmptyCheckList = MutableLiveData<List<GoalDataUiState>>()
+
     val showLoading: LiveData<Boolean>
         get() = _showLoading
     private val _showLoading = MutableLiveData<Boolean>()
@@ -106,16 +108,14 @@ class ActiveCompletedGoalsViewModel(
 
     private fun getActiveOrCompletedGoals(selection: MenuSelection = MenuSelection.ACTIVE_GOALS) {
         viewModelScope.launch {
-            _showLoading.value = true
-            val repositoryOperation = when (selection) {
+            val getActiveOrCompletedGoals = when (selection) {
                 MenuSelection.ACTIVE_GOALS -> goalsRepository.getActiveGoals()
                 MenuSelection.COMPLETED_GOALS -> goalsRepository.getCompletedGoals()
                 else -> return@launch
             }
-            repositoryOperation.run {
+            getActiveOrCompletedGoals.run {
                 when (this) {
                     is Result.Success -> {
-                        _showLoading.value = false
                         goals.value =
                             data.map { gd: GoalData ->
                                 GoalDataUiState(
@@ -132,7 +132,6 @@ class ActiveCompletedGoalsViewModel(
                             }
                     }
                     is Result.Error -> {
-                        _showLoading.value = false
                         Timber.e("Cant load goals")
                     }
                 }
@@ -143,18 +142,52 @@ class ActiveCompletedGoalsViewModel(
 
     }
 
+    fun deleteGoalsPerSelection(selection: MenuSelection){
+        viewModelScope.launch {
+            when(selection){
+                MenuSelection.DELETE_ACTIVE_GOALS -> goalsRepository.deleteAllActiveGoals()
+                MenuSelection.DELETE_COMPLETED_GOALS -> goalsRepository.deleteAllCompletedGoals()
+                MenuSelection.DELETE_ALL_GOALS -> goalsRepository.deleteAllGoals()
+                else -> return@launch
+            }
+            refreshGoals(activeCompletedGoalSelection.value ?: MenuSelection.ACTIVE_GOALS)
+        }
+    }
+
     // resolve data binding library issue , which doesn't allow me to call
     // getActiveOrCompletedGoals() directly in the Fragment
 
     fun refreshGoals(selection: MenuSelection = MenuSelection.ACTIVE_GOALS) =
         getActiveOrCompletedGoals(selection)
 
-    fun deleteGoals() {
+    fun getAllGoals():List<GoalDataUiState>?{
+
         viewModelScope.launch {
-            goalsRepository.deleteGoals().run {
-                _goalsAreDeleted.value = this is Result.Success
+            goalsRepository.getAllGoals().run {
+                when (this) {
+                    is Result.Success -> {
+                        goalsEmptyCheckList.value =
+                            data.map { gd: GoalData ->
+                                GoalDataUiState(
+                                    gd.title,
+                                    gd.dueDate,
+                                    gd.sendNotification,
+                                    gd.timeUnitNumber,
+                                    gd.days,
+                                    gd.months,
+                                    gd.isCompleted,
+                                    gd.goalId
+                                )
+
+                            }
+                    }
+                    is Result.Error -> {
+                        Timber.e("Cant load goals")
+                    }
+                }
             }
         }
+        return goalsEmptyCheckList.value
     }
 
     fun markGoalCompleted(goalId: Int) {

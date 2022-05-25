@@ -64,6 +64,16 @@ class GoalsListFragment : Fragment() {
                 viewModel.setActiveCompletedGoalSelection(MenuSelection.COMPLETED_GOALS)
                 return true
             }
+            R.id.delete_active_menu_item ->{
+                deleteGoalsMenuSelection(MenuSelection.DELETE_ACTIVE_GOALS)
+            }
+            R.id.delete_completed_menu_item ->{
+                deleteGoalsMenuSelection(MenuSelection.DELETE_COMPLETED_GOALS)
+            }
+            R.id.delete_all_menu_item ->{
+              deleteGoalsMenuSelection(MenuSelection.DELETE_ALL_GOALS)
+
+            }
         }
         return super.onOptionsItemSelected(item)
     }

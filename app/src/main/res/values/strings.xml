@@ -73,6 +73,13 @@
     <string name="completed_goal_details_completion_date_label">Goal completion date</string>
     <string name="completed_goal_label_list_item">Completed</string>
     <string name="due_goal_label_list_item">Due until</string>
+    <string name="active_goals_deleted_toast">Active goals deleted!</string>
+    <string name="alert_dialog_delete_all_active_goals">Delete all active goals?</string>
+    <string name="alert_dialog_delete_all_completed_goals">Delete all completed goals?</string>
+    <string name="alert_dialog_delete_all_goals">Delete all goals?</string>
+    <string name="completed_goals_deleted_toast">Completed goals deleted!</string>
+    <string name="all_goals_deleted_toast">All goals deleted!</string>
+    <string name="nothing_to_delete_toast">Nothing to delete!</string>
     <string-array name="days_months">
         <item>Day(s)</item>
         <item>Month(s)</item>
