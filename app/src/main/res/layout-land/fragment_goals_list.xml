@@ -24,7 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/active_image_of_the_day_image"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/no_goals" />
+            app:setImageResource="@{viewModel.activeCompletedGoalSelection}" />
 
         <ImageView
             android:id="@+id/active_image_of_the_day_image"

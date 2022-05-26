@@ -172,7 +172,16 @@ fun View.setupVisibility(isVisible: Boolean) {
         View.GONE
     }
 }
-
+@BindingAdapter("setImageResource")
+fun ImageView.setImagePerMenuSelection(menuSelection: MenuSelection?){
+    val internalMenuSelection = menuSelection ?: MenuSelection.ACTIVE_GOALS
+    setImageResource(
+        when(internalMenuSelection){
+            MenuSelection.ACTIVE_GOALS -> R.drawable.no_goals_active
+            MenuSelection.COMPLETED_GOALS -> R.drawable.no_goals_completed
+        }
+    )
+}
 @BindingAdapter("isAnimated")
 fun LottieAnimationView.setAnimationStatus(animationPlayed: LiveData<Boolean>) {
     if (animationPlayed.value == true) {

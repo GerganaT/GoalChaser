@@ -157,6 +157,5 @@ class GoalsListFragment : Fragment() {
   companion object{
       const val APPBAR_MENU ="APPBAR_MENU"
   }
-    //TODO show adapted no completed goals picture for completed goals empty state
     //TODO completion date != goal due date
 }

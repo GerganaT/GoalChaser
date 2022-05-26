@@ -94,5 +94,4 @@ fun GoalsListFragment.deleteAllGoals() {
                 childFragmentManager,
                 GoalsDeletionDialogFragment.TAG
             )
-
 }
