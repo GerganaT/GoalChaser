@@ -33,15 +33,8 @@ class GoalsListFragment : Fragment() {
         )
         return activeGoalsListBinding.root
     }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putSerializable(APPBAR_MENU,SavingMenu(appbarMenu))
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        savedInstanceState?.run { appbarMenu = (getSerializable(APPBAR_MENU) as SavingMenu).menu }
         activeGoalsListBinding.lifecycleOwner = viewLifecycleOwner
         activeGoalsListBinding.viewModel = viewModel
         viewModel.getAllGoals()
