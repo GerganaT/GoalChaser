@@ -157,5 +157,5 @@ class GoalsListFragment : Fragment() {
   companion object{
       const val APPBAR_MENU ="APPBAR_MENU"
   }
-    //TODO completion date != goal due date
+    //TODO optional if time - desugaring error
 }

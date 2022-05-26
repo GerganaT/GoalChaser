@@ -103,7 +103,6 @@ class ActiveCompletedGoalsViewModel(
             val getActiveOrCompletedGoals = when (selection) {
                 MenuSelection.ACTIVE_GOALS -> goalsRepository.getActiveGoals()
                 MenuSelection.COMPLETED_GOALS -> goalsRepository.getCompletedGoals()
-                else -> return@launch
             }
             getActiveOrCompletedGoals.run {
                 when (this) {
@@ -178,9 +177,9 @@ class ActiveCompletedGoalsViewModel(
         return goalsEmptyCheckList.value
     }
 
-    fun markGoalCompleted(goalId: Int) {
+    fun markGoalCompleted(goalId: Int,goalCompletionDate:String) {
         viewModelScope.launch {
-            goalsRepository.markGoalCompleted(goalId).run {
+            goalsRepository.markGoalCompleted(goalId,goalCompletionDate).run {
                 _goalIsCompleted.value = this is Result.Success
             }
         }

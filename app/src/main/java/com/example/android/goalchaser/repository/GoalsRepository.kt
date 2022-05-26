@@ -34,10 +34,10 @@ class GoalsRepository(
             }
         }
 
-    suspend fun markGoalCompleted(goalId: Int): Result<Boolean> =
+    suspend fun markGoalCompleted(goalId: Int,goalCompletionDate:String): Result<Boolean> =
         withContext(Dispatchers.IO) {
             try {
-                goalsDao.markGoalCompleted(goalId)
+                goalsDao.markGoalCompleted(goalId,goalCompletionDate)
                 Result.Success(true)
             } catch (e: Exception) {
                 Result.Error(e.message)

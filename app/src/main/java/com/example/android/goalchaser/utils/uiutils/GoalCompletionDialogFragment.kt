@@ -10,17 +10,21 @@ import com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoa
 import com.example.android.goalchaser.ui.activecompletedgoals.GoalsListFragmentDirections
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.android.ext.android.inject
+import java.time.LocalDate
+
 /**This class solves the issue where AlertDialog is dismissed on device rotation as it is
  *lifecycle-aware*/
 class GoalCompletionDialogFragment : DialogFragment() {
     private val viewModel: ActiveCompletedGoalsViewModel by inject()
-    private var goalId: Int = 0
+    private var goalId = 0
     private var goalTitle: String? = ""
+    private var goalCompletionDate = ""
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.run {
             putInt(GOAL_ID, goalId)
             putString(GOAL_TITLE, goalTitle)
+            putString(GOAL_COMPLETION_DATE, goalCompletionDate)
         }
     }
 
@@ -28,7 +32,14 @@ class GoalCompletionDialogFragment : DialogFragment() {
         savedInstanceState?.run {
             goalId = getInt(GOAL_ID)
             goalTitle = getString(GOAL_TITLE)
+            goalCompletionDate = getString(GOAL_COMPLETION_DATE).toString()
         }
+        LocalDate.now().run {
+            goalCompletionDate = requireContext().getString(
+                R.string.user_entered_date, monthValue, dayOfMonth, year
+            )
+        }
+
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setTitle(
                 getString(
@@ -38,7 +49,7 @@ class GoalCompletionDialogFragment : DialogFragment() {
             )
             .setMessage(R.string.alert_dialog_message)
             .setPositiveButton(R.string.alert_dialog_confirm_completed) { dialog: DialogInterface, _ ->
-                viewModel.markGoalCompleted(goalId)
+                viewModel.markGoalCompleted(goalId, goalCompletionDate)
                 viewModel.setCompletedGoalTitle(goalTitle)
                 dialog.dismiss()
                 findNavController().navigate(
@@ -59,6 +70,7 @@ class GoalCompletionDialogFragment : DialogFragment() {
         const val TAG = "GoalCompletionDialog"
         const val GOAL_ID = "GOAL_ID"
         const val GOAL_TITLE = "GOAL_TITLE"
+        const val GOAL_COMPLETION_DATE = "GOAL_COMPLETION_DATE"
     }
 
     fun setupGoalCompletionDialog(
