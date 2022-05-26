@@ -37,10 +37,6 @@ class ActiveCompletedGoalsViewModel(
 
    val goalsEmptyCheckList = MutableLiveData<List<GoalDataUiState>?>()
 
-    val goalIsCompleted: LiveData<Boolean>
-        get() = _goalIsCompleted
-    private val _goalIsCompleted = MutableLiveData<Boolean>()
-
     val goalCompletedAnimationDisplayed: LiveData<Boolean>
         get() = _goalCompletedAnimationDisplayed
     private val _goalCompletedAnimationDisplayed = MutableLiveData<Boolean>()
@@ -180,7 +176,8 @@ class ActiveCompletedGoalsViewModel(
     fun markGoalCompleted(goalId: Int,goalCompletionDate:String) {
         viewModelScope.launch {
             goalsRepository.markGoalCompleted(goalId,goalCompletionDate).run {
-                _goalIsCompleted.value = this is Result.Success
+                if(this is Result.Error )
+                Timber.e("Cant mark goal completed")
             }
         }
     }
