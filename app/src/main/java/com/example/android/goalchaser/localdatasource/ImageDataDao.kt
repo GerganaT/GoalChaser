@@ -14,6 +14,9 @@ interface ImageDataDao {
     @Query("SELECT * FROM image_data ORDER BY ImageDataId DESC LIMIT 1")
     suspend fun getLastSavedImageData():ImageData
 
+    @Query("DELETE FROM image_data WHERE imageLink = :imageLinkKey")
+    suspend fun deleteImageData(imageLinkKey:String)
+
 
 }
 

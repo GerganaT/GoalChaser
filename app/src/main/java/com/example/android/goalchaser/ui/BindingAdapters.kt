@@ -44,6 +44,7 @@ import com.example.android.goalchaser.utils.uiutils.setupDaysMonthsAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.squareup.picasso.Picasso
+import timber.log.Timber
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
@@ -51,24 +52,26 @@ import java.time.temporal.ChronoUnit
 
 fun bindImage(imgView: ImageView, imgUrl: String?) {
 
-    val lottieDrawable = LottieDrawable()
-    LottieCompositionFactory.fromRawRes(imgView.context, R.raw.animated_image_loading)
-        .addListener { lottieComposition ->
-            lottieDrawable.apply {
-                composition = lottieComposition
-                repeatCount = LottieDrawable.INFINITE
-                playAnimation()
 
+        val lottieDrawable = LottieDrawable()
+        LottieCompositionFactory.fromRawRes(imgView.context, R.raw.animated_image_loading)
+            .addListener { lottieComposition ->
+                lottieDrawable.apply {
+                    composition = lottieComposition
+                    repeatCount = LottieDrawable.INFINITE
+                    playAnimation()
+
+                }
             }
-        }
+        val imgUri = imgUrl?.toUri()?.buildUpon()?.scheme("https")?.build()
+        Picasso.get()
+            .load(imgUri)
+            .placeholder(lottieDrawable)
+            .error(R.drawable.ic_image_error)
+            .into(imgView)
 
-    val imgUri = imgUrl?.toUri()?.buildUpon()?.scheme("https")?.build()
-    Picasso.get()
-        .load(imgUri)
-        .placeholder(lottieDrawable)
-        .error(R.drawable.ic_image_error)
-        .into(imgView)
-//TODO error when no internet and no image in cache
+
+//TODO error when no internet and no image in cache -image to be loaded when internet appears
     //TODO delete older images - set some bool on old images to mark them as old
     // this will include database items deletion as well.
 }

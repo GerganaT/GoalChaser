@@ -1,12 +1,13 @@
 package com.example.android.goalchaser.repository
 
-import com.example.android.goalchaser.localdatasource.ImageDataDao
 import com.example.android.goalchaser.localdatasource.ImageData
+import com.example.android.goalchaser.localdatasource.ImageDataDao
 import com.example.android.goalchaser.remotedatasource.ImageDataApiService
 import com.example.android.goalchaser.utils.datautils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.time.LocalDate
 
 class ImageDataRepository(
     private val imageDataApiService: ImageDataApiService,
@@ -21,14 +22,11 @@ class ImageDataRepository(
                         ImageData(
                             randomImage.imageLink,
                             photographer.name,
-                            photographer.profileLinks.profileLink
-
+                            photographer.profileLinks.profileLink,
+                            LocalDate.now().toString()
                         )
                     }
-
-                imageDataDao.saveLastLoadedImageData(imageLocalData)
-
-
+                    imageDataDao.saveLastLoadedImageData(imageLocalData)
             }
         } catch (exception: Exception) {
             Timber.i(exception.localizedMessage)

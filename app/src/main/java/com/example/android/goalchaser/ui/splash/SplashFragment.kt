@@ -19,3 +19,5 @@ class SplashFragment : Fragment() {
 
 
 }
+//TODO fix navigation for this fragment
+//TODO dimiss it after set of time

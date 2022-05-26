@@ -146,9 +146,5 @@ class GoalsListFragment : Fragment() {
                 ?: MenuSelection.ACTIVE_GOALS
         )
     }
-
-  companion object{
-      const val APPBAR_MENU ="APPBAR_MENU"
-  }
     //TODO optional if time - desugaring error
 }

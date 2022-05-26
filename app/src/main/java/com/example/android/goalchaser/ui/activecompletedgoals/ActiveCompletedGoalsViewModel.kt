@@ -76,7 +76,7 @@ class ActiveCompletedGoalsViewModel(
                     is Result.Success -> {
                         data.run {
                             val imageUiState = ImageDataUiState(
-                                imageLink, photographerName, photographerProfile
+                                imageLink, photographerName, photographerProfile,imageSavedDate
                             )
                             _pictureUrl.value =
                                 imageUiState.imageLink
