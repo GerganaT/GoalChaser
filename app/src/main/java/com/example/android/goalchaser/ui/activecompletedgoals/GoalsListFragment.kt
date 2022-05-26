@@ -11,13 +11,15 @@ import com.example.android.goalchaser.databinding.FragmentGoalsListBinding
 import com.example.android.goalchaser.ui.activecompletedgoals.recyclerView.GoalsListAdapter
 import com.example.android.goalchaser.utils.uiutils.*
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 
 
 class GoalsListFragment : Fragment() {
 
     private lateinit var activeGoalsListBinding: FragmentGoalsListBinding
     val viewModel: ActiveCompletedGoalsViewModel by inject()
-    var popupMenu: PopupMenu? = null
+    private var popupMenu: PopupMenu? = null
+    private var appbarMenu:Menu?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,15 +31,26 @@ class GoalsListFragment : Fragment() {
             container,
             false
         )
-
         return activeGoalsListBinding.root
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putSerializable(APPBAR_MENU,SavingMenu(appbarMenu))
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        savedInstanceState?.run { appbarMenu = (getSerializable(APPBAR_MENU) as SavingMenu).menu }
         activeGoalsListBinding.lifecycleOwner = viewLifecycleOwner
         activeGoalsListBinding.viewModel = viewModel
+        viewModel.getAllGoals()
+        viewModel.goalsEmptyCheckList.observe(viewLifecycleOwner){
+            viewModel.getAllGoals()
+            if (it.isNullOrEmpty()){
+                appbarMenu?.removeItem(R.id.delete_all_menu_item)
+            }
+        }
         setHasOptionsMenu(true)
         setupRecyclerViewAdapter()
         activeGoalsListBinding.addActiveGoalFab.setOnClickListener {
@@ -47,6 +60,7 @@ class GoalsListFragment : Fragment() {
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        appbarMenu = menu
         inflater.inflate(R.menu.goals_list_menu, menu)
     }
 
@@ -64,14 +78,8 @@ class GoalsListFragment : Fragment() {
                 viewModel.setActiveCompletedGoalSelection(MenuSelection.COMPLETED_GOALS)
                 return true
             }
-            R.id.delete_active_menu_item ->{
-                deleteGoalsMenuSelection(MenuSelection.DELETE_ACTIVE_GOALS)
-            }
-            R.id.delete_completed_menu_item ->{
-                deleteGoalsMenuSelection(MenuSelection.DELETE_COMPLETED_GOALS)
-            }
             R.id.delete_all_menu_item ->{
-              deleteGoalsMenuSelection(MenuSelection.DELETE_ALL_GOALS)
+              deleteAllGoals()
 
             }
         }
@@ -146,11 +154,9 @@ class GoalsListFragment : Fragment() {
         )
     }
 
-
-    //TODO add an enum or constants with menu options to trigger the different database operations so code in
-    //TODO view model can be reused - done for active/completed goals
-    //TODO add logic to the menu - done for active/completed goals
+  companion object{
+      const val APPBAR_MENU ="APPBAR_MENU"
+  }
     //TODO show adapted no completed goals picture for completed goals empty state
     //TODO completion date != goal due date
-    //TODO add custom selection color for overflow menu /optional if time/
 }

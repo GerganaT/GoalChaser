@@ -35,15 +35,7 @@ class ActiveCompletedGoalsViewModel(
 
     val goals = MutableLiveData<List<GoalDataUiState>>()
 
-   val goalsEmptyCheckList = MutableLiveData<List<GoalDataUiState>>()
-
-    val showLoading: LiveData<Boolean>
-        get() = _showLoading
-    private val _showLoading = MutableLiveData<Boolean>()
-
-    val goalsAreDeleted: LiveData<Boolean>
-        get() = _goalsAreDeleted
-    private val _goalsAreDeleted = MutableLiveData<Boolean>()
+   val goalsEmptyCheckList = MutableLiveData<List<GoalDataUiState>?>()
 
     val goalIsCompleted: LiveData<Boolean>
         get() = _goalIsCompleted
@@ -142,15 +134,11 @@ class ActiveCompletedGoalsViewModel(
 
     }
 
-    fun deleteGoalsPerSelection(selection: MenuSelection){
+    fun deleteAllGoals(){
         viewModelScope.launch {
-            when(selection){
-                MenuSelection.DELETE_ACTIVE_GOALS -> goalsRepository.deleteAllActiveGoals()
-                MenuSelection.DELETE_COMPLETED_GOALS -> goalsRepository.deleteAllCompletedGoals()
-                MenuSelection.DELETE_ALL_GOALS -> goalsRepository.deleteAllGoals()
-                else -> return@launch
-            }
+                goalsRepository.deleteAllGoals()
             refreshGoals(activeCompletedGoalSelection.value ?: MenuSelection.ACTIVE_GOALS)
+            goalsEmptyCheckList.value = null
         }
     }
 
@@ -206,7 +194,6 @@ class ActiveCompletedGoalsViewModel(
 
 
 }
-
 
 
 

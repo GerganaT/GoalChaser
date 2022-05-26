@@ -88,34 +88,11 @@ fun Fragment.createToast(message: Int) {
 
 //TODO replace toast creation throughout the project with this helper-method
 
-fun GoalsListFragment.deleteGoalsMenuSelection(menuSelection: MenuSelection) {
-    viewModel.getAllGoals()
-    viewModel.goalsEmptyCheckList.observe(viewLifecycleOwner){
-        val isCompletedGoalsListEmpty = it?.filter { goalDataUiState ->
-            goalDataUiState.isCompleted == true
-        }.isNullOrEmpty()
-        val isActiveGoalsListEmpty = it?.filter { goalDataUiState ->
-            goalDataUiState.isCompleted == false
-        }.isNullOrEmpty()
-        val isAllGoalsListEmpty = it.isNullOrEmpty()
-        if (isActiveGoalsListEmpty && menuSelection == MenuSelection.DELETE_ACTIVE_GOALS){
-            createToast(R.string.nothing_to_delete_toast)
-        }
-        else if (isCompletedGoalsListEmpty && menuSelection == MenuSelection.DELETE_COMPLETED_GOALS){
-            createToast(R.string.nothing_to_delete_toast)
-        }
-        else if (isAllGoalsListEmpty && menuSelection == MenuSelection.DELETE_ALL_GOALS )
-            {
-            createToast(R.string.nothing_to_delete_toast)
-        } else {
-            GoalsDeletionDialogFragment()
-                .setupGoalDeleteDialog(menuSelection)
-                .show(
-                    childFragmentManager,
-                    GoalsDeletionDialogFragment.TAG
-                )
-        }
-    }
+fun GoalsListFragment.deleteAllGoals() {
+        GoalsDeletionDialogFragment()
+            .show(
+                childFragmentManager,
+                GoalsDeletionDialogFragment.TAG
+            )
 
-//TODO either fix the completed and active deletion to work or reduce it only to delete all
 }

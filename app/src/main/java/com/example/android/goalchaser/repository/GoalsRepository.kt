@@ -102,26 +102,4 @@ class GoalsRepository(
             }
 
         }
-    suspend fun deleteAllActiveGoals(): Result<Boolean> =
-        withContext(Dispatchers.IO) {
-            try {
-                goalsDao.deleteAllActiveGoals()
-                Result.Success(true)
-            } catch (e: Exception) {
-                Result.Error(e.message)
-            }
-
-        }
-    suspend fun deleteAllCompletedGoals(): Result<Boolean> =
-        withContext(Dispatchers.IO) {
-            try {
-                goalsDao.deleteAllCompletedGoals()
-                Result.Success(true)
-            } catch (e: Exception) {
-                Result.Error(e.message)
-            }
-
-        }
-
-
 }
