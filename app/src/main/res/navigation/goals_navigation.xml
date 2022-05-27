@@ -59,7 +59,7 @@
         tools:layout="@layout/fragment_goal_completed" />
     <fragment
         android:id="@+id/completedGoalDetailsFragment"
-        android:name="com.example.android.goalchaser.CompletedGoalDetailsFragment"
+        android:name="com.example.android.goalchaser.ui.activecompletedgoals.CompletedGoalDetailsFragment"
         android:label="CompletedGoalDetailsFragment"
         tools:layout="@layout/fragment_completed_goal_details"/>
 </navigation>

@@ -2,6 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalsViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/active_goals_root"
@@ -18,11 +24,12 @@
             android:id="@+id/no_goals_image_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_margin="@dimen/margin_small"
             android:paddingEnd="@dimen/padding_mid"
             app:isVisible="@{viewModel.goalsListIsEmpty}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/active_image_of_the_day_image"
+            app:layout_constraintStart_toEndOf="@+id/goals_list_guideline"
             app:layout_constraintTop_toTopOf="parent"
             app:setImageResource="@{viewModel.activeCompletedGoalSelection}" />
 
@@ -30,15 +37,29 @@
             android:id="@+id/active_image_of_the_day_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_small"
             android:paddingBottom="@dimen/padding_mid"
             android:scaleType="centerCrop"
             app:imageUrl="@{viewModel.pictureUrlString}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/active_goals_list_recycler"
+            app:layout_constraintEnd_toStartOf="@+id/goals_list_guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/backgrounds/scenic" />
+        <ImageView
+            android:id="@+id/error_image_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_small"
+            android:background="@drawable/border"
+            android:paddingBottom="@dimen/padding_mid"
+            android:scaleType="fitCenter"
+            android:src="@drawable/image_error"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/active_goals_list_recycler"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:showHideOnError="@{viewModel.pictureUrlString}" />
 
         <TextView
             android:id="@+id/active_photo_label_text"
@@ -48,8 +69,8 @@
             android:gravity="center"
             android:textColor="@color/primaryTextColor"
             android:textSize="@dimen/medium_text_size"
-            app:layout_constraintBottom_toBottomOf="@+id/active_image_of_the_day_image"
-            app:layout_constraintEnd_toEndOf="@+id/active_image_of_the_day_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/goals_list_guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:setPhotographerData="@{viewModel.photographerCredentials}" />
 
@@ -60,7 +81,7 @@
             app:feedLiveData="@{viewModel.goals}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/active_image_of_the_day_image"
+            app:layout_constraintStart_toStartOf="@+id/goals_list_guideline"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/goal_list_item">
 
@@ -80,12 +101,28 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="SpeakableTextPresentCheck" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/refresh_image_data_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_middle"
+            android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{()-> viewModel.getImageData()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/goals_list_guideline"
+            app:showHideOnError="@{viewModel.pictureUrlString}"
+            app:srcCompat="@drawable/ic_refresh"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/goals_list_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/goals_list_guideline_width" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalsViewModel" />
-    </data>
 </layout>

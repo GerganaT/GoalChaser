@@ -22,8 +22,7 @@ class ImageDataRepository(
                         ImageData(
                             randomImage.imageLink,
                             photographer.name,
-                            photographer.profileLinks.profileLink,
-                            LocalDate.now().toString()
+                            photographer.profileLinks.profileLink
                         )
                     }
                     imageDataDao.saveLastLoadedImageData(imageLocalData)

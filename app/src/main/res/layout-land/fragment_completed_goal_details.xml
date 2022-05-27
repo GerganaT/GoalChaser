@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/margin_large"
-        tools:context=".CompletedGoalDetailsFragment">
+        tools:context=".ui.activecompletedgoals.CompletedGoalDetailsFragment">
 
         <Button
             android:id="@+id/gompleted_goal_details_btn"

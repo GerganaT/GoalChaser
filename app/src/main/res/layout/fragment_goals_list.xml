@@ -36,6 +36,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:src="@tools:sample/backgrounds/scenic" />
+    <ImageView
+        android:id="@+id/error_image_view"
+        android:src="@drawable/image_error"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/image_of_the_day_height"
+        android:paddingTop="@dimen/padding_extra_large_portrait"
+        android:scaleType="centerCrop"
+        app:showHideOnError="@{viewModel.pictureUrlString}"
+        app:layout_constraintBottom_toTopOf="@id/active_goals_list_recycler"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
     <TextView
         android:id="@+id/active_photo_label_text"
         android:layout_width="0dp"
@@ -74,6 +85,20 @@
         app:backgroundTint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/refresh_image_data_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{()-> viewModel.getImageData()}"
+        app:layout_constraintBottom_toTopOf="@+id/active_photo_label_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:showHideOnError="@{viewModel.pictureUrlString}"
+        app:srcCompat="@drawable/ic_refresh"
         tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

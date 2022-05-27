@@ -44,15 +44,15 @@ import com.example.android.goalchaser.utils.uiutils.setupDaysMonthsAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.squareup.picasso.Picasso
-import timber.log.Timber
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
+
 
 @BindingAdapter("imageUrl")
 
 fun bindImage(imgView: ImageView, imgUrl: String?) {
-
-
+    if (imgUrl != null) {
+        imgView.visibility = View.VISIBLE
         val lottieDrawable = LottieDrawable()
         LottieCompositionFactory.fromRawRes(imgView.context, R.raw.animated_image_loading)
             .addListener { lottieComposition ->
@@ -63,17 +63,18 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 
                 }
             }
-        val imgUri = imgUrl?.toUri()?.buildUpon()?.scheme("https")?.build()
+        val imgUri = imgUrl.toUri().buildUpon()?.scheme("https")?.build()
         Picasso.get()
             .load(imgUri)
+            .fit()
+            .centerInside()
             .placeholder(lottieDrawable)
-            .error(R.drawable.ic_image_error)
+            .error(R.drawable.image_error)
             .into(imgView)
 
-
-//TODO error when no internet and no image in cache -image to be loaded when internet appears
-    //TODO delete older images - set some bool on old images to mark them as old
-    // this will include database items deletion as well.
+    } else {
+        imgView.visibility = View.GONE
+    }
 }
 
 @BindingAdapter("setPhotographerData")
@@ -97,7 +98,14 @@ fun TextView.showPhotographerCredentials(photographerCredentials: ImageDataUiSta
     } else {
         text = context.getString(R.string.no_data_error)
     }
+}
 
+@BindingAdapter("showHideOnError")
+fun ImageView.setImage(imgUrl: String?) {
+    visibility = when (imgUrl) {
+        null -> View.VISIBLE
+        else -> View.GONE
+    }
 
 }
 
@@ -175,16 +183,18 @@ fun View.setupVisibility(isVisible: Boolean) {
         View.GONE
     }
 }
+
 @BindingAdapter("setImageResource")
-fun ImageView.setImagePerMenuSelection(menuSelection: MenuSelection?){
+fun ImageView.setImagePerMenuSelection(menuSelection: MenuSelection?) {
     val internalMenuSelection = menuSelection ?: MenuSelection.ACTIVE_GOALS
     setImageResource(
-        when(internalMenuSelection){
+        when (internalMenuSelection) {
             MenuSelection.ACTIVE_GOALS -> R.drawable.no_goals_active
             MenuSelection.COMPLETED_GOALS -> R.drawable.no_goals_completed
         }
     )
 }
+
 @BindingAdapter("isAnimated")
 fun LottieAnimationView.setAnimationStatus(animationPlayed: LiveData<Boolean>) {
     if (animationPlayed.value == true) {

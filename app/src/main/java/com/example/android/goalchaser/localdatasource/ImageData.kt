@@ -10,8 +10,5 @@ data class ImageData(
     val imageLink: String,
     val photographerName: String,
     val photographerProfile: String,
-    val imageSavedDate:String = "",
     @PrimaryKey(autoGenerate = true) var ImageDataId: Int = 0,
 )
-
-//TODO remove last val if not needed

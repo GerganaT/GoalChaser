@@ -11,6 +11,7 @@ import com.example.android.goalchaser.utils.uiutils.MenuSelection
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+
 class ActiveCompletedGoalsViewModel(
     private val imageDataRepository: ImageDataRepository,
     private val goalsRepository: GoalsRepository
@@ -35,7 +36,7 @@ class ActiveCompletedGoalsViewModel(
 
     val goals = MutableLiveData<List<GoalDataUiState>>()
 
-   val goalsEmptyCheckList = MutableLiveData<List<GoalDataUiState>?>()
+    val goalsEmptyCheckList = MutableLiveData<List<GoalDataUiState>?>()
 
     val goalCompletedAnimationDisplayed: LiveData<Boolean>
         get() = _goalCompletedAnimationDisplayed
@@ -52,7 +53,7 @@ class ActiveCompletedGoalsViewModel(
         getActiveOrCompletedGoals()
     }
 
-    fun setActiveCompletedGoalSelection(menuSelection: MenuSelection?){
+    fun setActiveCompletedGoalSelection(menuSelection: MenuSelection?) {
         _activeCompletedGoalSelection.value = menuSelection
     }
 
@@ -60,7 +61,7 @@ class ActiveCompletedGoalsViewModel(
         _completedGoalTitle.value = completedGoalTitle
     }
 
-    fun setCompletedGoalDate(completedGoalDate: String?){
+    fun setCompletedGoalDate(completedGoalDate: String?) {
         _completedGoalDate.value = completedGoalDate
     }
 
@@ -68,7 +69,7 @@ class ActiveCompletedGoalsViewModel(
         _goalCompletedAnimationDisplayed.value = isAlreadyAnimated
     }
 
-    private fun getImageData() {
+    fun getImageData() {
 
         viewModelScope.launch {
             imageDataRepository.getImageData().run {
@@ -76,7 +77,7 @@ class ActiveCompletedGoalsViewModel(
                     is Result.Success -> {
                         data.run {
                             val imageUiState = ImageDataUiState(
-                                imageLink, photographerName, photographerProfile,imageSavedDate
+                                imageLink, photographerName, photographerProfile
                             )
                             _pictureUrl.value =
                                 imageUiState.imageLink
@@ -129,9 +130,9 @@ class ActiveCompletedGoalsViewModel(
 
     }
 
-    fun deleteAllGoals(){
+    fun deleteAllGoals() {
         viewModelScope.launch {
-                goalsRepository.deleteAllGoals()
+            goalsRepository.deleteAllGoals()
             refreshGoals(activeCompletedGoalSelection.value ?: MenuSelection.ACTIVE_GOALS)
             goalsEmptyCheckList.value = null
         }
@@ -143,7 +144,7 @@ class ActiveCompletedGoalsViewModel(
     fun refreshGoals(selection: MenuSelection = MenuSelection.ACTIVE_GOALS) =
         getActiveOrCompletedGoals(selection)
 
-    fun getAllGoals():List<GoalDataUiState>?{
+    fun getAllGoals(): List<GoalDataUiState>? {
 
         viewModelScope.launch {
             goalsRepository.getAllGoals().run {
@@ -173,11 +174,11 @@ class ActiveCompletedGoalsViewModel(
         return goalsEmptyCheckList.value
     }
 
-    fun markGoalCompleted(goalId: Int,goalCompletionDate:String) {
+    fun markGoalCompleted(goalId: Int, goalCompletionDate: String) {
         viewModelScope.launch {
-            goalsRepository.markGoalCompleted(goalId,goalCompletionDate).run {
-                if(this is Result.Error )
-                Timber.e("Cant mark goal completed")
+            goalsRepository.markGoalCompleted(goalId, goalCompletionDate).run {
+                if (this is Result.Error)
+                    Timber.e("Cant mark goal completed")
             }
         }
     }
@@ -187,8 +188,6 @@ class ActiveCompletedGoalsViewModel(
             goalsRepository.deleteGoal(goalId)
         }
     }
-
-
 }
 
 

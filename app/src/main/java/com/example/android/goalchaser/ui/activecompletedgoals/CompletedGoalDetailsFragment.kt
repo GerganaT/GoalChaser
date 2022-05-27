@@ -1,4 +1,4 @@
-package com.example.android.goalchaser
+package com.example.android.goalchaser.ui.activecompletedgoals
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,10 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
+import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentCompletedGoalDetailsBinding
-import com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalsViewModel
-import com.example.android.goalchaser.utils.uiutils.MenuSelection
 import org.koin.android.ext.android.inject
 
 
