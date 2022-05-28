@@ -281,3 +281,20 @@ class CreateEditGoalFragment : Fragment() {
 //TODO notifications are not being added for multiple goals
 //TODO trigger notification with unique ids /per room id/ - this could fix with not multiple notifications
 //TODO see what to do after notification is seen
+//TODO see if alert permissions have to be asked to user on Android 12?
+//TODO cancel notification on goal deletion or on notification cancellation:see below
+
+//fun cancelAlarm(){
+//    val alarmManager = getSystemService(Context.ALARM_SERVICE) as? AlarmManager?
+//    val intent = Intent(context, AlarmReceiver::class.java)
+//    val pendingIntent =
+//        PendingIntent.getService(
+//            context,
+//            requestCode,
+//            intent,
+//            PendingIntent.FLAG_NO_CREATE
+//        )
+//    pendingIntent?.let { _pendingIntent->
+//        alarmManager?.cancel(_pendingIntent)
+//    }
+//}
