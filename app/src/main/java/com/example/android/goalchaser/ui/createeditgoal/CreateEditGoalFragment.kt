@@ -15,6 +15,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentCreateEditGoalBinding
+import com.example.android.goalchaser.utils.notificationutils.checkIfUpdatedAndSendNotification
+import com.example.android.goalchaser.utils.notificationutils.setNotificationAlert
 import com.example.android.goalchaser.utils.uiutils.*
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -172,6 +174,9 @@ class CreateEditGoalFragment : Fragment() {
                         goalDueDaysOrMonths.text.toString(),
                         goalDaysOrMonthsAmount
                     )
+
+                    checkIfUpdatedAndSendNotification(viewModel)
+
                 } else {
                     viewModel.clearDaysMonths()
                 }
@@ -194,6 +199,7 @@ class CreateEditGoalFragment : Fragment() {
             }
 
             viewModel.goalIsUpdated.observe(viewLifecycleOwner) { isUpdated ->
+
                 val updateMessage = when(isUpdated){
                     true -> getString(R.string.goal_updated_toast, viewModel.goalTitle.value)
                     else -> getString(R.string.nothing_to_update_toast )
@@ -219,7 +225,7 @@ class CreateEditGoalFragment : Fragment() {
                 )
             }
         }
-        viewModel.daysMonthsMediatorLiveData.observe(viewLifecycleOwner) { daysOrMonths ->
+        viewModel.daysOrMonths.observe(viewLifecycleOwner) { daysOrMonths ->
             goalDueDaysOrMonths.setupSavedDaysMonthsValues(daysOrMonths, savedInstanceState)
         }
         viewModel.isTitleEntered.observe(viewLifecycleOwner) { isTitleEntered ->
@@ -272,4 +278,6 @@ class CreateEditGoalFragment : Fragment() {
         const val ADJUSTED_DATE = "ADJUSTED_DATE"
     }
 }
-//TODO add notifications
+//TODO notifications are not being added for multiple goals
+//TODO trigger notification with unique ids /per room id/ - this could fix with not multiple notifications
+//TODO see what to do after notification is seen

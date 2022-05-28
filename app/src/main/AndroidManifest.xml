@@ -24,8 +24,15 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <receiver android:name=".background.NotificationAlarmBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true"/>
+        <service android:name=".background.NotificationAlarmBroadcastReceiverService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
 
 </manifest>

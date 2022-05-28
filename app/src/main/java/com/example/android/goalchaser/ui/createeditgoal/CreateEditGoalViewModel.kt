@@ -1,5 +1,6 @@
 package com.example.android.goalchaser.ui.createeditgoal
 
+import android.content.Context
 import androidx.lifecycle.*
 import com.example.android.goalchaser.localdatasource.GoalData
 import com.example.android.goalchaser.repository.GoalsRepository
@@ -15,9 +16,9 @@ class CreateEditGoalViewModel(
     val goalTitle = MutableLiveData<String?>()
     val goalDueDate = MutableLiveData<String?>()
     val activeNotification = MutableLiveData<Boolean?>()
-    private val timeUnitCount = MutableLiveData<Int?>()
-    private val timeTypeDays = MutableLiveData<Boolean?>()
-    private val timeTypeMonths = MutableLiveData<Boolean?>()
+    val timeUnitCount = MutableLiveData<Int?>()
+     val timeTypeDays = MutableLiveData<Boolean?>()
+     val timeTypeMonths = MutableLiveData<Boolean?>()
     private val isDone = MutableLiveData<Boolean?>()
     val goal = MutableLiveData<GoalDataUiState>()
     val days: LiveData<Array<Int>>
@@ -40,12 +41,13 @@ class CreateEditGoalViewModel(
         get() = _isDateAdjusted
     private val _isDateAdjusted = MutableLiveData<Boolean>()
 
-    val daysMonthsMediatorLiveData = MediatorLiveData<Boolean?>()
+    val daysOrMonths = MediatorLiveData<Boolean?>()
+
 
     init {
         isDone.value = false
         _days.value = Array(31) { it + 1 }
-        initDaysMonthsMediatorLiveData()
+        setDaysOrMonths()
     }
 
     fun confirmDateAdjusted(dateAdjusted: Boolean) {
@@ -55,30 +57,31 @@ class CreateEditGoalViewModel(
     fun confirmWarningClicked() {
         _isTitleEntered.value = true
     }
-    private fun initDaysMonthsMediatorLiveData() {
+    private fun setDaysOrMonths() {
         // MediatorLiveData returns true if user selected days option in notifications options
-        daysMonthsMediatorLiveData.addSource(timeTypeDays) {
+        daysOrMonths.addSource(timeTypeDays) {
             it?.let {
                 if (it) {
-                    daysMonthsMediatorLiveData.value = it
+                    daysOrMonths.value = it
                 }
             }
             if (it == null) {
-                daysMonthsMediatorLiveData.value = null
+                daysOrMonths.value = null
             }
         }
         // MediatorLiveData returns false if user selected months option in notifications options
-        daysMonthsMediatorLiveData.addSource(timeTypeMonths) {
+        daysOrMonths.addSource(timeTypeMonths) {
             it?.let {
                 if (it) {
-                    daysMonthsMediatorLiveData.value = false
+                    daysOrMonths.value = false
                 }
             }
             if (it == null) {
-                daysMonthsMediatorLiveData.value = null
+                daysOrMonths.value = null
             }
         }
     }
+
 
     fun setupDays(days: Int) {
         _days.value = Array(1) { days }
@@ -197,6 +200,7 @@ class CreateEditGoalViewModel(
         timeTypeDays.value = daysOrMonths == daysMonths[0]
         timeTypeMonths.value = daysOrMonths == daysMonths[1]
     }
+
 
 }
 
