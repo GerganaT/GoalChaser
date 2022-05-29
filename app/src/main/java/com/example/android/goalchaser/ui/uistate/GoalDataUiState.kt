@@ -8,5 +8,6 @@ data class GoalDataUiState(
     val days: Boolean?,
     val months: Boolean?,
     val isCompleted: Boolean?,
+    val notificationId: Int?,
     var id: Int = 0
 )

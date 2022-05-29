@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalsViewModel
 import com.example.android.goalchaser.ui.activecompletedgoals.GoalsListFragmentDirections
+import com.example.android.goalchaser.utils.notificationutils.cancelNotificationAlert
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
@@ -19,12 +20,15 @@ class GoalCompletionDialogFragment : DialogFragment() {
     private var goalId = 0
     private var goalTitle: String? = ""
     private var goalCompletionDate = ""
+    private var goalNotificationId: Int? = null
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.run {
             putInt(GOAL_ID, goalId)
             putString(GOAL_TITLE, goalTitle)
             putString(GOAL_COMPLETION_DATE, goalCompletionDate)
+            goalNotificationId?.let { putInt(GOAL_NOTIFICATION_ID, it) }
         }
     }
 
@@ -33,6 +37,7 @@ class GoalCompletionDialogFragment : DialogFragment() {
             goalId = getInt(GOAL_ID)
             goalTitle = getString(GOAL_TITLE)
             goalCompletionDate = getString(GOAL_COMPLETION_DATE).toString()
+            goalNotificationId = getInt(GOAL_NOTIFICATION_ID)
         }
         LocalDate.now().run {
             goalCompletionDate = requireContext().getString(
@@ -49,9 +54,11 @@ class GoalCompletionDialogFragment : DialogFragment() {
             )
             .setMessage(R.string.alert_dialog_message)
             .setPositiveButton(R.string.alert_dialog_confirm_completed) { dialog: DialogInterface, _ ->
+                cancelNotificationAlert(requireContext(), goalNotificationId)
                 viewModel.markGoalCompleted(goalId, goalCompletionDate)
                 viewModel.setCompletedGoalTitle(goalTitle)
                 dialog.dismiss()
+
                 findNavController().navigate(
                     GoalsListFragmentDirections
                         .actionGoalsFragmentToGoalCompletedFragment()
@@ -71,14 +78,17 @@ class GoalCompletionDialogFragment : DialogFragment() {
         const val GOAL_ID = "GOAL_ID"
         const val GOAL_TITLE = "GOAL_TITLE"
         const val GOAL_COMPLETION_DATE = "GOAL_COMPLETION_DATE"
+        const val GOAL_NOTIFICATION_ID = "GOAL_NOTIFICATION_ID"
     }
 
     fun setupGoalCompletionDialog(
         completedGoalId: Int,
-        completedGoalTitle: String?
+        completedGoalTitle: String?,
+        completedGoalNotificationId: Int?,
     ): GoalCompletionDialogFragment {
         goalId = completedGoalId
         goalTitle = completedGoalTitle
+        goalNotificationId = completedGoalNotificationId
         return this
     }
 }

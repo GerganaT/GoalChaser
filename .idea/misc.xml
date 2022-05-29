@@ -44,6 +44,7 @@
         <entry key="..\:/GoalChaser/app/src/main/res/drawable/notification_icon.xml" value="0.1405" />
         <entry key="..\:/GoalChaser/app/src/main/res/drawable/popup_ripple.xml" value="0.18" />
         <entry key="..\:/GoalChaser/app/src/main/res/drawable/side_nav_bar.xml" value="0.1495" />
+        <entry key="..\:/GoalChaser/app/src/main/res/layout-land/activity_active_goal_details.xml" value="0.29717813051146386" />
         <entry key="..\:/GoalChaser/app/src/main/res/layout-land/activity_main.xml" value="0.18020833333333333" />
         <entry key="..\:/GoalChaser/app/src/main/res/layout-land/fragment_about.xml" value="0.5" />
         <entry key="..\:/GoalChaser/app/src/main/res/layout-land/fragment_active_goals_list.xml" value="0.39241917502787066" />
@@ -59,6 +60,7 @@
         <entry key="..\:/GoalChaser/app/src/main/res/layout/action_bar_layout.xml" value="0.1524822695035461" />
         <entry key="..\:/GoalChaser/app/src/main/res/layout/active_goal_list_item.xml" value="0.5" />
         <entry key="..\:/GoalChaser/app/src/main/res/layout/active_task_list_item.xml" value="0.2695035460992908" />
+        <entry key="..\:/GoalChaser/app/src/main/res/layout/activity_active_goal_details.xml" value="0.35104166666666664" />
         <entry key="..\:/GoalChaser/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/GoalChaser/app/src/main/res/layout/activity_nav_drawer_actvity.xml" value="0.5394021739130435" />
         <entry key="..\:/GoalChaser/app/src/main/res/layout/app_bar_nav_drawer_actvity.xml" value="0.5394021739130435" />

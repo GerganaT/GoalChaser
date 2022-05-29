@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ActiveGoalDetailsActivity">
+    <data>
+        <variable
+            name="goalData"
+            type="com.example.android.goalchaser.localdatasource.GoalData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/active_goal_details_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_large">
+
+        <Button
+            android:id="@+id/active_goal_details_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/open_app_button_label"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/active_goal_details_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_baseline_info_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/active_goal_details_due_date_label_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/active_goal_details_title_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:maxLines="@integer/max_lines_completed_goal_title"
+            android:text="@{goalData.title}"
+            android:textSize="@dimen/normal_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/active_goal_details_due_date_label_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/active_goal_details_btn"
+            tools:text="Some text here" />
+
+        <TextView
+            android:id="@+id/active_goal_details_due_date_label_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:text="@string/due_goal_label_list_item"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/active_goal_details_due_date_text"
+            app:layout_constraintStart_toStartOf="@+id/active_goal_details_btn" />
+
+        <TextView
+            android:id="@+id/active_goal_details_due_date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:text="@{goalData.dueDate}"
+            android:textSize="@dimen/normal_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/active_goal_details_btn"
+            app:layout_constraintStart_toStartOf="@+id/active_goal_details_btn"
+            tools:text="1/1/2022" />
+
+        <TextView
+            android:id="@+id/active_goal_details_title_label_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:text="@string/active_goal_title_label"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/active_goal_details_title_text"
+            app:layout_constraintStart_toStartOf="@+id/active_goal_details_btn" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -20,6 +20,7 @@ import com.example.android.goalchaser.utils.notificationutils.setNotificationAle
 import com.example.android.goalchaser.utils.uiutils.*
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 import java.text.DateFormatSymbols
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
@@ -278,23 +279,7 @@ class CreateEditGoalFragment : Fragment() {
         const val ADJUSTED_DATE = "ADJUSTED_DATE"
     }
 }
-//TODO notifications are not being added for multiple goals
-//TODO trigger notification with unique ids /per room id/ - this could fix with not multiple notifications
-//TODO see what to do after notification is seen
-//TODO see if alert permissions have to be asked to user on Android 12?
+//TODO overwrite notification if it has an existing id
 //TODO cancel notification on goal deletion or on notification cancellation:see below
+//TODO don't allow user to set invalid notification period
 
-//fun cancelAlarm(){
-//    val alarmManager = getSystemService(Context.ALARM_SERVICE) as? AlarmManager?
-//    val intent = Intent(context, AlarmReceiver::class.java)
-//    val pendingIntent =
-//        PendingIntent.getService(
-//            context,
-//            requestCode,
-//            intent,
-//            PendingIntent.FLAG_NO_CREATE
-//        )
-//    pendingIntent?.let { _pendingIntent->
-//        alarmManager?.cancel(_pendingIntent)
-//    }
-//}

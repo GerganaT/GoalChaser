@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentGoalsListBinding
 import com.example.android.goalchaser.ui.activecompletedgoals.recyclerView.GoalsListAdapter
+import com.example.android.goalchaser.utils.notificationutils.cancelNotificationAlert
 import com.example.android.goalchaser.utils.uiutils.*
 import org.koin.android.ext.android.inject
 import timber.log.Timber
@@ -101,7 +102,8 @@ class GoalsListFragment : Fragment() {
                         R.id.mark_completed_popup_item -> {
                             GoalCompletionDialogFragment().setupGoalCompletionDialog(
                                 selectedGoal.id,
-                                selectedGoal.title
+                                selectedGoal.title,
+                                selectedGoal.notificationId,
                             )
                                 .show(
                                     childFragmentManager,
@@ -112,11 +114,13 @@ class GoalsListFragment : Fragment() {
                             GoalDeletionDialogFragment().setupGoalDeleteDialog(
                                 selectedGoal.id,
                                 selectedGoal.title,
-                                viewModel.activeCompletedGoalSelection.value
+                                viewModel.activeCompletedGoalSelection.value,
+                                selectedGoal.notificationId
                             ).show(
                                 childFragmentManager,
                                 GoalDeletionDialogFragment.TAG
                             )
+
                         }
                     }
                     true

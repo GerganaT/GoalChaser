@@ -114,6 +114,7 @@ class ActiveCompletedGoalsViewModel(
                                     gd.days,
                                     gd.months,
                                     gd.isCompleted,
+                                    gd.notificationId,
                                     gd.goalId
                                 )
 
@@ -160,6 +161,7 @@ class ActiveCompletedGoalsViewModel(
                                     gd.days,
                                     gd.months,
                                     gd.isCompleted,
+                                    gd.notificationId,
                                     gd.goalId
                                 )
 

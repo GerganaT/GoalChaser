@@ -1,46 +1,40 @@
 package com.example.android.goalchaser.background
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.SystemClock
 import androidx.core.app.JobIntentService
+import com.example.android.goalchaser.localdatasource.GoalData
+import com.example.android.goalchaser.repository.GoalsRepository
+import com.example.android.goalchaser.utils.datautils.Result
+import com.example.android.goalchaser.utils.notificationutils.EXTRA_NotificationId
 import com.example.android.goalchaser.utils.notificationutils.sendNotification
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
 
-class NotificationAlarmBroadcastReceiverService : JobIntentService(),CoroutineScope {
+class NotificationAlarmBroadcastReceiverService : JobIntentService(), CoroutineScope {
     val TAG = NotificationAlarmBroadcastReceiverService::class.simpleName as String
     var coroutineJob: Job = Job()
     override fun onHandleWork(intent: Intent) {
-        registerNotification()
+    val notificationId = intent.extras?.getInt(EXTRA_NotificationId)
+        registerNotification(notificationId)
     }
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO + coroutineJob
 
-    private fun registerNotification(){
+    private fun registerNotification(notificationId:Int?) {
         val context = applicationContext
-      //  val requestCode=0
-//        val alarmPendingIntent:PendingIntent by lazy {
-//            val alarmIntent = Intent(context, NotificationAlarmBroadcastReceiver::class.java)
-//            PendingIntent.getBroadcast(
-//                context,
-//                requestCode,
-//                alarmIntent,
-//                PendingIntent.FLAG_UPDATE_CURRENT
-//            )
-//        }
-     //   val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as? AlarmManager?
-//        alarmManager?.set(
-//            AlarmManager.RTC_WAKEUP,
-//            SystemClock.elapsedRealtime() + 60 * 1000,
-//            alarmPendingIntent
-//        )
-       sendNotification(context)
+        val goalsRepository: GoalsRepository by inject()
+        CoroutineScope(coroutineContext).launch {
+            val result = goalsRepository.getGoalByNotificationId(notificationId)
+            if (result is Result.Success<GoalData>) {
+                sendNotification(context, result.data)
+            }
+        }
     }
 
     companion object {
@@ -56,3 +50,4 @@ class NotificationAlarmBroadcastReceiverService : JobIntentService(),CoroutineSc
     }
 
 }
+

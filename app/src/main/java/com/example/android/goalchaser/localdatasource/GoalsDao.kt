@@ -31,6 +31,6 @@ interface GoalsDao {
 
     @Query("SELECT * FROM goals WHERE isCompleted = 1")
     suspend fun getCompletedGoals(): List<GoalData>
-
-
+    @Query("SELECT * FROM goals WHERE notificationId = :notificationId ")
+    suspend fun getGoalByNotificationId(notificationId:Int?):GoalData
 }

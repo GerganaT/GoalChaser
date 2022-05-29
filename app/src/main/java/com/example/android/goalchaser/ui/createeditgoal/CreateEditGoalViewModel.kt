@@ -1,6 +1,6 @@
 package com.example.android.goalchaser.ui.createeditgoal
 
-import android.content.Context
+import android.os.SystemClock
 import androidx.lifecycle.*
 import com.example.android.goalchaser.localdatasource.GoalData
 import com.example.android.goalchaser.repository.GoalsRepository
@@ -43,11 +43,20 @@ class CreateEditGoalViewModel(
 
     val daysOrMonths = MediatorLiveData<Boolean?>()
 
+     val notificationId :LiveData<Int?>
+    get() = _notificationId
+    private val _notificationId = MutableLiveData<Int?>()
+
+
 
     init {
         isDone.value = false
         _days.value = Array(31) { it + 1 }
         setDaysOrMonths()
+    }
+
+    fun setNotificationId(){
+        _notificationId.value = ((SystemClock.uptimeMillis() % 10000).toInt())
     }
 
     fun confirmDateAdjusted(dateAdjusted: Boolean) {
@@ -104,6 +113,7 @@ class CreateEditGoalViewModel(
                                     gd.days,
                                     gd.months,
                                     gd.isCompleted,
+                                    gd.notificationId,
                                     gd.goalId
                                 )
 
@@ -127,6 +137,7 @@ class CreateEditGoalViewModel(
             timeTypeDays.value = days
             timeTypeMonths.value = months
             isDone.value = isCompleted
+            _notificationId.value = notificationId
         }
 
     fun clearDaysMonths() {
@@ -151,6 +162,7 @@ class CreateEditGoalViewModel(
                     days,
                     months,
                     isCompleted,
+                    notificationId,
                     id
                 )
             }
@@ -183,6 +195,7 @@ class CreateEditGoalViewModel(
                     timeTypeDays.value,
                     timeTypeMonths.value,
                     isDone.value,
+                    notificationId.value ?:0,
                     id = if (goalId != 0) goalId else 0
                 ).run { saveOrUpdateUiState(this) }
             } else {

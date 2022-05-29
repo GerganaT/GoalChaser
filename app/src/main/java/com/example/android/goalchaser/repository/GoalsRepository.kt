@@ -102,4 +102,14 @@ class GoalsRepository(
             }
 
         }
+
+    suspend fun getGoalByNotificationId(notificationId:Int?): Result<GoalData> =
+        withContext(Dispatchers.IO) {
+            try {
+                Result.Success(goalsDao.getGoalByNotificationId(notificationId))
+            } catch (e: Exception) {
+                Result.Error(e.message)
+            }
+
+        }
 }

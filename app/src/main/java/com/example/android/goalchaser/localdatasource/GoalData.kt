@@ -2,6 +2,7 @@ package com.example.android.goalchaser.localdatasource
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "goals")
 data class GoalData(
@@ -12,7 +13,8 @@ data class GoalData(
     val days: Boolean?,
     val months: Boolean?,
     val isCompleted: Boolean?,
+    val notificationId:Int?,
     @PrimaryKey(autoGenerate = true) var goalId: Int = 0
-)
+):Serializable
 
 
