@@ -190,6 +190,12 @@ class ActiveCompletedGoalsViewModel(
             goalsRepository.deleteGoal(goalId)
         }
     }
+
+    fun clearNotificationDataOnGoalCompletion(goalId: Int){
+        viewModelScope.launch {
+            goalsRepository.clearNotificationDataOnGoalCompletion(goalId)
+        }
+    }
 }
 
 

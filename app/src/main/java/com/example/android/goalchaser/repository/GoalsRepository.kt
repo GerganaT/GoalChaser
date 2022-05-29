@@ -34,10 +34,10 @@ class GoalsRepository(
             }
         }
 
-    suspend fun markGoalCompleted(goalId: Int,goalCompletionDate:String): Result<Boolean> =
+    suspend fun markGoalCompleted(goalId: Int, goalCompletionDate: String): Result<Boolean> =
         withContext(Dispatchers.IO) {
             try {
-                goalsDao.markGoalCompleted(goalId,goalCompletionDate)
+                goalsDao.markGoalCompleted(goalId, goalCompletionDate)
                 Result.Success(true)
             } catch (e: Exception) {
                 Result.Error(e.message)
@@ -72,6 +72,7 @@ class GoalsRepository(
                 Result.Error(e.message)
             }
         }
+
     suspend fun getCompletedGoals(): Result<List<GoalData>> =
         withContext(Dispatchers.IO) {
             try {
@@ -103,7 +104,7 @@ class GoalsRepository(
 
         }
 
-    suspend fun getGoalByNotificationId(notificationId:Int?): Result<GoalData> =
+    suspend fun getGoalByNotificationId(notificationId: Int?): Result<GoalData> =
         withContext(Dispatchers.IO) {
             try {
                 Result.Success(goalsDao.getGoalByNotificationId(notificationId))
@@ -112,4 +113,15 @@ class GoalsRepository(
             }
 
         }
+
+    suspend fun clearNotificationDataOnGoalCompletion(goalId: Int): Result<Boolean> =
+        withContext(Dispatchers.IO) {
+            try {
+                goalsDao.clearNotificationDataOnGoalCompletion(goalId)
+                Result.Success(true)
+            } catch (e: Exception) {
+                Result.Error(e.message)
+            }
+        }
 }
+

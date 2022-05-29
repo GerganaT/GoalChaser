@@ -150,5 +150,4 @@ class GoalsListFragment : Fragment() {
                 ?: MenuSelection.ACTIVE_GOALS
         )
     }
-    //TODO optional if time - desugaring error
 }

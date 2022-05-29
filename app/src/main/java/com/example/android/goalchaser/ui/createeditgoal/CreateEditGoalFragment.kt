@@ -279,7 +279,5 @@ class CreateEditGoalFragment : Fragment() {
         const val ADJUSTED_DATE = "ADJUSTED_DATE"
     }
 }
-//TODO overwrite notification if it has an existing id
-//TODO cancel notification on goal deletion or on notification cancellation:see below
 //TODO don't allow user to set invalid notification period
 

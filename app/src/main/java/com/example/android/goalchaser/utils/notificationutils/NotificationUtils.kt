@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.SystemClock
-import android.os.SystemClock.uptimeMillis
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.getSystemService
@@ -19,7 +18,6 @@ import com.example.android.goalchaser.R
 import com.example.android.goalchaser.background.NotificationAlarmBroadcastReceiver
 import com.example.android.goalchaser.localdatasource.GoalData
 import com.example.android.goalchaser.ui.createeditgoal.CreateEditGoalViewModel
-import timber.log.Timber
 
 private const val NOTIFICATION_CHANNEL_ID = BuildConfig.APPLICATION_ID + ".channel"
 
@@ -79,30 +77,30 @@ fun sendNotification(context: Context, goalItem: GoalData) {
 
 }
 
-private fun getUniqueId() = ((uptimeMillis() % 10000).toInt())
-
-
 fun setNotificationAlert(context: Context, oldNotificationId: Int?) {
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager?
     val notificationIntent: PendingIntent by lazy {
         val intent = Intent(context, NotificationAlarmBroadcastReceiver::class.java)
         intent.putExtra(EXTRA_NotificationId, oldNotificationId)
 
-        PendingIntent.getBroadcast(context, oldNotificationId!!, intent, PendingIntent.FLAG_IMMUTABLE)
+        PendingIntent.getBroadcast(
+            context,
+            oldNotificationId!!,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
     }
     alarmManager?.set(
         AlarmManager.RTC_WAKEUP,
-        SystemClock.elapsedRealtime() + 30 * 1000,
+        SystemClock.elapsedRealtime() + 60 * 1000,
         notificationIntent
     )
 }
 
 
-
-
 fun Fragment.checkIfUpdatedAndSendNotification(viewModel: CreateEditGoalViewModel) {
     when {
-                viewModel.goal.value?.id == 0 ||
+        viewModel.goal.value?.id == 0 ||
                 viewModel.goal.value?.dueDate != viewModel.goalDueDate.value ||
                 viewModel.goal.value?.sendNotification == false ||
                 viewModel.goal.value?.timeUnitNumber != viewModel.timeUnitCount.value ||
@@ -115,7 +113,7 @@ fun Fragment.checkIfUpdatedAndSendNotification(viewModel: CreateEditGoalViewMode
     }
 }
 
-fun cancelNotificationAlert(context: Context,requestCode:Int?){
+fun cancelNotificationAlert(context: Context, requestCode: Int?) {
     requestCode?.let {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
         val intent = Intent(context, NotificationAlarmBroadcastReceiver::class.java)
@@ -126,15 +124,12 @@ fun cancelNotificationAlert(context: Context,requestCode:Int?){
                 intent,
                 PendingIntent.FLAG_IMMUTABLE
             )
-        cancellingPendingIntent?.let { cancellingIntent->
+        cancellingPendingIntent?.let { cancellingIntent ->
             alarmManager?.cancel(cancellingIntent)
         }
     }
 
 }
-
-
-
 
 
 const val EXTRA_NotificationId = "EXTRA_NotificationId"

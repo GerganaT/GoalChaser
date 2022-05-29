@@ -8,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalsViewModel
 import com.example.android.goalchaser.ui.activecompletedgoals.GoalsListFragmentDirections
-import com.example.android.goalchaser.utils.notificationutils.cancelNotificationAlert
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
@@ -54,7 +53,7 @@ class GoalCompletionDialogFragment : DialogFragment() {
             )
             .setMessage(R.string.alert_dialog_message)
             .setPositiveButton(R.string.alert_dialog_confirm_completed) { dialog: DialogInterface, _ ->
-                cancelNotificationAlert(requireContext(), goalNotificationId)
+                viewModel.clearNotificationDataOnGoalCompletion(goalId)
                 viewModel.markGoalCompleted(goalId, goalCompletionDate)
                 viewModel.setCompletedGoalTitle(goalTitle)
                 dialog.dismiss()
