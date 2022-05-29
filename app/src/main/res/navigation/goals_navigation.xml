@@ -54,4 +54,9 @@
         android:name="com.example.android.goalchaser.ui.activecompletedgoals.CompletedGoalDetailsFragment"
         android:label="CompletedGoalDetailsFragment"
         tools:layout="@layout/fragment_completed_goal_details"/>
+    <activity
+        android:id="@+id/activeGoalDetailsActivity"
+        android:name="com.example.android.goalchaser.ActiveGoalDetailsActivity"
+        android:label="activity_active_goal_details"
+        tools:layout="@layout/activity_active_goal_details" />
 </navigation>

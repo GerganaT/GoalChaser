@@ -83,6 +83,7 @@
     <string name="active_goal_title_label">Goal title</string>
     <string name="open_app_button_label">View goal list</string>
     <string name="active_goal_due_date_notification">Goal due until %1$s</string>
+    <string name="invalid_notification_trigger_period">Invalid notification period entered</string>
     <string-array name="days_months">
         <item>Day(s)</item>
         <item>Month(s)</item>

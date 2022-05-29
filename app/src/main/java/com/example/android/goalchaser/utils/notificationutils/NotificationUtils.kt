@@ -7,7 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.os.SystemClock
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.getSystemService
@@ -18,6 +18,9 @@ import com.example.android.goalchaser.R
 import com.example.android.goalchaser.background.NotificationAlarmBroadcastReceiver
 import com.example.android.goalchaser.localdatasource.GoalData
 import com.example.android.goalchaser.ui.createeditgoal.CreateEditGoalViewModel
+import timber.log.Timber
+import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 
 private const val NOTIFICATION_CHANNEL_ID = BuildConfig.APPLICATION_ID + ".channel"
 
@@ -77,24 +80,33 @@ fun sendNotification(context: Context, goalItem: GoalData) {
 
 }
 
-fun setNotificationAlert(context: Context, oldNotificationId: Int?) {
+fun setNotificationAlert(context: Context, notificationId: Int?, notificationTriggerDayCount: Long) {
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager?
     val notificationIntent: PendingIntent by lazy {
         val intent = Intent(context, NotificationAlarmBroadcastReceiver::class.java)
-        intent.putExtra(EXTRA_NotificationId, oldNotificationId)
+        intent.putExtra(EXTRA_NotificationId, notificationId)
 
         PendingIntent.getBroadcast(
             context,
-            oldNotificationId!!,
+            notificationId!!,
             intent,
             PendingIntent.FLAG_IMMUTABLE
         )
     }
-    alarmManager?.set(
-        AlarmManager.RTC_WAKEUP,
-        SystemClock.elapsedRealtime() + 60 * 1000,
-        notificationIntent
-    )
+    Timber.i("notificationtriggerdaycount is $notificationTriggerDayCount")
+    if (notificationTriggerDayCount >= 0) {
+        alarmManager?.set(
+            AlarmManager.RTC_WAKEUP,
+            System.currentTimeMillis()
+                    + notificationTriggerDayCount * 24 * 60 * 60 * 1000,
+            notificationIntent
+        )
+    } else {
+        Toast.makeText(
+            context, R.string.invalid_notification_trigger_period, Toast.LENGTH_SHORT
+        ).show()
+    }
+
 }
 
 
@@ -108,7 +120,19 @@ fun Fragment.checkIfUpdatedAndSendNotification(viewModel: CreateEditGoalViewMode
                 viewModel.goal.value?.months != viewModel.timeTypeMonths.value
         -> {
             viewModel.setNotificationId()
-            setNotificationAlert(requireContext(), viewModel.notificationId.value)
+            viewModel.run {
+                val notificationTriggerDate = setNotificationTriggerDate(
+                    timeUnitCount.value,
+                    timeTypeDays.value,
+                    goalDueDate.value
+                )
+                setNotificationAlert(
+                    requireContext(),
+                    notificationId.value,
+                    notificationTriggerDate
+                )
+            }
+
         }
     }
 }
@@ -131,5 +155,37 @@ fun cancelNotificationAlert(context: Context, requestCode: Int?) {
 
 }
 
+fun setNotificationTriggerDate(
+    daysMonthsNumber: Int?,
+    days: Boolean?,
+    userSetGoalDueDate: String?
+): Long {
+    var year = 0
+    var month = 0
+    var day = 0
 
+    userSetGoalDueDate?.split("/")
+        ?.map { it.toInt() }?.run {
+            year = get(2)
+            month = get(0)
+            day = get(1)
+        }
+    val goalDueDate = LocalDate.of(year, month, day).toEpochDay()
+
+    var goalNotificationDate: Long = 0
+    daysMonthsNumber?.let { number ->
+        goalNotificationDate = LocalDate.now().plus(
+            number.toLong(), if (days == true) ChronoUnit.DAYS else ChronoUnit.MONTHS
+        ).toEpochDay()
+    }
+    val difference =  goalDueDate - goalNotificationDate
+    Timber.i("difference is $difference")
+    return if (difference >= 0) {
+        difference
+    } else {
+        return -1
+    }
+}
+//TODO logic seems to be working -test it further
+//TODO do not allow update notification if time period is invalid
 const val EXTRA_NotificationId = "EXTRA_NotificationId"

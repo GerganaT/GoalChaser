@@ -16,11 +16,9 @@ import androidx.navigation.fragment.navArgs
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentCreateEditGoalBinding
 import com.example.android.goalchaser.utils.notificationutils.checkIfUpdatedAndSendNotification
-import com.example.android.goalchaser.utils.notificationutils.setNotificationAlert
 import com.example.android.goalchaser.utils.uiutils.*
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 import java.text.DateFormatSymbols
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
@@ -201,9 +199,9 @@ class CreateEditGoalFragment : Fragment() {
 
             viewModel.goalIsUpdated.observe(viewLifecycleOwner) { isUpdated ->
 
-                val updateMessage = when(isUpdated){
+                val updateMessage = when (isUpdated) {
                     true -> getString(R.string.goal_updated_toast, viewModel.goalTitle.value)
-                    else -> getString(R.string.nothing_to_update_toast )
+                    else -> getString(R.string.nothing_to_update_toast)
                 }
                 if (findNavController()
                         .currentDestination?.id == R.id.createEditGoalFragment
