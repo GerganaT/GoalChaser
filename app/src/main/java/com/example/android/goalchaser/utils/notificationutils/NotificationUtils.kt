@@ -7,7 +7,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.getSystemService
@@ -80,7 +79,11 @@ fun sendNotification(context: Context, goalItem: GoalData) {
 
 }
 
-fun setNotificationAlert(context: Context, notificationId: Int?, notificationTriggerDayCount: Long) {
+fun setNotificationAlert(
+    context: Context,
+    notificationId: Int?,
+    notificationTriggerDayCount: Long
+) {
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager?
     val notificationIntent: PendingIntent by lazy {
         val intent = Intent(context, NotificationAlarmBroadcastReceiver::class.java)
@@ -102,9 +105,7 @@ fun setNotificationAlert(context: Context, notificationId: Int?, notificationTri
             notificationIntent
         )
     } else {
-        Toast.makeText(
-            context, R.string.invalid_notification_trigger_period, Toast.LENGTH_SHORT
-        ).show()
+        return
     }
 
 }
@@ -137,24 +138,6 @@ fun Fragment.checkIfUpdatedAndSendNotification(viewModel: CreateEditGoalViewMode
     }
 }
 
-fun cancelNotificationAlert(context: Context, requestCode: Int?) {
-    requestCode?.let {
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
-        val intent = Intent(context, NotificationAlarmBroadcastReceiver::class.java)
-        val cancellingPendingIntent =
-            PendingIntent.getService(
-                context,
-                requestCode,
-                intent,
-                PendingIntent.FLAG_IMMUTABLE
-            )
-        cancellingPendingIntent?.let { cancellingIntent ->
-            alarmManager?.cancel(cancellingIntent)
-        }
-    }
-
-}
-
 fun setNotificationTriggerDate(
     daysMonthsNumber: Int?,
     days: Boolean?,
@@ -178,7 +161,7 @@ fun setNotificationTriggerDate(
             number.toLong(), if (days == true) ChronoUnit.DAYS else ChronoUnit.MONTHS
         ).toEpochDay()
     }
-    val difference =  goalDueDate - goalNotificationDate
+    val difference = goalDueDate - goalNotificationDate
     Timber.i("difference is $difference")
     return if (difference >= 0) {
         difference
@@ -186,6 +169,5 @@ fun setNotificationTriggerDate(
         return -1
     }
 }
-//TODO logic seems to be working -test it further
-//TODO do not allow update notification if time period is invalid
+
 const val EXTRA_NotificationId = "EXTRA_NotificationId"

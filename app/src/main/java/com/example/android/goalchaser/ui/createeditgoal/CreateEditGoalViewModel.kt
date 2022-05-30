@@ -6,6 +6,7 @@ import com.example.android.goalchaser.localdatasource.GoalData
 import com.example.android.goalchaser.repository.GoalsRepository
 import com.example.android.goalchaser.ui.uistate.GoalDataUiState
 import com.example.android.goalchaser.utils.datautils.Result
+import com.example.android.goalchaser.utils.notificationutils.setNotificationTriggerDate
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -17,8 +18,8 @@ class CreateEditGoalViewModel(
     val goalDueDate = MutableLiveData<String?>()
     val activeNotification = MutableLiveData<Boolean?>()
     val timeUnitCount = MutableLiveData<Int?>()
-     val timeTypeDays = MutableLiveData<Boolean?>()
-     val timeTypeMonths = MutableLiveData<Boolean?>()
+    val timeTypeDays = MutableLiveData<Boolean?>()
+    val timeTypeMonths = MutableLiveData<Boolean?>()
     private val isDone = MutableLiveData<Boolean?>()
     val goal = MutableLiveData<GoalDataUiState>()
     val days: LiveData<Array<Int>>
@@ -43,11 +44,13 @@ class CreateEditGoalViewModel(
 
     val daysOrMonths = MediatorLiveData<Boolean?>()
 
-     val notificationId :LiveData<Int?>
-    get() = _notificationId
+    val notificationId: LiveData<Int?>
+        get() = _notificationId
     private val _notificationId = MutableLiveData<Int?>()
 
-
+    val isValidNotificationPeriodEntered: LiveData<Boolean>
+        get() = _isValidNotificationPeriodEntered
+    private val _isValidNotificationPeriodEntered = MutableLiveData<Boolean>()
 
     init {
         isDone.value = false
@@ -55,7 +58,15 @@ class CreateEditGoalViewModel(
         setDaysOrMonths()
     }
 
-    fun setNotificationId(){
+    fun defineValidNotificationEntered() {
+        _isValidNotificationPeriodEntered.value = setNotificationTriggerDate(
+            timeUnitCount.value,
+            timeTypeDays.value,
+            goalDueDate.value
+        ) >= 0
+    }
+
+    fun setNotificationId() {
         _notificationId.value = ((SystemClock.uptimeMillis() % 10000).toInt())
     }
 
@@ -66,6 +77,7 @@ class CreateEditGoalViewModel(
     fun confirmWarningClicked() {
         _isTitleEntered.value = true
     }
+
     private fun setDaysOrMonths() {
         // MediatorLiveData returns true if user selected days option in notifications options
         daysOrMonths.addSource(timeTypeDays) {
@@ -195,7 +207,7 @@ class CreateEditGoalViewModel(
                     timeTypeDays.value,
                     timeTypeMonths.value,
                     isDone.value,
-                    notificationId.value ?:0,
+                    notificationId.value ?: 0,
                     id = if (goalId != 0) goalId else 0
                 ).run { saveOrUpdateUiState(this) }
             } else {

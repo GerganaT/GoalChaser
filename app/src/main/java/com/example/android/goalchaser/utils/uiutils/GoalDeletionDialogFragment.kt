@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalsViewModel
-import com.example.android.goalchaser.utils.notificationutils.cancelNotificationAlert
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.android.ext.android.inject
 
@@ -18,14 +17,14 @@ class GoalDeletionDialogFragment
     private val viewModel: ActiveCompletedGoalsViewModel by inject()
     private var goalId: Int = 0
     private var goalTitle: String? = ""
-    private var menuSelection:MenuSelection?=null
-    private var goalNotificationId:Int?=null
+    private var menuSelection: MenuSelection? = null
+    private var goalNotificationId: Int? = null
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.run {
             putInt(GOAL_ID, goalId)
             putString(GOAL_TITLE, goalTitle)
-            putSerializable(MENU_SELECTION,menuSelection)
+            putSerializable(MENU_SELECTION, menuSelection)
             goalNotificationId?.let { putInt(GOAL_NOTIFICATION_ID, it) }
         }
     }
@@ -49,7 +48,6 @@ class GoalDeletionDialogFragment
                     getString(R.string.deleted_goal_toast, goalTitle),
                     Toast.LENGTH_SHORT
                 ).show()
-                cancelNotificationAlert(requireContext(),goalNotificationId)
                 viewModel.refreshGoals(menuSelection ?: MenuSelection.ACTIVE_GOALS)
 
             }
@@ -65,7 +63,7 @@ class GoalDeletionDialogFragment
         const val TAG = "GoalDeletionDialog"
         const val GOAL_ID = "GOAL_ID"
         const val GOAL_TITLE = "GOAL_TITLE"
-        const val MENU_SELECTION="MENU_SELECTION"
+        const val MENU_SELECTION = "MENU_SELECTION"
         const val GOAL_NOTIFICATION_ID = "GOAL_NOTIFICATION_ID"
     }
 
@@ -73,7 +71,7 @@ class GoalDeletionDialogFragment
         deletedGoalId: Int,
         deletedGoalTitle: String?,
         deletedGoalMenuSelection: MenuSelection?,
-        deletedGoalNotificationId:Int?
+        deletedGoalNotificationId: Int?
     ): GoalDeletionDialogFragment {
         goalId = deletedGoalId
         goalTitle = deletedGoalTitle

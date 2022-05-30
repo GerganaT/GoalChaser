@@ -1,6 +1,7 @@
-package com.example.android.goalchaser
+package com.example.android.goalchaser.background
 
 import android.app.Application
+import com.example.android.goalchaser.BuildConfig
 import com.example.android.goalchaser.localdatasource.GoalsDao
 import com.example.android.goalchaser.localdatasource.ImageDataDao
 import com.example.android.goalchaser.localdatasource.getGoalChaserDatabase

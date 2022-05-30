@@ -9,10 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentGoalsListBinding
 import com.example.android.goalchaser.ui.activecompletedgoals.recyclerView.GoalsListAdapter
-import com.example.android.goalchaser.utils.notificationutils.cancelNotificationAlert
 import com.example.android.goalchaser.utils.uiutils.*
 import org.koin.android.ext.android.inject
-import timber.log.Timber
 
 
 class GoalsListFragment : Fragment() {
@@ -20,7 +18,7 @@ class GoalsListFragment : Fragment() {
     private lateinit var activeGoalsListBinding: FragmentGoalsListBinding
     val viewModel: ActiveCompletedGoalsViewModel by inject()
     private var popupMenu: PopupMenu? = null
-    private var appbarMenu:Menu?=null
+    private var appbarMenu: Menu? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,14 +32,15 @@ class GoalsListFragment : Fragment() {
         )
         return activeGoalsListBinding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activeGoalsListBinding.lifecycleOwner = viewLifecycleOwner
         activeGoalsListBinding.viewModel = viewModel
         viewModel.getAllGoals()
-        viewModel.goalsEmptyCheckList.observe(viewLifecycleOwner){
+        viewModel.goalsEmptyCheckList.observe(viewLifecycleOwner) {
             viewModel.getAllGoals()
-            if (it.isNullOrEmpty()){
+            if (it.isNullOrEmpty()) {
                 appbarMenu?.removeItem(R.id.delete_all_menu_item)
             }
         }
@@ -62,18 +61,18 @@ class GoalsListFragment : Fragment() {
         when (item.itemId) {
             R.id.show_active_menu_item -> {
                 viewModel.refreshGoals()
-                createToast(R.string.active_goals_toast)
+                createToast(R.string.active_goals_toast, requireContext())
                 viewModel.setActiveCompletedGoalSelection(MenuSelection.ACTIVE_GOALS)
                 return true
             }
             R.id.show_completed_menu_item -> {
                 viewModel.refreshGoals(MenuSelection.COMPLETED_GOALS)
-                createToast(R.string.completed_goals_toast)
+                createToast(R.string.completed_goals_toast, requireContext())
                 viewModel.setActiveCompletedGoalSelection(MenuSelection.COMPLETED_GOALS)
                 return true
             }
-            R.id.delete_all_menu_item ->{
-              deleteAllGoals()
+            R.id.delete_all_menu_item -> {
+                deleteAllGoals()
 
             }
         }

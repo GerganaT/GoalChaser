@@ -159,6 +159,7 @@ class CreateEditGoalFragment : Fragment() {
             }
         }
         createEditGoalBinding.saveGoalFab.setOnClickListener {
+
             if (viewModel.activeNotification.value == null) {
                 viewModel.resetActiveNotification()
             }
@@ -173,15 +174,24 @@ class CreateEditGoalFragment : Fragment() {
                         goalDueDaysOrMonths.text.toString(),
                         goalDaysOrMonthsAmount
                     )
-
+                    viewModel.defineValidNotificationEntered()
                     checkIfUpdatedAndSendNotification(viewModel)
-
                 } else {
                     viewModel.clearDaysMonths()
+                    viewModel.createOrUpdateGoal(args.passedGoalId)
                 }
 
             }
-            viewModel.createOrUpdateGoal(args.passedGoalId)
+            viewModel.isValidNotificationPeriodEntered.observe(viewLifecycleOwner) {
+                if (it) {
+                    viewModel.createOrUpdateGoal(args.passedGoalId)
+                } else {
+                    createToast(R.string.invalid_notification_trigger_period,requireContext())
+                }
+            }
+
+
+
 
 
             viewModel.goalIsCreated.observe(viewLifecycleOwner) { isCreated ->
@@ -192,13 +202,13 @@ class CreateEditGoalFragment : Fragment() {
                         context,
                         getString(R.string.goal_created_toast, viewModel.goalTitle.value),
                         Toast.LENGTH_SHORT
+
                     ).show()
                     findNavController().navigateUp()
                 }
             }
 
             viewModel.goalIsUpdated.observe(viewLifecycleOwner) { isUpdated ->
-
                 val updateMessage = when (isUpdated) {
                     true -> getString(R.string.goal_updated_toast, viewModel.goalTitle.value)
                     else -> getString(R.string.nothing_to_update_toast)
@@ -277,5 +287,5 @@ class CreateEditGoalFragment : Fragment() {
         const val ADJUSTED_DATE = "ADJUSTED_DATE"
     }
 }
-//TODO don't allow user to set invalid notification period
+
 

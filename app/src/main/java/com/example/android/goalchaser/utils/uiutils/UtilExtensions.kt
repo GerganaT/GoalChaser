@@ -1,16 +1,15 @@
 package com.example.android.goalchaser.utils.uiutils
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.ui.activecompletedgoals.GoalsListFragment
 import com.example.android.goalchaser.ui.activecompletedgoals.GoalsListFragmentDirections
 import com.example.android.goalchaser.ui.uistate.GoalDataUiState
-import timber.log.Timber
 
 fun AutoCompleteTextView.setupDaysMonthsCountAdapter(days: Array<Int>, savedState: Bundle?) {
 
@@ -82,16 +81,13 @@ fun GoalsListFragment.navigateToCompletedGoalDetailsFragment(selectedGoal: GoalD
     }
 }
 
-fun Fragment.createToast(message: Int) {
+fun createToast(message: Int, context: Context) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
-
-//TODO replace toast creation throughout the project with this helper-method
-
 fun GoalsListFragment.deleteAllGoals() {
-        GoalsDeletionDialogFragment()
-            .show(
-                childFragmentManager,
-                GoalsDeletionDialogFragment.TAG
-            )
+    GoalsDeletionDialogFragment()
+        .show(
+            childFragmentManager,
+            GoalsDeletionDialogFragment.TAG
+        )
 }

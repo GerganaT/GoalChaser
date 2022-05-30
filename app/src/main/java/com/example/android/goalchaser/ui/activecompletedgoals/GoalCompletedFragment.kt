@@ -9,17 +9,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.android.goalchaser.R
 import com.example.android.goalchaser.databinding.FragmentGoalCompletedBinding
-import com.example.android.goalchaser.utils.notificationutils.cancelNotificationAlert
 import org.koin.android.ext.android.inject
 
 
 class GoalCompletedFragment : Fragment() {
 
     lateinit var goalCompletedBinding: FragmentGoalCompletedBinding
-    private var actionBar:ActionBar?=null
+    private var actionBar: ActionBar? = null
     val viewModel: ActiveCompletedGoalsViewModel by inject()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

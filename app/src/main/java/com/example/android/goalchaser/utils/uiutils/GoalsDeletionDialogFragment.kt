@@ -24,7 +24,7 @@ class GoalsDeletionDialogFragment
                     .setMessage(R.string.alert_dialog_message)
                     .setPositiveButton(R.string.alert_dialog_delete) { _, _ ->
                         viewModel.deleteAllGoals()
-                        createToast(R.string.all_goals_deleted_toast)
+                        createToast(R.string.all_goals_deleted_toast,requireContext())
                     }
                     .setNegativeButton(R.string.alert_dialog_cancel) { dialog, _ ->
                         dialog.dismiss()
