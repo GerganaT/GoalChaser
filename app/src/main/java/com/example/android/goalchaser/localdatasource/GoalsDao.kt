@@ -14,8 +14,10 @@ interface GoalsDao {
     @Query("UPDATE goals SET isCompleted = 1 ,dueDate = :goalCompletionDate WHERE goalId = :goalId")
     suspend fun markGoalCompleted(goalId: Int, goalCompletionDate: String)
 
-    @Query("UPDATE goals SET timeUnitNumber = null," +
-            " days = null,months = null, notificationId = null WHERE goalId = :goalId")
+    @Query(
+        "UPDATE goals SET timeUnitNumber = null," +
+                " days = null,months = null, notificationId = null WHERE goalId = :goalId"
+    )
     suspend fun clearNotificationDataOnGoalCompletion(goalId: Int)
 
     @Query("DELETE FROM goals WHERE goalId = :goalId ")
@@ -38,4 +40,14 @@ interface GoalsDao {
 
     @Query("SELECT * FROM goals WHERE notificationId = :notificationId ")
     suspend fun getGoalByNotificationId(notificationId: Int?): GoalData
+
+    @Query("SELECT COUNT (*) FROM goals WHERE isCompleted = 0")
+    suspend fun getActiveGoalsCount(): Int
+
+    @Query("SELECT COUNT (*) FROM goals WHERE isCompleted = 1")
+    suspend fun getCompletedGoalsCount(): Int
+
+    @Query("SELECT COUNT (*) FROM goals")
+    suspend fun getAllGoalsCount(): Int
+
 }

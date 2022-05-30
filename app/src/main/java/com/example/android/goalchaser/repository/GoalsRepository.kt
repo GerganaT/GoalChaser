@@ -123,5 +123,31 @@ class GoalsRepository(
                 Result.Error(e.message)
             }
         }
+
+    suspend fun getActiveGoalsCount(): Int =
+        withContext(Dispatchers.IO) {
+            return@withContext try {
+                goalsDao.getActiveGoalsCount()
+            } catch (e: Exception) {
+                0
+            }
+        }
+    suspend fun getCompletedGoalsCount(): Int =
+        withContext(Dispatchers.IO) {
+            return@withContext try {
+                goalsDao.getCompletedGoalsCount()
+            } catch (e: Exception) {
+                0
+            }
+        }
+    suspend fun getAllGoalsCount(): Int =
+        withContext(Dispatchers.IO) {
+            return@withContext try {
+                goalsDao.getAllGoalsCount()
+            } catch (e: Exception) {
+                0
+            }
+        }
 }
+
 

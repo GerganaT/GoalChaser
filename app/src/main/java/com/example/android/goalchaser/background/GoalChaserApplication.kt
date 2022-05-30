@@ -11,6 +11,7 @@ import com.example.android.goalchaser.repository.GoalsRepository
 import com.example.android.goalchaser.repository.ImageDataRepository
 import com.example.android.goalchaser.ui.activecompletedgoals.ActiveCompletedGoalsViewModel
 import com.example.android.goalchaser.ui.createeditgoal.CreateEditGoalViewModel
+import com.example.android.goalchaser.ui.statistics.StatisticsViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -33,6 +34,11 @@ class GoalChaserApplication : Application() {
                       get() as GoalsRepository
                   )
               }
+            viewModel {
+                StatisticsViewModel(
+                    get() as GoalsRepository
+                )
+            }
 
             single {
                 ActiveCompletedGoalsViewModel(

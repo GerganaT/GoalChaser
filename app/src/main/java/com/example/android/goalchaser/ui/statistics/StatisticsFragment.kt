@@ -1,6 +1,7 @@
 package com.example.android.goalchaser.ui.statistics
 
 import android.graphics.Color
+import android.media.CamcorderProfile.getAll
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import com.example.android.goalchaser.R
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
@@ -16,9 +18,12 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class StatisticsFragment : Fragment() {
     lateinit var pieChart: PieChart
+    private val viewModel: StatisticsViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,9 +36,17 @@ class StatisticsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        pieChart = activity?.findViewById(R.id.statistics_pie_chart) as PieChart
-        setupPieChart()
-        loadPieChartData()
+        viewModel.getActiveAndCompletedGoalCounts()
+        viewModel.getActiveInactiveGoalsRatio()
+        viewModel.allGoals.observe(viewLifecycleOwner){
+            if (it>0){
+                pieChart = activity?.findViewById(R.id.statistics_pie_chart) as PieChart
+                setupPieChart()
+                loadPieChartData()
+            }
+        }
+
+
     }
 
     private fun setupPieChart() {
@@ -50,16 +63,16 @@ class StatisticsFragment : Fragment() {
         legend.isEnabled = true
 
     }
-
+   //TODO the pie entry accepts values such as 0.47f
     private fun loadPieChartData() {
         val tasksPercentage = arrayListOf(
-            PieEntry(0.53f, "Active"),
-            PieEntry(0.47f, "Completed")
+            PieEntry(viewModel.activeGoalsRatio.value ?: 0.0f, "Active"),
+            PieEntry(viewModel.completedGoalsRatio.value ?: 0.0f, "Completed")
 
         )
         val pieColors = arrayListOf<Int>()
-        pieColors.add(ContextCompat.getColor( requireActivity(), R.color.colorAccent))
-        pieColors.add(ContextCompat.getColor( requireActivity(), R.color.primaryColor))
+        pieColors.add(ContextCompat.getColor(requireActivity(), R.color.colorAccent))
+        pieColors.add(ContextCompat.getColor(requireActivity(), R.color.primaryColor))
 
 
         val pieDataSet = PieDataSet(tasksPercentage, "")
