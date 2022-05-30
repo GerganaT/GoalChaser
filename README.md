@@ -5,6 +5,7 @@ Design document:
 [DesignDocumentGoalChaser.pdf](https://github.com/GerganaT/GoalChaser/files/8800064/DesignDocumentGoalChaser.pdf)
 
 Libraries used include:
+
 **MPAndroidChart**
 https://github.com/PhilJay/MPAndroidChart
 
