@@ -1,3 +1,17 @@
+/* Copyright 2022,  Gergana Kirilova
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 package com.example.android.goalchaser.ui.statistics
 
 import androidx.lifecycle.LiveData
@@ -5,8 +19,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.goalchaser.repository.GoalsRepository
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import kotlin.math.roundToInt
 
 class StatisticsViewModel(
     val goalsRepository: GoalsRepository
@@ -32,6 +48,8 @@ class StatisticsViewModel(
         get() = _completedGoalsRatio
     private val _completedGoalsRatio = MutableLiveData<Float?>()
 
+    private lateinit var activeAndCompletedGoalCountsJob: Job
+
 
     suspend fun getAllGoals() {
         _allGoals.value = goalsRepository.getAllGoalsCount()
@@ -49,6 +67,7 @@ class StatisticsViewModel(
     }
 
     fun getActiveAndCompletedGoalCounts() {
+        activeAndCompletedGoalCountsJob =
         viewModelScope.launch {
             getAllGoals()
             getAllActiveGoals()
@@ -56,19 +75,21 @@ class StatisticsViewModel(
         }
     }
 
-     fun getActiveInactiveGoalsRatio() {
-        _activeGoalsRatio.value = try {
-            String.format("%.2f", ((_allActiveGoals.value!! / _allGoals.value!!) )).toFloat()
-        } catch (e: Exception) {
-            0.0f
-        }
-        _completedGoalsRatio.value = try {
-            String.format("%.2f", ((_allCompletedGoals.value!! / _allGoals.value!!) )).toFloat()
-        } catch (e: Exception) {
-            0.0f
-        }
-
-        Timber.i("  ratio active${_activeGoalsRatio.value}")
+    fun getActiveInactiveGoalsRatio() = viewModelScope.launch {
+        if(!::activeAndCompletedGoalCountsJob.isInitialized)
+            return@launch
+        activeAndCompletedGoalCountsJob.join()
+            _activeGoalsRatio.value = try {
+                String.format("%.2f", ((_allActiveGoals.value!!.toFloat() / _allGoals.value!!.toFloat()))).toFloat()
+            } catch (e: Exception) {
+                0.0f
+            }
+            _completedGoalsRatio.value = try {
+                String.format("%.2f", ((
+                        _allCompletedGoals.value !!.toFloat()/_allGoals.value!!.toFloat()))).toFloat()
+            } catch (e: Exception) {
+                0.0f
+            }
     }
 }
 

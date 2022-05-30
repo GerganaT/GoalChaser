@@ -1,3 +1,16 @@
+<!--    Copyright 2022,  Gergana Kirilova-->
+
+<!--    Licensed under the Apache License, Version 2.0 (the "License");-->
+<!--    you may not use this file except in compliance with the License.-->
+<!--    You may obtain a copy of the License at-->
+
+<!--    http://www.apache.org/licenses/LICENSE-2.0-->
+
+<!--    Unless required by applicable law or agreed to in writing, software-->
+<!--    distributed under the License is distributed on an "AS IS" BASIS,-->
+<!--    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.-->
+<!--    See the License for the specific language governing permissions and-->
+<!--    limitations under the License.-->
 <resources>
     <string name="app_name">Goal Chaser</string>
     <string name="menu_delete_all">Delete all</string>
@@ -6,18 +19,16 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="instructions_drawer_menu_item">Instructions</string>
     <string name="statistics_drawer_menu_item">Statistics</string>
-    <string name="instructions_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-        nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-        officia deserunt mollit anim id est laborum.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-        nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-        officia deserunt mollit anim id est laborum.</string>
+    <string name="instructions_text">This is how it can be used:
+Once the app starts, a screen with space for image and goals\' list will show up.
+If there\'s internet you can view a beautiful motivational image.
+Once saved the image is available in offline mode too.
+Once a new goal is created via the + button,you can tap on it and open additional features.
+On the main screen to the right,there\'s a menu,which can show you either active or completed goals list for your reference.
+When viewing completed goals,tap on a goal for additional features.
+You will also notice that once you have marked a goal completed,the date shows Completed. This is completion goal date so not the goal due date.
+The notifications feature is also there - once scheduled,the notification will be sent out on the proper date regardless of whether the app is running.Once the notification pops up,tap it to view additional goal details and open the app if desired.
+Thank you for choosing my app and enjoy:)</string>
     <string name="instructions_fragment_label">Instructions</string>
     <string name="active_goals_fragment_label">Goals</string>
     <string name="statistcs_fragment_label">Statistics</string>
