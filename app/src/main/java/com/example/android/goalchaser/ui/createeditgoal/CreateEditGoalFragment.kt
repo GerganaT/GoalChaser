@@ -223,6 +223,13 @@ class CreateEditGoalFragment : Fragment() {
             }
 
             viewModel.goalIsUpdated.observe(viewLifecycleOwner) { isUpdated ->
+                if (isUpdated && viewModel.activeNotification.value == false){
+                    viewModel.goal.value?.id?.let { goalId ->
+                        viewModel.clearNotificationDataOnGoalCompletion(
+                            goalId
+                        )
+                    }
+                }
                 val updateMessage = when (isUpdated) {
                     true -> getString(R.string.goal_updated_toast, viewModel.goalTitle.value)
                     else -> getString(R.string.nothing_to_update_toast)

@@ -239,6 +239,11 @@ class CreateEditGoalViewModel(
         timeTypeDays.value = daysOrMonths == daysMonths[0]
         timeTypeMonths.value = daysOrMonths == daysMonths[1]
     }
+    fun clearNotificationDataOnGoalCompletion(goalId: Int) {
+        viewModelScope.launch {
+            goalsRepository.clearNotificationDataOnGoalCompletion(goalId)
+        }
+    }
 
 
 }
