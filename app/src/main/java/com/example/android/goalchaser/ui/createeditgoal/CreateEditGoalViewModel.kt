@@ -72,10 +72,6 @@ class CreateEditGoalViewModel(
         setDaysOrMonths()
     }
 
-    fun setIsValidNotificationPeriodEntered(isValidPeridEntered:Boolean){
-        _isValidNotificationPeriodEntered.value = isValidPeridEntered
-    }
-
     fun defineValidNotificationEntered() {
         _isValidNotificationPeriodEntered.value = setNotificationTriggerDate(
             timeUnitCount.value,
