@@ -89,6 +89,8 @@ class CreateEditGoalFragment : Fragment() {
             putSerializable(DATE_ADJUSTED_SNACKBAR, dateAdjustedSavingSnackbar)
             putSerializable(ADJUSTED_DATE, adjustedDate)
             putSerializable(GOAL_TITLE,viewModel.goalTitle.value)
+            viewModel.activeNotification.value?.let { putBoolean(IS_NOTIFICATION_ENABLED, it) }
+            viewModel.goalDueDate.value?.let { putString(GOAL_ENTERED_DATE,it) }
         }
     }
 
@@ -108,6 +110,8 @@ class CreateEditGoalFragment : Fragment() {
             dateAdjustedSavingSnackbar = getSerializable(DATE_ADJUSTED_SNACKBAR) as SavingSnackbar?
             dateAdjustedSnackbar = dateAdjustedSavingSnackbar?.savedSnackbar
             adjustedDate = getSerializable(ADJUSTED_DATE) as SavingAdjustedDate?
+            viewModel.activeNotification.value = getBoolean(IS_NOTIFICATION_ENABLED)
+
 
         }
 
@@ -120,6 +124,7 @@ class CreateEditGoalFragment : Fragment() {
         createEditGoalBinding.lifecycleOwner = viewLifecycleOwner
         createEditGoalBinding.viewModel = viewModel
         savedInstanceState?.run { viewModel.goalTitle.value = getString(GOAL_TITLE) }
+        savedInstanceState?.run { viewModel.goalDueDate.value = getString(GOAL_ENTERED_DATE) }
         goalDatePicker = createEditGoalBinding.goalDatePicker
         goalDueDaysOrMonths = createEditGoalBinding.daysOrMonthsAutocompleteText
         goalDueDaysMonthsAmount =
@@ -194,23 +199,14 @@ class CreateEditGoalFragment : Fragment() {
                     checkIfUpdatedAndSendNotification(viewModel)
                 } else {
                     viewModel.clearDaysMonths()
-                 //   viewModel.createOrUpdateGoal(args.passedGoalId)
                 }
 
             }
             viewModel.isValidNotificationPeriodEntered.observe(viewLifecycleOwner) {
-                if (it) {
-               //   viewModel.createOrUpdateGoal(args.passedGoalId)
-                } else {
+                if (!it) {
                     createToast(R.string.invalid_notification_trigger_period,requireContext())
                 }
             }
-
-        //TODO fix above observer as it calls createorupdate method many times
-            //TODO also when process is killed notifications are auto disabled if were enabled
-
-
-
             viewModel.goalIsCreated.observe(viewLifecycleOwner) { isCreated ->
                 if (isCreated && findNavController()
                         .currentDestination?.id == R.id.createEditGoalFragment
@@ -248,7 +244,11 @@ class CreateEditGoalFragment : Fragment() {
                     findNavController().navigateUp()
                 }
             }
-            viewModel.createOrUpdateGoal(args.passedGoalId)
+            if(viewModel.activeNotification.value == false ||
+                    viewModel.isValidNotificationPeriodEntered.value == true){
+                viewModel.createOrUpdateGoal(args.passedGoalId)
+            }
+
 
         }
         viewModel.days.observe(viewLifecycleOwner) { daysAmount ->
@@ -311,6 +311,8 @@ class CreateEditGoalFragment : Fragment() {
         const val DATE_ADJUSTED_SNACKBAR = "DATE_ADJUSTED_SNACKBAR"
         const val ADJUSTED_DATE = "ADJUSTED_DATE"
         const val GOAL_TITLE="GOAL_TITLE"
+        const val IS_NOTIFICATION_ENABLED = "IS_NOTIFICATION_ENABLED"
+        const val GOAL_ENTERED_DATE="GOAL_ENTERED_DATE"
     }
 }
 
