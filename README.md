@@ -13,6 +13,7 @@ Just clone the repo and open the project with Android Studio.
 Note:If you want to be able to view the motivational images you will need an Unsplash Demo API key.
 You can see more here:
 https://unsplash.com/documentation#registering-your-application
+
 After obtaining the key and cloning the repo enter the following in the **local.properties** folder in the cloned project:
 
 apiKey="your_key_here"
