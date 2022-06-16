@@ -6,6 +6,14 @@ Full design and functionality in the design document.
 Design document:
 [DesignDocumentGoalChaser.pdf](https://github.com/GerganaT/GoalChaser/files/8800064/DesignDocumentGoalChaser.pdf)
 
+Running the project on your local machine:
+Just clone the repo.
+Note:If you want to be able to view the motivational images you will need an Unsplash Demo API key.
+You can see more here:
+https://unsplash.com/documentation#registering-your-application
+After obtaining the key and cloning the repo enter the following in the **local.properties** folder in the cloned project:
+apiKey="your_key_here"
+
 Libraries used include:
 
 **MPAndroidChart**
