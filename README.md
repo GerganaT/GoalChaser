@@ -9,6 +9,7 @@ Design document:
 Running the project on your local machine:
 
 Just clone the repo and open the project with Android Studio.
+
 Note:If you want to be able to view the motivational images you will need an Unsplash Demo API key.
 You can see more here:
 https://unsplash.com/documentation#registering-your-application
