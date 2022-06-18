@@ -104,8 +104,10 @@ fun TextView.showPhotographerCredentials(photographerCredentials: ImageDataUiSta
 
         val photographerLabel = context.getString(
             R.string.photographer_credentials,
-            "<a href=\"$photographersProfile\">$photographerName</a>",
-            "<a href=\"$unsplashSiteUrl\">$unsplashSiteName</a>"
+            "<a href=\"$photographersProfile" +
+                    "?utm_source=goal_chaser&utm_medium=referral\">$photographerName</a>",
+            "<a href=\"$unsplashSiteUrl" +
+                    "?utm_source=goal_chaser&utm_medium=referral\">$unsplashSiteName</a>"
         )
         Linkify.addLinks(this, Linkify.ALL)
         text = Html.fromHtml(photographerLabel)
